@@ -1,12 +1,8 @@
 // app.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { UserModule } from './modules/v1/user/user.module';
-import { AuthModule } from './modules/v1/auth/auth.module';
-import { PostModule } from './modules/v1/post/post.module';
-import { CommonModule } from './common/common.module';
-import { ConfigModule } from './config/config.module';
-import { UserModule } from './modules/v2/user/user.module';
+// import { AuthModule } from './module/v1/auth/auth.module';
+import { CapeModule } from './module/v1/cape/cape.module';
 
 @Module({
     imports: [
@@ -14,11 +10,8 @@ import { UserModule } from './modules/v2/user/user.module';
             isGlobal: true,
             envFilePath: '.env',
         }),
-		UserModule,
-		AuthModule,
-		PostModule,
-		CommonModule,
-		ConfigModule,
+		// AuthModule,
+		CapeModule,
 	],
     controllers: [],
     providers: [],

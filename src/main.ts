@@ -1,11 +1,18 @@
 // main.ts
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { VersioningType, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    
+
+    app.enableVersioning({
+        type: VersioningType.URI,
+        prefix: 'api/',
+        defaultVersion: '1',
+    });
+
     const config = new DocumentBuilder()
         .setTitle('[App Name] API')
         .setDescription('The [App Name] API description')
@@ -24,11 +31,13 @@ async function bootstrap() {
         credentials: true,
     });
 
-
     const PORT = process.env.PORT;
     await app.listen(PORT, '0.0.0.0', () => {
-        console.log(`Weather App server is running on port => ${PORT}`);
+        console.log(`Datagaze SandBox server is running on port => ${PORT}`);
     });
 }
 
-bootstrap();
+bootstrap().catch((error) => {
+    console.error('Failed to start the application:', error);
+    process.exit(1);
+});

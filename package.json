@@ -1,10 +1,10 @@
 {
-  "name": "nestjs-template",
+  "name": "datagaze-sandbox",
   "version": "0.0.1",
   "description": "",
   "author": "",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "build:swc": "yarn swc --out-dir dist -w src",
@@ -12,14 +12,12 @@
     "start": "yarn build && node dist/main",
     "start:dev": "concurrently \"yarn build:swc\" \"yarn start:swc\"",
     "start:prod": "node dist/main",
+    "migrate:make": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:make",
     "migrate:latest": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:latest",
     "migrate:rollback": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:rollback",
-    "migrate:make": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:make",
     "migrate:rollback:all": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:rollback --all",
-    "migrate:down": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:down",
     "seed:make": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts seed:make",
     "seed:run": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts seed:run",
-    "db:clean": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:down 20250215061416_create_computer_applications_table && ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:down 20250311075235_create_computer_drives_table && ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:down 20250313202054_create_network_interfaces_of_computer && ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts migrate:down 20250215061313_create_computers_table",
     "db:reset": "yarn migrate:rollback:all && yarn migrate:latest && yarn seed:run"
   },
  "dependencies": {

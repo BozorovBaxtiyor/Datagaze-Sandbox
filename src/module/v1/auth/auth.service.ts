@@ -2,15 +2,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { AuthRepository } from './auth.repository';
-import { LoginDto } from './dto/login.input';
-import { RegisterDto } from './dto/register.input';
-import { UpdateProfileDto } from './dto/update.input';
-import { PaginationQueryUsersDto } from './dto/get-all.users.input';
-import { LoginEntity } from './entities/login.output';
-import { RegisterEntity } from './entities/register.output';
-import { UpdateProfileEntity } from './entities/update.output';
-import { User } from '../../../common/types/types';
 
 @Injectable()
 export class AuthService {

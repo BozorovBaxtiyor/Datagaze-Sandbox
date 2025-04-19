@@ -19,18 +19,18 @@ export class CapeController {
         return this.capeService.getListOfTasks();
     }
 
-    @Post('tasks/create/file')
-    async createFile() {
-        return this.capeService.createFile();
-    }
+    // @Post('tasks/create/file')
+    // async createFile() {
+    //     return this.capeService.createFile();
+    // }
 
-    @Post('tasks/create/url')
-    async createUrl() {
-        return this.capeService.createUrl();
-    }
+    // @Post('tasks/create/url')
+    // async createUrl() {
+    //     return this.capeService.createUrl();
+    // }
 
-    @Get('machines/list')
-    async getListOfMachines() {
-        return this.capeService.getListOfMachines();
-    }
+    // @Get('machines/list')
+    // async getListOfMachines() {
+    //     return this.capeService.getListOfMachines();
+    // }
 }

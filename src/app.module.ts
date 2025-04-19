@@ -1,7 +1,8 @@
 // app.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-// import { AuthModule } from './module/v1/auth/auth.module';
+import { DatabaseModule } from './module/v1/database/database.module';
+import { AuthModule } from './module/v1/auth/auth.module';
 import { CapeModule } from './module/v1/cape/cape.module';
 
 @Module({
@@ -10,7 +11,8 @@ import { CapeModule } from './module/v1/cape/cape.module';
             isGlobal: true,
             envFilePath: '.env',
         }),
-		// AuthModule,
+        DatabaseModule,
+		AuthModule,
 		CapeModule,
 	],
     controllers: [],

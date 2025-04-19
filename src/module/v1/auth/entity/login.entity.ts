@@ -1,4 +1,4 @@
-// login.output.ts
+// login.entity.ts
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginEntity {

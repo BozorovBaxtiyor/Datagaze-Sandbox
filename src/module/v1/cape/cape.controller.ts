@@ -15,7 +15,7 @@ export class CapeController {
     constructor(private readonly capeService: CapeService) {}
 
     @Get('tasks/list')
-    async getListOfTasks() {
+    async getListOfTasks(): Promise<any> {
         return this.capeService.getListOfTasks();
     }
 

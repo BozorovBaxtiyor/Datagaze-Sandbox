@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { CapeTasksRepository } from '../repository/cape.tasks.repository';
+import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 
 interface SimplifiedCapeTask {
     id: string;
@@ -23,19 +24,28 @@ export class CapeService {
 
     constructor(private readonly capeTasksRepository: CapeTasksRepository) {}
 
-    async getListOfTasks(): Promise<any> {
-        const response = await axios.get(`${this.baseUrl}/tasks/list/`, {
+    async getTasks(query: TaskListQueryDto): Promise<any> {
+        const resp = await axios.get(`${this.baseUrl}/tasks/list/`, { headers: { Accept: 'application/json' } });
+
+        const validTasks = resp.data.data.filter(t => t.sample?.sha256);
+
+        await Promise.all(validTasks.map(t => 
+            this.capeTasksRepository.upsertTask(this.mapTaskData(t))
+        ));
+    
+        const { data, total } = await this.capeTasksRepository.findAndCount(query);
+
+        return {
+            tasks: data.map(r => this.formatResponse(r))
+        };
+    }  
+
+    async getTask(taskId: string): Promise<any> {
+        const response = await axios.get(`${this.baseUrl}/tasks/view/${taskId}`, {
             headers: { 'Accept': 'application/json' }
         });
 
-        const tasks = [];
-        for (const task of response.data.data) {
-            const mappedData = this.mapTaskData(task);
-            const result = await this.capeTasksRepository.upsertTask(mappedData);
-            tasks.push(this.formatResponse(result));
-        }
-
-        return tasks;
+        return response.data;
     }
 
     private mapTaskData(taskData: any) {

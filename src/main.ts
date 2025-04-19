@@ -13,16 +13,14 @@ async function bootstrap() {
         defaultVersion: '1',
     });
 
-    const config = new DocumentBuilder()
-        .setTitle('[App Name] API')
-        .setDescription('The [App Name] API description')
-        .setVersion('1.0')
-        .addTag('[App Name]')
-        .addBearerAuth()
-        .build();
-
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transform: true,
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            transformOptions: { enableImplicitConversion: true },
+        }),
+    );
 
     app.enableCors({
         origin: '*',

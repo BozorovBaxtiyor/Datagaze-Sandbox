@@ -1,22 +1,26 @@
 // cape.controller.ts
-import {
-    Controller,
-    Get,
-    Post,
-    Param,
-    Query,
-    UseGuards,
-    ParseUUIDPipe,
-} from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, UseGuards } from '@nestjs/common';
 import { CapeService } from './service/cape.service';
+import { TaskListQueryDto } from './dto/tasks.list.query.dto';
 
 @Controller({ path: 'cape', version: '1' })
 export class CapeController {
     constructor(private readonly capeService: CapeService) {}
 
-    @Get('tasks/list')
-    async getListOfTasks(): Promise<any> {
-        return this.capeService.getListOfTasks();
+    @Get('active/tasks/list')
+    async getActiveTasks(@Query() query: TaskListQueryDto): Promise<any> {
+        return this.capeService.getTasks(query);
+    }
+
+    @Get('inactive/tasks/list')
+    async getInactiveTasks(@Query() query: TaskListQueryDto): Promise<any> {
+        // return this.capeService.getTasks(query);
+        return 'Inactive tasks list is not implemented yet';
+    }
+
+    @Get('tasks/view/:taskId')
+    async getTask(@Param('taskId') taskId: string): Promise<any> {
+        return this.capeService.getTask(taskId);
     }
 
     // @Post('tasks/create/file')

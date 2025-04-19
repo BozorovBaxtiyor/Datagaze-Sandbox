@@ -8,7 +8,7 @@ import {
     UseGuards,
     ParseUUIDPipe,
 } from '@nestjs/common';
-import { CapeService } from './cape.service';
+import { CapeService } from './service/cape.service';
 
 @Controller({ path: 'cape', version: '1' })
 export class CapeController {

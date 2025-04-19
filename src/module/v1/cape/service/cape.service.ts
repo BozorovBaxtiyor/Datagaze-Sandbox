@@ -3,10 +3,15 @@ import * as FormData from 'form-data';
 import * as fs from 'fs';
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { CapeTasksRepository } from '../repository/cape.tasks.repository';
 
 @Injectable()
 export class CapeService {
-    private readonly baseUrl = process.env.CAPE_URL + '/apiv2';
+    private readonly baseUrl = process.env.CAPE_URL;
+
+    constructor(
+        private readonly capeTasksRepository: CapeTasksRepository
+    ) {}
 
     async getListOfTasks(): Promise<any> {
         const response = await axios.get(`${this.baseUrl}/tasks/list/`, {
@@ -14,7 +19,13 @@ export class CapeService {
                 'Accept': 'application/json',
             }
         });
-        return response.data;
+
+        const tasks = [];
+        for (const task of response.data.data) {
+            tasks.push(await this.capeTasksRepository.saveTask(task));
+        }
+
+        return tasks;
     }
 
     async createFile(): Promise<any> {

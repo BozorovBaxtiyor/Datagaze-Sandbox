@@ -28,13 +28,13 @@ export class CapeTasksRepository {
         return result;
     }    
 
-    async findAndCount(query: TaskListQueryDto): Promise<{ data: any[]; total: number }> {
+    async findAndCount(query: TaskListQueryDto): Promise<{ data: any[] }> {
         const page = Number(query.page) || 1;
         const limit = Number(query.limit) || 10;
         const skip = (page - 1) * limit;
-        
+    
         let qb = this.knex('capeTasks');
-        
+    
         if (query.status && query.status !== 'all') {
             qb = qb.where('status', query.status);
         }
@@ -47,24 +47,11 @@ export class CapeTasksRepository {
             qb = qb.where('incidentType', query.incidentType);
         }
     
-        const countQuery = qb.clone().count('id as count').first();
-        
-        const dataQuery = qb.clone()
+        const data = await qb
             .orderBy('createdAt', 'desc')
             .limit(limit)
             .offset(skip);
     
-        try {
-            const [countResult, data] = await Promise.all([countQuery, dataQuery]);
-            
-            const total = countResult ? Number(countResult.count) : 0;
-            
-            return { 
-                data, 
-                total 
-            };
-        } catch (error) {
-            throw new Error(`Failed to fetch tasks: ${error.message}`);
-        }
+        return { data };
     }
 }

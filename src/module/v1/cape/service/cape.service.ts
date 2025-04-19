@@ -33,11 +33,9 @@ export class CapeService {
             this.capeTasksRepository.upsertTask(this.mapTaskData(t))
         ));
     
-        const { data, total } = await this.capeTasksRepository.findAndCount(query);
+        const { data } = await this.capeTasksRepository.findAndCount(query);
 
-        return {
-            tasks: data.map(r => this.formatResponse(r))
-        };
+        return data.map(r => this.formatResponse(r));
     }  
 
     async getTask(taskId: string): Promise<any> {

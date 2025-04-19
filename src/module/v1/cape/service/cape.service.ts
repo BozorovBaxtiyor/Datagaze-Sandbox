@@ -23,7 +23,7 @@ export class CapeService {
 
     constructor(private readonly capeTasksRepository: CapeTasksRepository) {}
 
-    async getListOfTasks(): Promise<SimplifiedCapeTask[]> {
+    async getListOfTasks(): Promise<any> {
         const response = await axios.get(`${this.baseUrl}/tasks/list/`, {
             headers: { 'Accept': 'application/json' }
         });

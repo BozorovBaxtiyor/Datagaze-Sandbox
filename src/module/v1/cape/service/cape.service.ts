@@ -11,6 +11,7 @@ import { SimplifiedCapeTask } from '../type/cape.type';
 @Injectable()
 export class CapeService {
     private readonly logger = new Logger(CapeService.name);
+    private readonly headers = { Accept: 'application/json' };
     private readonly baseUrl = process.env.CAPE_URL;
 
     constructor(
@@ -18,24 +19,30 @@ export class CapeService {
         private readonly capeGetTasksRepository: CapeGetTasksRepository
     ) {}
 
-    async getTasks(query: TaskListQueryDto): Promise<any> {
+    private async fetchFromCape<T>(endpoint: string): Promise<T> {
         try {
-            const resp = await axios.get(`${this.baseUrl}/tasks/list/`, {
-                headers: { Accept: 'application/json' },
-            });
-    
-            const validTasks = resp?.data?.data?.filter(t => t.sample?.sha256);
-    
-            if (validTasks?.length) {
-                await Promise.all(
-                    validTasks.map(t =>
-                        this.capeUpsertTaskRepository.upsertTask(this.mapTaskData(t))
-                    )
-                );
-            }
-        } catch (error) {
-            this.logger.warn(`[CapeService] Warning: Failed to fetch CAPE tasks. Reason: ${error.message}`);
+            return axios.get<T>(`${this.baseUrl}${endpoint}`, { headers: this.headers }).then(response => response.data);
+        } catch (error: any) {
+            this.logger.warn(`[CapeService] Warning: Failed to fetch from CAPE API. Reason: ${error.message}`);
         }
+    }
+
+    private getValidTasks(tasks: any[]): any[] {
+        return tasks.filter(task => task.sample?.sha256);
+    }
+
+    async getTasks(query: TaskListQueryDto): Promise<any> {
+        const response = await this.fetchFromCape<any>('/tasks/list/');
+        const validTasks = this.getValidTasks(response?.data?.data ?? []);
+
+        if (validTasks?.length) {
+            await Promise.all(
+                validTasks.map(t =>
+                    this.capeUpsertTaskRepository.upsertTask(this.mapTaskData(t))
+                )
+            );
+        }
+
         const { data } = await this.capeGetTasksRepository.getTotalTasks(query);
     
         return data.map(r => this.formatResponse(r));

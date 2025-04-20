@@ -10,7 +10,6 @@ export async function seed(knex: Knex): Promise<void> {
         hashedPassword = await bcrypt.hash('superadmin', 10);
     } catch (err: unknown) {
         const error = err as Error;
-        console.error('Error hashing password:', error.message);
         throw new Error(`Failed to hash password: ${error.message}`);
     }
 

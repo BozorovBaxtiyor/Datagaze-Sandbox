@@ -25,7 +25,15 @@ export class CapeGetTasksRepository {
         if (query.incidentType && query.incidentType !== 'all') {
             qb = qb.where('incidentType', query.incidentType);
         }
+
+        if (query.startedAt && query.startedAt !== 'all') {
+            qb = qb.where('startedAt', '>=', query.startedAt);
+        }
     
+        if (query.completedAt && query.completedAt !== 'all') {
+            qb = qb.where('completedAt', '<=', query.completedAt);
+        }
+
         return { data: await qb.orderBy('createdAt', 'desc').limit(limit).offset(skip) };
     }
 }

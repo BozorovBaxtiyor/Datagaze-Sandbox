@@ -7,15 +7,9 @@ import { TaskListQueryDto } from './dto/tasks.list.query.dto';
 export class CapeController {
     constructor(private readonly capeService: CapeService) {}
 
-    @Get('active/tasks/list')
+    @Get('tasks/list')
     async getActiveTasks(@Query() query: TaskListQueryDto): Promise<any> {
         return this.capeService.getTasks(query);
-    }
-
-    @Get('inactive/tasks/list')
-    async getInactiveTasks(@Query() query: TaskListQueryDto): Promise<any> {
-        // return this.capeService.getTasks(query);
-        return 'Inactive tasks list is not implemented yet';
     }
 
     @Get('tasks/view/:taskId')

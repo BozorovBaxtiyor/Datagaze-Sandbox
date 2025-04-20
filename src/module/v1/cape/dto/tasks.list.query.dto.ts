@@ -1,6 +1,6 @@
 // tasks.list.dto.ts
-import { IsOptional, IsInt, Min, Max, IsEnum } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsOptional, IsInt, Min, Max, IsEnum, IsDateString } from 'class-validator';
+import { Type, Transform } from 'class-transformer';
 import { TaskStatus, TaskCategory, IncidentType } from '../enum/cape.enum';
 
 export class TaskListQueryDto {
@@ -28,4 +28,31 @@ export class TaskListQueryDto {
     @IsOptional()
     @IsEnum(IncidentType)
     incidentType?: IncidentType | 'all' = 'all';
+
+    @IsOptional()
+    @Transform(({ value }) => {
+        if (value === 'all') return 'all';
+        try {
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return undefined;
+            return date.toISOString();
+        } catch {
+            return undefined;
+        }
+    })
+    startedAt?: string = 'all';
+
+    @IsOptional()
+    @Transform(({ value }) => {
+        if (value === 'all') return 'all';
+        try {
+            const date = new Date(value);
+            if (isNaN(date.getTime())) return undefined;
+            date.setHours(23, 59, 59, 999);
+            return date.toISOString();
+        } catch {
+            return undefined;
+        }
+    })
+    completedAt?: string = 'all';
 }

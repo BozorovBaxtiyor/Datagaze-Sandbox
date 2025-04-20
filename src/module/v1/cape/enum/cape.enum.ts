@@ -1,14 +1,3 @@
-export enum TaskStatus {
-    All = 'all',
-    Pending = 'pending',
-    Running = 'running',
-    Processing = 'processing',
-    Analyzing = 'analyzing',
-    Reported = 'reported',
-    FailedAnalysis = 'failedAnalysis',
-    Completed = 'completed',
-}
-
 export enum TaskCategory {
     All = 'all',
     File = 'file',
@@ -25,4 +14,14 @@ export enum IncidentType {
     Spyware = 'spyware',
     Cryptominer = 'cryptominer',
     Unknown = 'unknown',
+}
+
+export enum TaskStatus {
+    All = 'all',
+    Pending = 'pending',
+    Running = 'running',
+    Processing = 'processing',
+    Analyzing = 'analyzing',
+    Reported = 'reported',
+    Failed = 'failed',
 }

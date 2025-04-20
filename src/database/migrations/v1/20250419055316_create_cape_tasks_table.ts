@@ -44,7 +44,8 @@ export async function up(knex: Knex): Promise<void> {
 
         table.boolean('timedout').defaultTo(false);
 
-        table.string('fileType');
+        table.string('fileType').nullable();
+        table.string('filePath').nullable();
 
         table.index(['status', 'createdAt']);
         table.index('sha256');

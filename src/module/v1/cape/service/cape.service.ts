@@ -1,11 +1,13 @@
 // cape.service.ts
-import * as FormData from 'form-data';
+import FormData from 'form-data';
 import * as fs from 'fs';
+import * as path from 'path';
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
+import { CreateFileDto } from '../dto/create.file.dto';
 import { SimplifiedCapeTask } from '../type/cape.type';
 
 @Injectable()
@@ -33,7 +35,7 @@ export class CapeService {
 
     async getTasks(query: TaskListQueryDto): Promise<any> {
         const response = await this.fetchFromCape<any>('/tasks/list/');
-        const validTasks = this.getValidTasks(response?.data?.data ?? []);
+        const validTasks = this.getValidTasks(response?.data ?? []);
 
         if (validTasks?.length) {
             await Promise.all(
@@ -48,6 +50,79 @@ export class CapeService {
         return data.map(r => this.formatResponse(r));
     }
     
+    async createFile(createFileDto: CreateFileDto): Promise<any> {
+        try {
+            const filePath = await this.saveFileToDisk(createFileDto);
+            createFileDto.filePath = filePath;
+        
+            const form = this.prepareCapeForm(createFileDto);
+        
+            const response = await this.uploadToCape(form);
+        
+            await this.storeTaskMetadata(createFileDto);
+        
+            return response.data;
+        } catch (error: any) {
+            throw new Error(`Failed to create file: ${error.message}`);
+        }
+    }
+
+    private async saveFileToDisk(dto: CreateFileDto): Promise<string> {
+        const uploadDir = path.join(process.cwd(), 'src', 'file');
+      
+        if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+        }
+      
+        const fileName = `${Date.now()}_${dto.file.originalname}`;
+        const filePath = path.join(uploadDir, fileName);
+        await fs.promises.writeFile(filePath, dto.file.buffer);
+      
+        return filePath;
+    }
+      
+    private prepareCapeForm(dto: CreateFileDto): FormData {
+        const form = new FormData();
+        form.append('file', fs.createReadStream(dto.filePath));
+        form.append('package', dto.package);
+        form.append('timeout', String(dto.timeout));
+        form.append('machine', dto.machine);
+        form.append('platform', dto.platform);
+        form.append('options', dto.options);
+      
+        return form;
+    }
+      
+    private async uploadToCape(form: FormData): Promise<any> {
+        const capeUrl = `${this.baseUrl}/tasks/create/file/`;
+      
+        return axios.post(capeUrl, form, {
+            headers: {
+                ...form.getHeaders(),
+                'Accept': 'application/json',
+            },
+            maxContentLength: Infinity,
+            maxBodyLength: Infinity,
+        });
+    }
+      
+    private async storeTaskMetadata(dto: CreateFileDto): Promise<void> {
+        await this.capeUpsertTaskRepository.upsertTask({
+            target: dto.file.originalname,
+            sha256: 'ksd',
+            category: 'file',
+            filePath: dto.filePath,
+            fileType: dto.file.mimetype,
+            fileSize: dto.file.size,
+            machine: dto.machine,
+            platform: dto.platform,
+            package: dto.package,
+            timeout: dto.timeout,
+            status: 'pending',
+            createdAt: new Date().toISOString(),
+        });
+    }
+      
     async getTask(taskId: string): Promise<any> {
         const response = await axios.get(`${this.baseUrl}/tasks/view/${taskId}`, {
             headers: { 'Accept': 'application/json' }

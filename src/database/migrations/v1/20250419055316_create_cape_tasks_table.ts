@@ -9,9 +9,8 @@ export async function up(knex: Knex): Promise<void> {
         
         table.string('sha256').unique();
         table.string('md5');
-        table.string('fileType');
         table.integer('fileSize');
-        
+
         table.string('machine').nullable();
         table.string('platform').defaultTo('windows');
         table.string('package').nullable();
@@ -42,14 +41,18 @@ export async function up(knex: Knex): Promise<void> {
         table.timestamp('createdAt').defaultTo(knex.fn.now());
         table.timestamp('startedAt').nullable();
         table.timestamp('completedAt').nullable();
-        table.timestamp('analysisStartedAt').nullable();
-        table.timestamp('analysisFinishedAt').nullable();
-        
-        table.jsonb('tags').defaultTo('[]');
-        table.jsonb('errors').defaultTo('[]');
-        table.jsonb('sampleInfo').defaultTo('{}');
+
+        // table.jsonb('tags').defaultTo('[]');
+        // table.jsonb('errors').defaultTo('[]');
+        // table.jsonb('sampleInfo').defaultTo('{}');
+
         table.boolean('timedout').defaultTo(false);
-        
+
+        // 🔽 Unused or not yet mapped columns moved to bottom
+        table.string('fileType');
+        // table.timestamp('analysisStartedAt').nullable();
+        // table.timestamp('analysisFinishedAt').nullable();
+
         table.index(['status', 'createdAt']);
         table.index('sha256');
         table.index('incidentType');

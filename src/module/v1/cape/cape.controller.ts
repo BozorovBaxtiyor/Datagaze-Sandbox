@@ -9,15 +9,15 @@ import { CreateFileDto } from './dto/create.file.dto';
 export class CapeController {
     constructor(private readonly capeService: CapeService) {}
 
-    @Get('tasks/list')
-    async getActiveTasks(@Query() query: TaskListQueryDto): Promise<any> {
-        return this.capeService.getTasks(query);
+    @Get('tasks/list/:path')
+    async getTasks(@Param('path') path: string, @Query() query: TaskListQueryDto): Promise<any> {
+        return this.capeService.getTasks(path, query);
     }
 
-    @Get('tasks/view/:taskId')
-    async getTask(@Param('taskId') taskId: string): Promise<any> {
-        return this.capeService.getTask(taskId);
-    }
+    // @Get('tasks/view/:taskId')
+    // async getTask(@Param('taskId') taskId: string): Promise<any> {
+    //     return this.capeService.getTask(taskId);
+    // }
 
     @Post('tasks/create/file')
     @UseInterceptors(AnyFilesInterceptor({

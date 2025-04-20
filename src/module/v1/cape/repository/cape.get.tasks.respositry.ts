@@ -7,13 +7,18 @@ import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 export class CapeGetTasksRepository {
     constructor(@InjectKnex() private readonly knex: Knex) {}
 
-    async getTotalTasks(query: TaskListQueryDto): Promise<{ data: any[] }> {
+    async getTotalTasks(query: TaskListQueryDto, path: string): Promise<{ data: any[] }> {
         const page = Number(query.page) || 1;
         const limit = Number(query.limit) || 10;
         const skip = (page - 1) * limit;
     
         let qb = this.knex('capeTasks');
-    
+        if (path === 'active') {
+            qb = qb.whereIn('status', ['pending', 'running', 'processing']);
+        } else if (path === 'history') {
+            qb = qb.whereIn('status', ['reported', 'failed', 'completed']);
+        }
+
         if (query.status && query.status !== 'all') {
             qb = qb.where('status', query.status);
         }

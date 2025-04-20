@@ -33,7 +33,7 @@ export class CapeService {
         return tasks.filter(task => task.sample?.sha256);
     }
 
-    async getTasks(query: TaskListQueryDto): Promise<any> {
+    async getTasks(path: string, query: TaskListQueryDto): Promise<any> {
         const response = await this.fetchFromCape<any>('/tasks/list/');
         const validTasks = this.getValidTasks(response?.data ?? []);
 
@@ -45,7 +45,7 @@ export class CapeService {
             );
         }
 
-        const { data } = await this.capeGetTasksRepository.getTotalTasks(query);
+        const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
     
         return data.map(r => this.formatResponse(r));
     }

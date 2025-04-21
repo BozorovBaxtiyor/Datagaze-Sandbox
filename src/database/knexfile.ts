@@ -14,7 +14,7 @@ interface ExtendedConnectionOptions extends Knex.PgConnectionConfig {
 
 const knexConfig: { [key: string]: Knex.Config } = {
     development: { 
-        debug:true,
+        debug: false,
         client: 'pg',
         connection: {
             host: process.env.DB_HOST,
@@ -42,6 +42,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
         },
     },
     production: {
+        debug: false,
         client: 'pg',
         connection: {
             host: process.env.DB_HOST,

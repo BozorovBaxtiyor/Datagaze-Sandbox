@@ -6,8 +6,13 @@ import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
+import { CapeGetTaskIdRepository } from '../repository/cape.get.taskId.repositry';
+import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';  
+import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.repository';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
+import { UploadSignatureDto } from '../dto/upload.signature.dto';
+import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
 import { SimplifiedCapeTask } from '../type/cape.type';
 
 @Injectable()
@@ -18,8 +23,92 @@ export class CapeService {
 
     constructor(
         private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
-        private readonly capeGetTasksRepository: CapeGetTasksRepository
+        private readonly capeGetTasksRepository: CapeGetTasksRepository,
+        private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
+        private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
+        private readonly capeGetSignaturesRepository: CapeGetSignaturesRepository,
     ) {}
+
+    async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<any> {
+        const taskIds = await this.capeGetTaskIdRepository.getTaskIdByUserId(userId);
+        if (taskIds.length !== 0) {
+            await Promise.all(taskIds.map(async (taskId) => {
+                const task = await this.getTask(taskId);
+                if (task) {
+                    const taskData = this.mapTaskData(task, taskId, userId);
+                    await this.capeUpsertTaskRepository.upsertTask(taskData);
+                }
+            }));
+        }
+
+        const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
+        
+        return data.map(r => this.formatResponse(r));
+    }
+    
+    async getSignatures(query: GetSignaturesQueryDto, userId: string): Promise<any> {
+        const { data } = await this.capeGetSignaturesRepository.getSignaturesByUserId(query, userId);
+        return data.map(r => ({
+            id: r.id,
+            name: r.name,
+            rule: r.rule,
+            type: r.type,
+            createdAt: r.created_at,
+            uploadedBy: r.uploaded_by,
+        }));
+    }
+    
+    async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
+        try {
+            const filePath = await this.saveFileToDisk(createFileDto);
+            createFileDto.filePath = filePath;
+            const form = this.prepareCapeForm(createFileDto);
+            const response = await this.uploadToCape(form);
+            const taskId = response.data.data.task_ids[0];
+
+            await this.storeTaskData(createFileDto, userId, taskId);
+
+            return response.data;
+        } catch (error: any) {
+            throw new Error(`Failed to create file: ${error.message}`);
+        }
+    }
+
+    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<any> {
+        const form = new FormData();
+        form.append('name', signature.name);
+        form.append('rule', signature.rule);
+
+        try {
+            const response = await axios.post(`${this.baseUrl}/yara/upload/`, form, {
+                headers: form.getHeaders(),
+            });
+
+            await this.capeCreateYaraRepository.createSignature({
+                name: signature.name,
+                rule: signature.rule,
+                uploadedBy: userId,
+                category: signature.type,
+            });
+
+            return response.data;
+        } catch (error: any) {
+            throw new Error('Signature upload failed');
+        }
+    }
+
+    async getTask(taskId: string): Promise<any> {
+        return axios.get(`${this.baseUrl}/tasks/view/${taskId}`, { headers: { 'Accept': 'application/json' } }).then(response => response.data);
+    }
+
+    async getReport(taskId: string): Promise<any> {
+        const format = 'json';
+        const response = await axios.get(`${this.baseUrl}/tasks/get/report/${taskId}/${format}`, {
+            headers: { 'Accept': 'application/json' }
+        });
+
+        return response.data;
+    }
 
     private async fetchFromCape<T>(endpoint: string): Promise<T> {
         try {
@@ -31,40 +120,6 @@ export class CapeService {
 
     private getValidTasks(tasks: any[]): any[] {
         return tasks.filter(task => task.sample?.sha256);
-    }
-
-    async getTasks(path: string, query: TaskListQueryDto): Promise<any> {
-        const response = await this.fetchFromCape<any>('/tasks/list/');
-        const validTasks = this.getValidTasks(response?.data ?? []);
-
-        if (validTasks?.length) {
-            await Promise.all(
-                validTasks.map(t =>
-                    this.capeUpsertTaskRepository.upsertTask(this.mapTaskData(t))
-                )
-            );
-        }
-
-        const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
-    
-        return data.map(r => this.formatResponse(r));
-    }
-    
-    async createFile(createFileDto: CreateFileDto): Promise<any> {
-        try {
-            const filePath = await this.saveFileToDisk(createFileDto);
-            createFileDto.filePath = filePath;
-        
-            const form = this.prepareCapeForm(createFileDto);
-        
-            const response = await this.uploadToCape(form);
-        
-            await this.storeTaskMetadata(createFileDto);
-        
-            return response.data;
-        } catch (error: any) {
-            throw new Error(`Failed to create file: ${error.message}`);
-        }
     }
 
     private async saveFileToDisk(dto: CreateFileDto): Promise<string> {
@@ -106,10 +161,10 @@ export class CapeService {
         });
     }
       
-    private async storeTaskMetadata(dto: CreateFileDto): Promise<void> {
+    private async storeTaskData(dto: CreateFileDto, userId: string, taskId: string): Promise<void> {
         await this.capeUpsertTaskRepository.upsertTask({
             target: dto.file.originalname,
-            sha256: 'ksd',
+            sha256: '',
             category: 'file',
             filePath: dto.filePath,
             fileType: dto.file.mimetype,
@@ -120,19 +175,14 @@ export class CapeService {
             timeout: dto.timeout,
             status: 'pending',
             createdAt: new Date().toISOString(),
+            createdBy: userId,
+            taskId: taskId,
         });
     }
-      
-    async getTask(taskId: string): Promise<any> {
-        const response = await axios.get(`${this.baseUrl}/tasks/view/${taskId}`, {
-            headers: { 'Accept': 'application/json' }
-        });
 
-        return response.data;
-    }
-
-    private mapTaskData(taskData: any) {
+    private mapTaskData(taskData: any, taskId: string, userId: string): any {
         return {
+            taskId: taskId || taskData.id,
             target: this.extractFilename(taskData.target) || '',
             category: taskData.category || 'file',
             sha256: taskData.sample?.sha256 || null,
@@ -148,6 +198,7 @@ export class CapeService {
             startedAt: taskData.started_on || null,
             completedAt: taskData.completed_on || null,
             incidentType: 'unknown',
+            createdBy: userId,
         };
     }
 
@@ -198,9 +249,10 @@ export class CapeService {
         const statusMap: { [key: string]: string } = {
             pending: 'pending',
             running: 'running',
-            reported: 'completed',
+            reported: 'reported',
             failed_analysis: 'failedAnalysis',
-            completed: 'completed'
+            completed: 'completed',
+            failed: 'failed',
         };
         return statusMap[capeStatus] || 'pending';
     }

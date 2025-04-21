@@ -63,8 +63,8 @@ export class CapeService {
             const filePath = await this.saveFileToDisk(createFileDto);
             createFileDto.filePath = filePath;
             const form = this.prepareCapeForm(createFileDto);
-            const response = await this.uploadToCape(form);
-            const taskId = response.data.data.task_ids[0];
+            const response: any = await this.uploadToCape(form);
+            const taskId = response?.data?.data?.task_ids[0];
 
             await this.storeTaskData(createFileDto, userId, taskId);
 

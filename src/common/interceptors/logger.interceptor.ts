@@ -7,7 +7,6 @@ import {
     Logger,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoggingInterceptor implements NestInterceptor {
@@ -19,8 +18,7 @@ export class LoggingInterceptor implements NestInterceptor {
         const userAgent = req.get('user-agent') || '';
         const timestamp = new Date().toISOString();
         const handler = context.getHandler().name;
-        
-        // Request logging with better formatting
+
         this.logger.log(
             `\n🔹 Incoming Request ${'-'.repeat(50)}
             📆 Timestamp: ${timestamp}
@@ -33,24 +31,6 @@ export class LoggingInterceptor implements NestInterceptor {
             ${'-'.repeat(70)}`
         );
 
-        const now = Date.now();
-        return next.handle().pipe(
-            tap((data) => {
-                const response = context.switchToHttp().getResponse();
-                const delay = Date.now() - now;
-                
-                // Response logging with better formatting
-                this.logger.log(
-                    `\n✨ Outgoing Response ${'-'.repeat(48)}
-                    📆 Timestamp: ${timestamp}
-                    🎯 Endpoint: ${handler}
-                    📍 ${method} ${url}
-                    ⏱️  Response Time: ${delay}ms
-                    🔢 Status: ${response.statusCode}
-                    📄 Response Data: ${JSON.stringify(data, null, 2)}
-                    ${'-'.repeat(70)}`
-                );
-            }),
-        );
+        return next.handle();
     }
 }

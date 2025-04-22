@@ -9,6 +9,7 @@ import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry'
 import { CapeGetTaskIdRepository } from '../repository/cape.get.taskId.repositry';
 import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';  
 import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.repository';
+import { CapeGetUsernameRepository } from '../repository/cape.get.username.repository';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
 import { UploadSignatureDto } from '../dto/upload.signature.dto';
@@ -27,6 +28,7 @@ export class CapeService {
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
         private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
         private readonly capeGetSignaturesRepository: CapeGetSignaturesRepository,
+        private readonly capeGetUsernameRepository: CapeGetUsernameRepository,
     ) {}
 
     async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<any> {
@@ -48,14 +50,24 @@ export class CapeService {
     
     async getSignatures(query: GetSignaturesQueryDto, userId: string): Promise<any> {
         const { data } = await this.capeGetSignaturesRepository.getSignaturesByUserId(query, userId);
-        return data.map(r => ({
-            id: r.id,
-            name: r.name,
-            rule: r.rule,
-            type: r.type,
-            createdAt: r.created_at,
-            uploadedBy: r.uploaded_by,
-        }));
+
+        const signaturePromises = data.map(async (r) => {
+            const username = await this.capeGetUsernameRepository.getUsernameById(r.uploadedBy);
+            
+            return {
+                id: r.id,
+                name: r.name,
+                rule: r.rule,
+                type: r.category, 
+                createdAt: r.uploadedAt,
+                uploadedBy: username, 
+                lastModifiedAt: r.lastModifiedAt || r.uploadedAt,
+            };
+        });
+    
+        const signaturesWithUsernames = await Promise.all(signaturePromises);
+    
+        return signaturesWithUsernames;
     }
     
     async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {

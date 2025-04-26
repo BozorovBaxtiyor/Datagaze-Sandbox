@@ -59,6 +59,7 @@ export class CapeService {
                 name: r.name,
                 rule: r.rule,
                 type: r.category, 
+                status: r.status,
                 createdAt: r.uploadedAt,
                 uploadedBy: username, 
                 lastModifiedAt: r.lastModifiedAt || r.uploadedAt,
@@ -70,6 +71,36 @@ export class CapeService {
         return signaturesWithUsernames;
     }
     
+    async getSignaturesFromCape(): Promise<void> {
+        try {
+            const response = await axios.get(`${this.baseUrl}/yara/all/`, { headers: this.headers });
+    
+            if (!response.data || !response.data.files) {
+                this.logger.warn(`[CapeService] No files found in the response.`);
+                return;
+            }
+    
+            for (const file of response.data.files) {
+                const { name, content } = file;
+    
+                try {
+                    await this.capeCreateYaraRepository.createSignature({
+                        name,
+                        rule: content,
+                        uploadedBy: "f7f39c49-d839-4a03-9b57-9226dcde8a2a",
+                        category: 'yar', 
+                    });
+    
+                    this.logger.log(`[CapeService] Successfully stored signature: ${name}`);
+                } catch (error: any) {
+                    this.logger.error(`[CapeService] Failed to store signature: ${name}. Reason: ${error.message}`);
+                }
+            }
+        } catch (error: any) {
+            this.logger.warn(`[CapeService] Warning: Failed to fetch signatures from CAPE API. Reason: ${error.message}`);
+        }
+    }
+
     async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
         try {
             const filePath = await this.saveFileToDisk(createFileDto);

@@ -53,6 +53,7 @@ export class CapeService {
     
     private async getFormattedTasks(query: TaskListQueryDto, path: string): Promise<any> {
         const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
+
         return data.map(r => this.formatResponse(r));
     }
     

@@ -29,15 +29,14 @@ export class CapeController {
         return this.capeService.getSignatures(query, req.user.userId);
     }
 
-    @Get('tasks/view/all/signatures')
-    async getSignature(): Promise<any> {
-        return this.capeService.getSignaturesFromCape();
-    }
+    // @Get('tasks/view/all/signatures')
+    // async getSignature(): Promise<any> {
+    //     return this.capeService.getSignaturesFromCape();
+    // }
 
     @Post('tasks/create/file')
     @UseInterceptors(AnyFilesInterceptor({ limits: { fileSize: 100 * 1024 * 1024 }}))
     async createFile(@UploadedFiles() files: Array<Express.Multer.File>, @Body() createFileDto: CreateFileDto, @Req() req: CustomRequest): Promise<any> {
-        if (!files || files.length === 0) throw new BadRequestException('No file uploaded');
         createFileDto.file = files[0]; 
         return this.capeService.createFile(createFileDto, req.user.userId);
     }

@@ -236,7 +236,7 @@ export class CapeService {
     }
 
     async getTask(taskId: string): Promise<any> {
-        return axios.get(`${this.baseUrl}/tasks/view/${taskId}`, { headers: { 'Accept': 'application/json' } }).then(response => response.data);
+        return axios.get(`${this.baseUrl}/tasks/view/${taskId}/`, { headers: { 'Accept': 'application/json' } }).then(response => response.data);
     }
 
     async getReport(taskId: string): Promise<any> {
@@ -360,22 +360,24 @@ export class CapeService {
     }
 
     private mapTaskData(taskData: any, taskId: string, userId: string): any {
+        const data = taskData.data || taskData; 
+
         return {
-            taskId: taskId || taskData.id,
-            target: this.extractFilename(taskData.target) || '',
-            category: taskData.category || 'file',
-            sha256: taskData.sample?.sha256 || null,
-            md5: taskData.sample?.md5 || null,
-            fileSize: taskData.sample?.file_size || 0,
-            machine: taskData.machine || null,
-            platform: taskData.platform || 'windows',
-            package: taskData.package || null,
-            timeout: taskData.timeout || 200,
-            memory: taskData.memory || false,
-            status: this.mapStatus(taskData.status),
-            createdAt: taskData.added_on || taskData.clock || new Date().toISOString(),
-            startedAt: taskData.started_on || null,
-            completedAt: taskData.completed_on || null,
+            taskId: taskId || data.id,
+            target: this.extractFilename(data.target) || '',
+            category: data.category || 'file',
+            sha256: data.sample?.sha256 || null,
+            md5: data.sample?.md5 || null,
+            fileSize: data.sample?.file_size || 0,
+            machine: data.machine || null,
+            platform: data.platform || 'windows',
+            package: data.package || null,
+            timeout: data.timeout || 200,
+            memory: data.memory || false,
+            status: this.mapStatus(data.status),
+            createdAt: data.added_on || data.clock || new Date().toISOString(),
+            startedAt: data.started_on || null,
+            completedAt: data.completed_on || null,
             incidentType: 'unknown',
             createdBy: userId,
         };

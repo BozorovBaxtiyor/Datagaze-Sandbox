@@ -147,15 +147,40 @@ export class CapeService {
         this.logger.warn(`[CapeService] Warning: Failed to fetch signatures from CAPE API. Reason: ${error.message}`);
     }
 
+    // async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
+    //     try {
+    //         const preparedFile = await this.prepareFileForUpload(createFileDto);
+    //         const taskId = await this.uploadFileToCape(preparedFile);
+    //         await this.storeTaskData(preparedFile, userId, taskId);
+
+    //         return preparedFile.response.data;
+    //     } catch (error: any) {
+    //         throw new Error(`Failed to create file: ${error.message}`);
+    //     }
+    // }
+
     async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
         try {
             const preparedFile = await this.prepareFileForUpload(createFileDto);
+            this.logger.debug(`File prepared for upload: ${createFileDto.file.originalname}`);
+            
             const taskId = await this.uploadFileToCape(preparedFile);
+            this.logger.debug(`File uploaded to CAPE, received taskId: ${taskId}`);
+            
             await this.storeTaskData(preparedFile, userId, taskId);
-
+            this.logger.debug(`Task data stored in database for taskId: ${taskId}`);
+    
             return preparedFile.response.data;
         } catch (error: any) {
-            throw new Error(`Failed to create file: ${error.message}`);
+            this.logger.error(`File upload failed: ${error.message}`, error.stack);
+            if (error.response) {
+                this.logger.error(`CAPE API Response: ${JSON.stringify({
+                    status: error.response.status,
+                    data: error.response.data,
+                    headers: error.response.headers
+                })}`);
+            }
+            throw new Error(`File upload failed: ${error.message}`);
         }
     }
     

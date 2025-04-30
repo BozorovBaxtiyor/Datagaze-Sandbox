@@ -18,6 +18,27 @@ async function bootstrap() {
         defaultVersion: '1',
     });
 
+    const webConfig = new DocumentBuilder()
+        .setTitle('Datagaze Sandbox API')
+        .setDescription(
+            "Datagaze Sandbox",
+        )
+        .setVersion('1.0')
+        .addTag('Datagaze Sandbox Web')
+        .addBearerAuth(
+            {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+                in: 'header',
+            },
+            'JWT',
+        )
+        .build();
+
+    const webDocument = SwaggerModule.createDocument(app, webConfig);
+    SwaggerModule.setup('api', app, webDocument);
+
     app.useGlobalPipes(
         new ValidationPipe({
             transform: true,

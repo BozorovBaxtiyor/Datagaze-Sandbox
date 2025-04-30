@@ -7,6 +7,7 @@ import { CapeGetTaskIdRepository } from './repository/cape.get.taskId.repositry'
 import { CapeCreateYaraRepository } from './repository/cape.create.yara.repository';
 import { CapeGetSignaturesRepository } from './repository/cape.get.signatures.repository';
 import { CapeGetUsernameRepository } from './repository/cape.get.username.repository';
+import { CapeGetRealTaskIdRepository } from './repository/cape.get.real.taskId.repository';
 import { CapeController } from './cape.controller';
 import { CapeService } from './service/cape.service';
 
@@ -20,7 +21,8 @@ import { CapeService } from './service/cape.service';
         CapeGetTaskIdRepository,
         CapeCreateYaraRepository,
         CapeGetSignaturesRepository,
-        CapeGetUsernameRepository
+        CapeGetUsernameRepository,
+        CapeGetRealTaskIdRepository
     ]
 })
 export class CapeModule {}

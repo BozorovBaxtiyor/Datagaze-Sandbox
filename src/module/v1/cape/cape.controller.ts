@@ -8,32 +8,72 @@ import { UploadSignatureDto } from './dto/upload.signature.dto';
 import { GetSignaturesQueryDto } from './dto/get.signatures.query.dto';
 import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
 import { CustomRequest } from 'src/common/types/types';
+import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiConsumes, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
+
 
 @UseGuards(JwtHttpAuthGuard)
+@ApiTags('Cape Sandbox')
+@ApiBearerAuth('JWT')
 @Controller({ path: 'cape', version: '1' })
 export class CapeController {
     constructor(private readonly capeService: CapeService) {}
 
+    @ApiOperation({ summary: 'Get list of tasks', description: 'Retrieves list of tasks for a specific path' })
+    @ApiParam({ name: 'path', description: 'Path to list tasks from', example: 'recent' })
+    @ApiResponse({ status: 200, description: 'List of tasks retrieved successfully' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
     @Get('tasks/list/:path')
     async getTasks(@Param('path') path: string, @Query() query: TaskListQueryDto, @Req() req: CustomRequest): Promise<any> {
         return this.capeService.getTasks(path, query, req.user.userId);
     }
 
+    @ApiOperation({ summary: 'Get task details', description: 'Retrieves details of a specific task' })
+    @ApiParam({ name: 'taskId', description: 'ID of the task to view', example: '1234567890' })
+    @ApiResponse({ status: 200, description: 'Task details retrieved successfully' })
+    @ApiResponse({ status: 404, description: 'Task not found' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
     @Get('tasks/view/:taskId')
     async getTask(@Param('taskId') taskId: string): Promise<any> {
         return this.capeService.getTask(taskId);
     }
 
+    @ApiOperation({ summary: 'Get signatures', description: 'Retrieves signatures based on query parameters' })
+    @ApiResponse({ status: 200, description: 'Signatures retrieved successfully' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
     @Get('tasks/signatures')
     async getSignatures(@Query() query: GetSignaturesQueryDto, @Req() req: CustomRequest): Promise<any> {
         return this.capeService.getSignatures(query, req.user.userId);
     }
 
-    // @Get('tasks/view/all/signatures')
-    // async getSignature(): Promise<any> {
-    //     return this.capeService.getSignaturesFromCape();
-    // }
+    @ApiOperation({ summary: 'Get task screenshot', description: 'Retrieves screenshot for a specific task' })
+    @ApiParam({ name: 'taskId', description: 'ID of the task to get screenshot for', example: '1234567890' })
+    @ApiResponse({ status: 200, description: 'Screenshot retrieved successfully' })
+    @ApiResponse({ status: 404, description: 'Screenshot not found' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
+    @Get('tasks/get/screenshot/:taskId')
+    async getScreenshot(@Param('taskId') taskId: string): Promise<any> {
+        return this.capeService.getScreenshot(taskId);
+    }
 
+    @ApiOperation({ summary: 'Create file for analysis', description: 'Upload a file for CAPE sandbox analysis' })
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+        description: 'File upload with additional data',
+        schema: {
+            type: 'object',
+            properties: {
+                file: {
+                    type: 'string',
+                    format: 'binary',
+                    description: 'File to analyze (max 100MB)'
+                },
+                // Add other CreateFileDto properties here
+            }
+        }
+    })
+    @ApiResponse({ status: 201, description: 'File created and submitted for analysis' })
+    @ApiResponse({ status: 400, description: 'Bad request' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
     @Post('tasks/create/file')
     @UseInterceptors(AnyFilesInterceptor({ limits: { fileSize: 100 * 1024 * 1024 }}))
     async createFile(@UploadedFiles() files: Array<Express.Multer.File>, @Body() createFileDto: CreateFileDto, @Req() req: CustomRequest): Promise<any> {
@@ -41,10 +81,20 @@ export class CapeController {
         return this.capeService.createFile(createFileDto, req.user.userId);
     }
 
+    @ApiOperation({ summary: 'Upload signature', description: 'Upload a new signature to the system' })
+    @ApiBody({ type: UploadSignatureDto })
+    @ApiResponse({ status: 201, description: 'Signature uploaded successfully' })
+    @ApiResponse({ status: 400, description: 'Bad request' })
+    @ApiResponse({ status: 401, description: 'Unauthorized' })
     @Post('tasks/upload/signature')
     async uploadSignature(@Body() signature: UploadSignatureDto, @Req() req: CustomRequest): Promise<any> {
         return this.capeService.uploadSignature(signature, req.user.userId);
     }
+
+    // @Get('tasks/view/all/signatures')
+    // async getSignature(): Promise<any> {
+    //     return this.capeService.getSignaturesFromCape();
+    // }
 
     // @Get('tasks/get/report/:taskId')
     // async getReport(@Param('taskId') taskId: string): Promise<any> {

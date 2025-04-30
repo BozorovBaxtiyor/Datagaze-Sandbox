@@ -2,14 +2,16 @@
 import FormData from 'form-data';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import axios from 'axios';
+import AdmZip from 'adm-zip';
 import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
 import { CapeGetTaskIdRepository } from '../repository/cape.get.taskId.repositry';
 import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';  
 import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.repository';
 import { CapeGetUsernameRepository } from '../repository/cape.get.username.repository';
+import { CapeGetRealTaskIdRepository } from '../repository/cape.get.real.taskId.repository';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
 import { UploadSignatureDto } from '../dto/upload.signature.dto';
@@ -29,6 +31,7 @@ export class CapeService {
         private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
         private readonly capeGetSignaturesRepository: CapeGetSignaturesRepository,
         private readonly capeGetUsernameRepository: CapeGetUsernameRepository,
+        private readonly capeGetRealTaskIdRepository: CapeGetRealTaskIdRepository,
     ) {}
 
     async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<any> {
@@ -148,18 +151,6 @@ export class CapeService {
         this.logger.warn(`[CapeService] Warning: Failed to fetch signatures from CAPE API. Reason: ${error.message}`);
     }
 
-    // async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
-    //     try {
-    //         const preparedFile = await this.prepareFileForUpload(createFileDto);
-    //         const taskId = await this.uploadFileToCape(preparedFile);
-    //         await this.storeTaskData(preparedFile, userId, taskId);
-
-    //         return preparedFile.response.data;
-    //     } catch (error: any) {
-    //         throw new Error(`Failed to create file: ${error.message}`);
-    //     }
-    // }
-
     async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
         try {
             const preparedFile = await this.prepareFileForUpload(createFileDto);
@@ -237,7 +228,23 @@ export class CapeService {
     }
 
     async getTask(taskId: string): Promise<any> {
-        return axios.get(`${this.baseUrl}/tasks/view/${taskId}/`, { headers: { 'Accept': 'application/json' } }).then(response => response.data);
+        try {
+            const realTaskId = await this.capeGetRealTaskIdRepository.getTaskIdByUserId(taskId);
+            
+            if (!realTaskId) {
+                this.logger.warn(`No real taskId found for taskId: ${taskId}`);
+                throw new Error(`Task not found for taskId: ${taskId}`);
+            }
+    
+            const response = await axios.get(`${this.baseUrl}/tasks/view/${realTaskId}/`, { 
+                headers: { 'Accept': 'application/json' } 
+            });
+            
+            return response.data;
+        } catch (error: any) {
+            this.logger.error(`Error fetching screenshot for taskId ${taskId}: ${error.message}`);
+            throw new NotFoundException(`Screenshot not found for taskId: ${taskId}`);
+        }
     }
 
     async getReport(taskId: string): Promise<any> {
@@ -417,16 +424,6 @@ export class CapeService {
         return Number((bytes / (1024 * 1024)).toFixed(2));
     }
 
-    private formatJsonField(value: any): string {
-        if (!value) return '[]';
-        if (Array.isArray(value)) return JSON.stringify(value);
-        if (typeof value === 'string') {
-            return value.includes(',') ? JSON.stringify(value.split(',').map(item => item.trim())) : JSON.stringify([value]);
-        }
-        if (typeof value === 'object') return JSON.stringify(value);
-        return JSON.stringify([]);
-    }
-
     private mapStatus(capeStatus: string): string {
         const statusMap: { [key: string]: string } = {
             pending: 'pending',
@@ -437,5 +434,43 @@ export class CapeService {
             failed: 'failed',
         };
         return statusMap[capeStatus] || 'pending';
+    }
+
+    async getScreenshot(taskId: string): Promise<string[]> {
+        const realTaskId = await this.capeGetRealTaskIdRepository.getTaskIdByUserId(taskId);
+        console.log('realTaskId', realTaskId);
+        try {
+            if (!realTaskId) {
+                this.logger.warn(`No real taskId found for taskId: ${taskId}`);
+                return [];
+            }
+            const response = await axios.get(`${this.baseUrl}/tasks/get/screenshot/${realTaskId}/`, {
+                responseType: 'arraybuffer'
+            });
+    
+            // Define path to save screenshots
+            const screenshotsDir = path.join(__dirname, '..', 'file', 'images', realTaskId);
+            fs.mkdirSync(screenshotsDir, { recursive: true });
+        
+            // Extract ZIP
+            const zip = new AdmZip(response.data);
+            zip.extractAllTo(screenshotsDir, true);
+        
+            // Look for images in the shots directory
+            const shotsDir = path.join(screenshotsDir, 'shots');
+            if (fs.existsSync(shotsDir)) {
+                const imageFiles = fs.readdirSync(shotsDir)
+                    .filter(f => /\.(jpg|jpeg|png)$/i.test(f))
+                    .map(f => `/images/${realTaskId}/shots/${f}`);
+                
+                this.logger.debug(`Found ${imageFiles.length} screenshots in ${shotsDir}`);
+                return imageFiles;
+            }
+            
+            return [];
+        } catch(error: any) {
+            this.logger.error(`Error fetching screenshot for taskId ${realTaskId}: ${error.message}`);
+            return [];
+        }
     }
 }

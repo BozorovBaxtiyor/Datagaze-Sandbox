@@ -6,7 +6,7 @@ import { InjectKnex, Knex } from 'nestjs-knex';
 export class CapeGetRealTaskIdRepository {
     constructor(@InjectKnex() private readonly knex: Knex) {}
 
-    async getTaskIdByUserId(taskId: string): Promise<string | null> {
+    async getRealTaskId(taskId: string): Promise<string | null> {
         try {
             const result = await this.knex('capeTasks')
                 .select('taskId')

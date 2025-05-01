@@ -21,11 +21,14 @@ export async function up(knex: Knex): Promise<void> {
         table.enum('status', [
             'pending',
             'running',
-            'processing',
-            'analyzing',
+            'distributed',
+            'completed',
+            'recovered',
             'reported',
-            'failedAnalysis',
-            'completed'
+            'failed_analysis',
+            'failed_processing',
+            'failed_reporting',
+            'processing',
         ]).defaultTo('pending');
         
         table.enum('incidentType', [

@@ -41,6 +41,7 @@ export class CapeService {
     
     private async syncTasksFromCape(userId: string): Promise<void> {
         const taskIds = await this.capeGetTaskIdRepository.getTaskIdByUserId(userId);
+        console.log('taskIds', taskIds);
         if (taskIds.length === 0) return;
         
         await Promise.all(taskIds.map(taskId => this.syncSingleTask(taskId, userId)));
@@ -103,7 +104,7 @@ export class CapeService {
     
     private async fetchSignatureFilesFromCape(): Promise<any[]> {
         const response = await axios.get(`${this.baseUrl}/yara/all/`, { headers: this.headers });
-        
+        this.logger.debug(`[CapeService] Received ${response.data.files.length} signature files from CAPE API.`);
         if (!response.data || !response.data.files) {
             this.logger.warn(`[CapeService] No files found in the response.`);
             return [];
@@ -131,10 +132,11 @@ export class CapeService {
     }
     
     private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
+        
         await this.capeCreateYaraRepository.createSignature({
             name,
             rule: content,
-            uploadedBy: "22ab286b-bed0-47b8-bdca-e83f88d4f912",
+            uploadedBy: "4b76aba4-7922-4fac-b7d6-894f63579622",
             category: 'yar',
         });
     }
@@ -229,21 +231,34 @@ export class CapeService {
 
     async getTask(taskId: string): Promise<any> {
         try {
-            const realTaskId = await this.capeGetRealTaskIdRepository.getTaskIdByUserId(taskId);
+            if (!taskId) {
+                this.logger.warn('TaskId is required');
+                throw new Error('Task ID is required');
+            }
+    
+            // UUID validation regex
+            const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
             
-            if (!realTaskId) {
+            // Determine which ID to use for the API call
+            const apiTaskId = uuidRegex.test(taskId) 
+                ? await this.capeGetRealTaskIdRepository.getRealTaskId(taskId)
+                : taskId;
+    
+            if (!apiTaskId) {
                 this.logger.warn(`No real taskId found for taskId: ${taskId}`);
                 throw new Error(`Task not found for taskId: ${taskId}`);
             }
     
-            const response = await axios.get(`${this.baseUrl}/tasks/view/${realTaskId}/`, { 
+            const response = await axios.get(`${this.baseUrl}/tasks/view/${apiTaskId}/`, { 
                 headers: { 'Accept': 'application/json' } 
             });
             
+            this.logger.debug(`Successfully fetched task data for ID: ${apiTaskId}`);
             return response.data;
+    
         } catch (error: any) {
-            this.logger.error(`Error fetching screenshot for taskId ${taskId}: ${error.message}`);
-            throw new NotFoundException(`Screenshot not found for taskId: ${taskId}`);
+            this.logger.error(`Error fetching task data for taskId ${taskId}: ${error.message}`);
+            throw new NotFoundException(`Task not found for taskId: ${taskId}`);
         }
     }
 
@@ -254,18 +269,6 @@ export class CapeService {
         });
 
         return response.data;
-    }
-
-    private async fetchFromCape<T>(endpoint: string): Promise<T> {
-        try {
-            return axios.get<T>(`${this.baseUrl}${endpoint}`, { headers: this.headers }).then(response => response.data);
-        } catch (error: any) {
-            this.logger.warn(`[CapeService] Warning: Failed to fetch from CAPE API. Reason: ${error.message}`);
-        }
-    }
-
-    private getValidTasks(tasks: any[]): any[] {
-        return tasks.filter(task => task.sample?.sha256);
     }
 
     // File handling methods
@@ -369,7 +372,6 @@ export class CapeService {
 
     private mapTaskData(taskData: any, taskId: string, userId: string): any {
         const data = taskData.data || taskData; 
-
         return {
             taskId: taskId || data.id,
             target: this.extractFilename(data.target) || '',
@@ -430,15 +432,15 @@ export class CapeService {
             running: 'running',
             reported: 'reported',
             failed_analysis: 'failedAnalysis',
-            completed: 'completed',
+            completed: 'processing',
             failed: 'failed',
         };
         return statusMap[capeStatus] || 'pending';
     }
 
     async getScreenshot(taskId: string): Promise<string[]> {
-        const realTaskId = await this.capeGetRealTaskIdRepository.getTaskIdByUserId(taskId);
-        console.log('realTaskId', realTaskId);
+        const realTaskId = await this.capeGetRealTaskIdRepository.getRealTaskId(taskId);
+        console.log('realTaskId in getScreenshot method', realTaskId, 'taskId', taskId);
         try {
             if (!realTaskId) {
                 this.logger.warn(`No real taskId found for taskId: ${taskId}`);

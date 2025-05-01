@@ -26,10 +26,12 @@ const knexConfig: { [key: string]: Knex.Config } = {
                 rejectUnauthorized: false,
                 require: true,
             },
+            connectionTimeoutMillis: 600000,
         } as ExtendedConnectionOptions,
         pool: {
             min: 2,
             max: 10,
+            acquireTimeoutMillis: 60000,
         },
         migrations: {
             directory: path.resolve(process.cwd(), '../database/migrations/v1'),
@@ -42,7 +44,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
         },
     },
     production: {
-        debug: false,
+        debug: true,
         client: 'pg',
         connection: {
             host: process.env.DB_HOST,

@@ -75,7 +75,7 @@ export class CapeController {
     @ApiResponse({ status: 400, description: 'Bad request' })
     @ApiResponse({ status: 401, description: 'Unauthorized' })
     @Post('tasks/create/file')
-    @UseInterceptors(AnyFilesInterceptor({ limits: { fileSize: 100 * 1024 * 1024 }}))
+    @UseInterceptors(AnyFilesInterceptor({ limits: { fileSize: 200 * 1024 * 1024 }}))
     async createFile(@UploadedFiles() files: Array<Express.Multer.File>, @Body() createFileDto: CreateFileDto, @Req() req: CustomRequest): Promise<any> {
         createFileDto.file = files[0]; 
         return this.capeService.createFile(createFileDto, req.user.userId);

@@ -1,6 +1,5 @@
 // cape.service.ts
 import FormData from 'form-data';
-import * as fs from 'fs';
 import * as path from 'path';
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import AdmZip from 'adm-zip';
@@ -12,6 +11,7 @@ import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.r
 import { CapeGetUsernameRepository } from '../repository/cape.get.username.repository';
 import { CapeGetRealTaskIdRepository } from '../repository/cape.get.real.taskId.repository';
 import { CapeApiService } from './cape.api.service';
+import { CapeFileService } from './cape.file.service';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
 import { UploadSignatureDto } from '../dto/upload.signature.dto';
@@ -22,6 +22,7 @@ import { SimplifiedCapeTask } from '../type/cape.type';
 export class CapeService {
     constructor(
         private readonly capeApiService: CapeApiService,
+        private readonly capeFileService: CapeFileService,
         private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
@@ -213,42 +214,23 @@ export class CapeService {
     // File handling methods
     private async saveFileToDisk(dto: CreateFileDto): Promise<string> {
         const uploadDir = this.getUploadDirectory();
-        this.ensureDirectoryExists(uploadDir);
-        const fileName = this.generateFileName(dto.file.originalname);
-        const filePath = path.join(uploadDir, fileName);
+        this.capeFileService.ensureDirectoryExists(uploadDir);
+        const filePath = path.join(uploadDir, dto.file.originalname);
         
-        await this.writeFileToDisk(filePath, dto.file.buffer);
+        await this.capeFileService.writeFileToDisk(filePath, dto.file.buffer);
         return filePath;
     }
     
     private getUploadDirectory(): string {
         return path.join(process.cwd(), 'src', 'file');
     }
-    
-    private ensureDirectoryExists(dirPath: string): void {
-        if (!fs.existsSync(dirPath)) {
-            fs.mkdirSync(dirPath, { recursive: true });
-        }
-    }
-    
-    private generateFileName(originalName: string): string {
-        return `${Date.now()}_${originalName}`;
-    }
-    
-    private async writeFileToDisk(filePath: string, buffer: Buffer): Promise<void> {
-        await fs.promises.writeFile(filePath, buffer);
-    }
       
     // Form preparation methods
     private prepareCapeForm(dto: CreateFileDto): FormData {
         const form = new FormData();
-        this.appendFileToForm(form, dto.filePath);
+        this.capeFileService.appendFileToForm(form, dto.filePath);
         this.appendTaskSettingsToForm(form, dto);
         return form;
-    }
-    
-    private appendFileToForm(form: FormData, filePath: string): void {
-        form.append('file', fs.createReadStream(filePath));
     }
     
     private appendTaskSettingsToForm(form: FormData, dto: CreateFileDto): void {
@@ -354,30 +336,20 @@ export class CapeService {
 
     async getScreenshot(taskId: string): Promise<string[]> {
         const realTaskId = await this.capeGetRealTaskIdRepository.getRealTaskId(taskId);
+        if (!realTaskId) return [];
 
         try {
-            if (!realTaskId) {
-                return [];
-            }
-            const response = await this.capeApiService.getScreenshot(realTaskId);
-    
+            const resp = await this.capeApiService.getScreenshot(realTaskId);
+
             const screenshotsDir = path.join(__dirname, '..', 'file', 'images', realTaskId);
-            fs.mkdirSync(screenshotsDir, { recursive: true });
-    
-            const zip = new AdmZip(response.data);
+            await this.capeFileService.ensureDirectoryExists(screenshotsDir);
+
+            const zip = new AdmZip(resp.data);
             zip.extractAllTo(screenshotsDir, true);
-        
+
             const shotsDir = path.join(screenshotsDir, 'shots');
-            if (fs.existsSync(shotsDir)) {
-                const imageFiles = fs.readdirSync(shotsDir)
-                    .filter(f => /\.(jpg|jpeg|png)$/i.test(f))
-                    .map(f => `/images/${realTaskId}/shots/${f}`);
-                
-                return imageFiles;
-            }
-            
-            return [];
-        } catch(error: any) {
+            return this.capeFileService.listScreenshotImages(shotsDir, realTaskId);
+        } catch {
             return [];
         }
     }

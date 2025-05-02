@@ -11,13 +11,14 @@ import { CapeGetRealTaskIdRepository } from './repository/cape.get.real.taskId.r
 import { CapeController } from './cape.controller';
 import { CapeService } from './service/cape.service';
 import { CapeApiService } from './service/cape.api.service';
-
+import { CapeFileService } from './service/cape.file.service';
 @Module({
     imports: [JwtAuthModule],
     controllers: [CapeController],
     providers: [
         CapeService, 
         CapeApiService,
+        CapeFileService,
         CapeUpsertTaskRepository,
         CapeGetTasksRepository,
         CapeGetTaskIdRepository,

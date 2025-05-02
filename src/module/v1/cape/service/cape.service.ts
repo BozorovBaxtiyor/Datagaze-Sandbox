@@ -7,11 +7,10 @@ import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.reposit
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
 import { CapeGetTaskIdRepository } from '../repository/cape.get.taskId.repositry';
 import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';  
-import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.repository';
-import { CapeGetUsernameRepository } from '../repository/cape.get.username.repository';
 import { CapeGetRealTaskIdRepository } from '../repository/cape.get.real.taskId.repository';
 import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
+import { CapeSignatureService } from './cape.signature.service';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
 import { UploadSignatureDto } from '../dto/upload.signature.dto';
@@ -23,12 +22,11 @@ export class CapeService {
     constructor(
         private readonly capeApiService: CapeApiService,
         private readonly capeFileService: CapeFileService,
+        private readonly capeSignatureService: CapeSignatureService,
         private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
         private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
-        private readonly capeGetSignaturesRepository: CapeGetSignaturesRepository,
-        private readonly capeGetUsernameRepository: CapeGetUsernameRepository,
         private readonly capeGetRealTaskIdRepository: CapeGetRealTaskIdRepository,
     ) {}
 
@@ -58,71 +56,11 @@ export class CapeService {
     }
     
     async getSignatures(query: GetSignaturesQueryDto, userId: string): Promise<any> {
-        const signatures = await this.fetchSignaturesFromDatabase(query, userId);
-        return this.enrichSignaturesWithUsernames(signatures);
-    }
-
-    private async fetchSignaturesFromDatabase(query: GetSignaturesQueryDto, userId: string): Promise<any[]> {
-        const { data } = await this.capeGetSignaturesRepository.getSignaturesByUserId(query, userId);
-        return data;
-    }
-
-    private async enrichSignaturesWithUsernames(signatures: any[]): Promise<any[]> {
-        const signaturePromises = signatures.map(signature => this.enrichSignatureWithUsername(signature));
-        return Promise.all(signaturePromises);
-    }
-
-    private async enrichSignatureWithUsername(signature: any): Promise<any> {
-        const username = await this.capeGetUsernameRepository.getUsernameById(signature.uploadedBy);
-        
-        return {
-            id: signature.id,
-            name: signature.name,
-            rule: signature.rule,
-            type: signature.category, 
-            status: signature.status,
-            createdAt: signature.uploadedAt,
-            uploadedBy: username, 
-            lastModifiedAt: signature.lastModifiedAt || signature.uploadedAt,
-        };
+        return this.capeSignatureService.getSignatures(query, userId);
     }
     
-    async getSignaturesFromCape(): Promise<void> {
-        const signatureFiles = await this.fetchSignatureFilesFromCape();
-        if (!signatureFiles || signatureFiles.length === 0) return;
-        
-        await this.processAndStoreSignatureFiles(signatureFiles);
-    }
-    
-    private async fetchSignatureFilesFromCape(): Promise<any[]> {
-        const response = await this.capeApiService.getAllSignatures();
-        if (!response.data || !response.data.files) {
-            return [];
-        }
-        
-        return response.data.files;
-    }
-    
-    private async processAndStoreSignatureFiles(files: any[]): Promise<void> {
-        for (const file of files) {
-            await this.processAndStoreSignatureFile(file);
-        }
-    }
-    
-    private async processAndStoreSignatureFile(file: any): Promise<void> {
-        const { name, content } = file;
-        const baseName = this.extractFilename(name);
-
-        await this.storeSignatureInDatabase(baseName, content);
-    }
-    
-    private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
-        await this.capeCreateYaraRepository.createSignature({
-            name,
-            rule: content,
-            uploadedBy: "4b76aba4-7922-4fac-b7d6-894f63579622",
-            category: 'yar',
-        });
+    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<any> {
+        return this.capeSignatureService.uploadSignature(signature, userId);
     }
 
     async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
@@ -154,34 +92,6 @@ export class CapeService {
     
     private extractTaskIdFromResponse(response: any): string {
         return response?.data?.data?.task_ids[0];
-    }
-
-    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<any> {
-        try {
-            const form = this.createSignatureForm(signature);
-            const response = await this.capeApiService.sendSignatureToCape(form);
-            await this.storeSignatureRecord(signature, userId);
-            
-            return response.data;
-        } catch (error: any) {
-            throw new Error('Signature upload failed');
-        }
-    }
-    
-    private createSignatureForm(signature: UploadSignatureDto): FormData {
-        const form = new FormData();
-        form.append('name', signature.name);
-        form.append('rule', signature.rule);
-        return form;
-    }
-    
-    private async storeSignatureRecord(signature: UploadSignatureDto, userId: string): Promise<void> {
-        await this.capeCreateYaraRepository.createSignature({
-            name: signature.name,
-            rule: signature.rule,
-            uploadedBy: userId,
-            category: signature.type,
-        });
     }
 
     async getTask(taskId: string): Promise<any> {
@@ -362,4 +272,42 @@ export class CapeService {
             throw new Error('Failed to fetch list of machines');
         }
     }
+
+    // async getSignaturesFromCape(): Promise<void> {
+    //     const signatureFiles = await this.fetchSignatureFilesFromCape();
+    //     if (!signatureFiles || signatureFiles.length === 0) return;
+        
+    //     await this.processAndStoreSignatureFiles(signatureFiles);
+    // }
+    
+    // private async fetchSignatureFilesFromCape(): Promise<any[]> {
+    //     const response = await this.capeApiService.getAllSignatures();
+    //     if (!response.data || !response.data.files) {
+    //         return [];
+    //     }
+        
+    //     return response.data.files;
+    // }
+
+    // private async processAndStoreSignatureFiles(files: any[]): Promise<void> {
+    //     for (const file of files) {
+    //         await this.processAndStoreSignatureFile(file);
+    //     }
+    // }
+
+    // private async processAndStoreSignatureFile(file: any): Promise<void> {
+    //     const { name, content } = file;
+    //     const baseName = this.extractFilename(name);
+
+    //     await this.storeSignatureInDatabase(baseName, content);
+    // }
+    
+    // private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
+    //     await this.capeCreateYaraRepository.createSignature({
+    //         name,
+    //         rule: content,
+    //         uploadedBy: "4b76aba4-7922-4fac-b7d6-894f63579622",
+    //         category: 'yar',
+    //     });
+    // }
 }

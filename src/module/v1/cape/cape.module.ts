@@ -12,6 +12,8 @@ import { CapeController } from './cape.controller';
 import { CapeService } from './service/cape.service';
 import { CapeApiService } from './service/cape.api.service';
 import { CapeFileService } from './service/cape.file.service';
+import { CapeSignatureService } from './service/cape.signature.service';
+
 @Module({
     imports: [JwtAuthModule],
     controllers: [CapeController],
@@ -19,6 +21,7 @@ import { CapeFileService } from './service/cape.file.service';
         CapeService, 
         CapeApiService,
         CapeFileService,
+        CapeSignatureService,
         CapeUpsertTaskRepository,
         CapeGetTasksRepository,
         CapeGetTaskIdRepository,

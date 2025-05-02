@@ -18,6 +18,11 @@ import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiConsumes, Ap
 export class CapeController {
     constructor(private readonly capeService: CapeService) {}
 
+    @Get('machines/list')
+    async getListOfMachines() {
+        return this.capeService.getListOfMachines();
+    }
+    
     @ApiOperation({ summary: 'Get list of tasks', description: 'Retrieves list of tasks for a specific path' })
     @ApiParam({ name: 'path', description: 'Path to list tasks from', example: 'recent' })
     @ApiResponse({ status: 200, description: 'List of tasks retrieved successfully' })
@@ -106,8 +111,5 @@ export class CapeController {
     //     return this.capeService.createUrl();
     // }
 
-    // @Get('machines/list')
-    // async getListOfMachines() {
-    //     return this.capeService.getListOfMachines();
-    // }
+    
 }

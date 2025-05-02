@@ -2,8 +2,7 @@
 import FormData from 'form-data';
 import * as fs from 'fs';
 import * as path from 'path';
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
-import axios from 'axios';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import AdmZip from 'adm-zip';
 import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
@@ -12,6 +11,7 @@ import { CapeCreateYaraRepository } from '../repository/cape.create.yara.reposit
 import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.repository';
 import { CapeGetUsernameRepository } from '../repository/cape.get.username.repository';
 import { CapeGetRealTaskIdRepository } from '../repository/cape.get.real.taskId.repository';
+import { CapeApiService } from './cape.api.service';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
 import { UploadSignatureDto } from '../dto/upload.signature.dto';
@@ -20,11 +20,8 @@ import { SimplifiedCapeTask } from '../type/cape.type';
 
 @Injectable()
 export class CapeService {
-    private readonly logger = new Logger(CapeService.name);
-    private readonly headers = { Accept: 'application/json' };
-    private readonly baseUrl = process.env.CAPE_URL;
-
     constructor(
+        private readonly capeApiService: CapeApiService,
         private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
@@ -41,9 +38,7 @@ export class CapeService {
     
     private async syncTasksFromCape(userId: string): Promise<void> {
         const taskIds = await this.capeGetTaskIdRepository.getTaskIdByUserId(userId);
-        console.log('taskIds', taskIds);
         if (taskIds.length === 0) return;
-        
         await Promise.all(taskIds.map(taskId => this.syncSingleTask(taskId, userId)));
     }
     
@@ -92,21 +87,15 @@ export class CapeService {
     }
     
     async getSignaturesFromCape(): Promise<void> {
-        try {
-            const signatureFiles = await this.fetchSignatureFilesFromCape();
-            if (!signatureFiles || signatureFiles.length === 0) return;
-            
-            await this.processAndStoreSignatureFiles(signatureFiles);
-        } catch (error: any) {
-            this.logSignatureFetchError(error);
-        }
+        const signatureFiles = await this.fetchSignatureFilesFromCape();
+        if (!signatureFiles || signatureFiles.length === 0) return;
+        
+        await this.processAndStoreSignatureFiles(signatureFiles);
     }
     
     private async fetchSignatureFilesFromCape(): Promise<any[]> {
-        const response = await axios.get(`${this.baseUrl}/yara/all/`, { headers: this.headers });
-        this.logger.debug(`[CapeService] Received ${response.data.files.length} signature files from CAPE API.`);
+        const response = await this.capeApiService.getAllSignatures();
         if (!response.data || !response.data.files) {
-            this.logger.warn(`[CapeService] No files found in the response.`);
             return [];
         }
         
@@ -123,16 +112,10 @@ export class CapeService {
         const { name, content } = file;
         const baseName = this.extractFilename(name);
 
-        try {
-            await this.storeSignatureInDatabase(baseName, content);
-            this.logSignatureStoreSuccess(baseName);
-        } catch (error: any) {
-            this.logSignatureStoreError(name, error);
-        }
+        await this.storeSignatureInDatabase(baseName, content);
     }
     
     private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
-        
         await this.capeCreateYaraRepository.createSignature({
             name,
             rule: content,
@@ -140,40 +123,17 @@ export class CapeService {
             category: 'yar',
         });
     }
-    
-    private logSignatureStoreSuccess(name: string): void {
-        this.logger.log(`[CapeService] Successfully stored signature: ${name}`);
-    }
-    
-    private logSignatureStoreError(name: string, error: any): void {
-        this.logger.error(`[CapeService] Failed to store signature: ${name}. Reason: ${error.message}`);
-    }
-    
-    private logSignatureFetchError(error: any): void {
-        this.logger.warn(`[CapeService] Warning: Failed to fetch signatures from CAPE API. Reason: ${error.message}`);
-    }
 
     async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
         try {
             const preparedFile = await this.prepareFileForUpload(createFileDto);
-            this.logger.debug(`File prepared for upload: ${createFileDto.file.originalname}`);
             
             const taskId = await this.uploadFileToCape(preparedFile);
-            this.logger.debug(`File uploaded to CAPE, received taskId: ${taskId}`);
             
             await this.storeTaskData(preparedFile, userId, taskId);
-            this.logger.debug(`Task data stored in database for taskId: ${taskId}`);
     
             return preparedFile.response.data;
         } catch (error: any) {
-            this.logger.error(`File upload failed: ${error.message}`, error.stack);
-            if (error.response) {
-                this.logger.error(`CAPE API Response: ${JSON.stringify({
-                    status: error.response.status,
-                    data: error.response.data,
-                    headers: error.response.headers
-                })}`);
-            }
             throw new Error(`File upload failed: ${error.message}`);
         }
     }
@@ -186,7 +146,7 @@ export class CapeService {
     }
     
     private async uploadFileToCape(preparedFile: any): Promise<string> {
-        const response = await this.uploadToCape(preparedFile.form);
+        const response = await this.capeApiService.uploadFile(preparedFile.form);
         preparedFile.response = response;
         return this.extractTaskIdFromResponse(response);
     }
@@ -198,7 +158,7 @@ export class CapeService {
     async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<any> {
         try {
             const form = this.createSignatureForm(signature);
-            const response = await this.sendSignatureToCape(form);
+            const response = await this.capeApiService.sendSignatureToCape(form);
             await this.storeSignatureRecord(signature, userId);
             
             return response.data;
@@ -214,12 +174,6 @@ export class CapeService {
         return form;
     }
     
-    private async sendSignatureToCape(form: FormData): Promise<any> {
-        return axios.post(`${this.baseUrl}/yara/upload/`, form, {
-            headers: form.getHeaders(),
-        });
-    }
-    
     private async storeSignatureRecord(signature: UploadSignatureDto, userId: string): Promise<void> {
         await this.capeCreateYaraRepository.createSignature({
             name: signature.name,
@@ -232,42 +186,27 @@ export class CapeService {
     async getTask(taskId: string): Promise<any> {
         try {
             if (!taskId) {
-                this.logger.warn('TaskId is required');
                 throw new Error('Task ID is required');
             }
     
-            // UUID validation regex
             const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
             
-            // Determine which ID to use for the API call
-            const apiTaskId = uuidRegex.test(taskId) 
-                ? await this.capeGetRealTaskIdRepository.getRealTaskId(taskId)
-                : taskId;
+            const apiTaskId = uuidRegex.test(taskId) ? await this.capeGetRealTaskIdRepository.getRealTaskId(taskId) : taskId;
     
             if (!apiTaskId) {
-                this.logger.warn(`No real taskId found for taskId: ${taskId}`);
                 throw new Error(`Task not found for taskId: ${taskId}`);
             }
     
-            const response = await axios.get(`${this.baseUrl}/tasks/view/${apiTaskId}/`, { 
-                headers: { 'Accept': 'application/json' } 
-            });
+            const response = await this.capeApiService.getTask(apiTaskId);
             
-            this.logger.debug(`Successfully fetched task data for ID: ${apiTaskId}`);
             return response.data;
-    
         } catch (error: any) {
-            this.logger.error(`Error fetching task data for taskId ${taskId}: ${error.message}`);
-            throw new NotFoundException(`Task not found for taskId: ${taskId}`);
+            throw new HttpException(`Task not found for taskId: ${taskId}`, HttpStatus.NOT_FOUND);
         }
     }
 
     async getReport(taskId: string): Promise<any> {
-        const format = 'json';
-        const response = await axios.get(`${this.baseUrl}/tasks/get/report/${taskId}/${format}`, {
-            headers: { 'Accept': 'application/json' }
-        });
-
+        const response = await this.capeApiService.getReport(taskId, 'json');
         return response.data;
     }
 
@@ -318,31 +257,6 @@ export class CapeService {
         form.append('machine', dto.machine);
         form.append('platform', dto.platform);
         form.append('options', dto.options);
-    }
-      
-    // API communication methods
-    private async uploadToCape(form: FormData): Promise<any> {
-        const capeUrl = this.getCapeFileUploadUrl();
-        return this.sendPostRequestWithForm(capeUrl, form);
-    }
-    
-    private getCapeFileUploadUrl(): string {
-        return `${this.baseUrl}/tasks/create/file/`;
-    }
-    
-    private async sendPostRequestWithForm(url: string, form: FormData): Promise<any> {
-        return axios.post(url, form, {
-            headers: this.getFormHeaders(form),
-            maxContentLength: Infinity,
-            maxBodyLength: Infinity,
-        });
-    }
-    
-    private getFormHeaders(form: FormData): any {
-        return {
-            ...form.getHeaders(),
-            'Accept': 'application/json',
-        };
     }
       
     // Database storage methods
@@ -440,39 +354,40 @@ export class CapeService {
 
     async getScreenshot(taskId: string): Promise<string[]> {
         const realTaskId = await this.capeGetRealTaskIdRepository.getRealTaskId(taskId);
-        console.log('realTaskId in getScreenshot method', realTaskId, 'taskId', taskId);
+
         try {
             if (!realTaskId) {
-                this.logger.warn(`No real taskId found for taskId: ${taskId}`);
                 return [];
             }
-            const response = await axios.get(`${this.baseUrl}/tasks/get/screenshot/${realTaskId}/`, {
-                responseType: 'arraybuffer'
-            });
+            const response = await this.capeApiService.getScreenshot(realTaskId);
     
-            // Define path to save screenshots
             const screenshotsDir = path.join(__dirname, '..', 'file', 'images', realTaskId);
             fs.mkdirSync(screenshotsDir, { recursive: true });
-        
-            // Extract ZIP
+    
             const zip = new AdmZip(response.data);
             zip.extractAllTo(screenshotsDir, true);
         
-            // Look for images in the shots directory
             const shotsDir = path.join(screenshotsDir, 'shots');
             if (fs.existsSync(shotsDir)) {
                 const imageFiles = fs.readdirSync(shotsDir)
                     .filter(f => /\.(jpg|jpeg|png)$/i.test(f))
                     .map(f => `/images/${realTaskId}/shots/${f}`);
                 
-                this.logger.debug(`Found ${imageFiles.length} screenshots in ${shotsDir}`);
                 return imageFiles;
             }
             
             return [];
         } catch(error: any) {
-            this.logger.error(`Error fetching screenshot for taskId ${realTaskId}: ${error.message}`);
             return [];
+        }
+    }
+
+    async getListOfMachines(): Promise<any> {
+        try {
+            const response = await this.capeApiService.getMachineLists();
+            return response.data;
+        } catch (error: any) {
+            throw new Error('Failed to fetch list of machines');
         }
     }
 }

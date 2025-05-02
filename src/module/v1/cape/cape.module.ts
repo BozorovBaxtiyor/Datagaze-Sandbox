@@ -10,12 +10,14 @@ import { CapeGetUsernameRepository } from './repository/cape.get.username.reposi
 import { CapeGetRealTaskIdRepository } from './repository/cape.get.real.taskId.repository';
 import { CapeController } from './cape.controller';
 import { CapeService } from './service/cape.service';
+import { CapeApiService } from './service/cape.api.service';
 
 @Module({
     imports: [JwtAuthModule],
     controllers: [CapeController],
     providers: [
         CapeService, 
+        CapeApiService,
         CapeUpsertTaskRepository,
         CapeGetTasksRepository,
         CapeGetTaskIdRepository,

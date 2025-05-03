@@ -6,7 +6,6 @@ import AdmZip from 'adm-zip';
 import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
 import { CapeGetTaskIdRepository } from '../repository/cape.get.taskId.repositry';
-import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';  
 import { CapeGetRealTaskIdRepository } from '../repository/cape.get.real.taskId.repository';
 import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
@@ -16,7 +15,6 @@ import { CreateFileDto } from '../dto/create.file.dto';
 import { UploadSignatureDto } from '../dto/upload.signature.dto';
 import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
 import { SimplifiedCapeTask } from '../type/cape.type';
-
 @Injectable()
 export class CapeService {
     constructor(
@@ -26,7 +24,6 @@ export class CapeService {
         private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
-        private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
         private readonly capeGetRealTaskIdRepository: CapeGetRealTaskIdRepository,
     ) {}
 
@@ -117,8 +114,8 @@ export class CapeService {
     }
 
     async getReport(taskId: string): Promise<any> {
-        const response = await this.capeApiService.getReport(taskId, 'json');
-        return response.data;
+        const realTaskId = await this.capeGetRealTaskIdRepository.getRealTaskId(taskId);
+        return this.capeApiService.getReport(realTaskId, 'json').then(res => res.data);
     }
 
     // File handling methods
@@ -265,12 +262,7 @@ export class CapeService {
     }
 
     async getListOfMachines(): Promise<any> {
-        try {
-            const response = await this.capeApiService.getMachineLists();
-            return response.data;
-        } catch (error: any) {
-            throw new Error('Failed to fetch list of machines');
-        }
+       return this.capeApiService.getMachineLists().then(res => res.data);
     }
 
     // async getSignaturesFromCape(): Promise<void> {

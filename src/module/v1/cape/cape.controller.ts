@@ -31,6 +31,11 @@ export class CapeController {
         return this.capeService.getTasks(path, query, req.user.userId);
     }
 
+    @Get('tasks/get/report/:taskId')
+    async getReport(@Param('taskId') taskId: string): Promise<any> {
+        return this.capeService.getReport(taskId);
+    }
+
     @ApiOperation({ summary: 'Get task details', description: 'Retrieves details of a specific task' })
     @ApiParam({ name: 'taskId', description: 'ID of the task to view', example: '1234567890' })
     @ApiResponse({ status: 200, description: 'Task details retrieved successfully' })
@@ -81,7 +86,19 @@ export class CapeController {
     }
 
     @ApiOperation({ summary: 'Upload signature', description: 'Upload a new signature to the system' })
-    @ApiBody({ type: UploadSignatureDto })
+     @ApiBody({ 
+            type: UploadSignatureDto, 
+            description: 'User credentials',
+            examples: {
+                loginExample: {
+                    value: {
+                        name: 'filename.yar',
+                        type: 'YAR',
+                        rule: 'rule',
+                    },
+                }
+            } 
+        })
     @ApiResponse({ status: 201, description: 'Signature uploaded successfully' })
     @ApiResponse({ status: 400, description: 'Bad request' })
     @Post('tasks/upload/signature')
@@ -92,11 +109,6 @@ export class CapeController {
     // @Get('tasks/view/all/signatures')
     // async getSignature(): Promise<any> {
     //     return this.capeService.getSignaturesFromCape();
-    // }
-
-    // @Get('tasks/get/report/:taskId')
-    // async getReport(@Param('taskId') taskId: string): Promise<any> {
-    //     return this.capeService.getReport(taskId);
     // }
     
     // @Post('tasks/create/url')

@@ -1,5 +1,5 @@
 // cape.signature.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import FormData from 'form-data';
 import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';
 import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.repository';
@@ -24,12 +24,17 @@ export class CapeSignatureService {
 
     async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<any> {
         try {
+            this.validateYaraRule(signature.rule);
+
             const form = this.createSignatureForm(signature);
             const response = await this.capeApiService.sendSignatureToCape(form);
             await this.storeSignatureRecord(signature, userId);
             
             return response.data;
         } catch (error: any) {
+            if (error instanceof BadRequestException) {
+                throw error;
+            }
             throw new Error('Signature upload failed');
         }
     }
@@ -73,5 +78,40 @@ export class CapeSignatureService {
             uploadedBy: userId,
             category: signature.type,
         });
+    }
+
+    private validateYaraRule(rule: string): void {
+        if (!rule || typeof rule !== 'string') {
+            throw new BadRequestException('YARA rule must be a non-empty string');
+        }
+
+        const trimmedRule = rule.trim();
+        
+        if (!trimmedRule.startsWith('rule')) {
+            throw new BadRequestException('YARA rule must start with "rule" keyword');
+        }
+
+        const ruleNameMatch = trimmedRule.match(/rule\s+([a-zA-Z0-9_]+)\s*{/);
+        if (!ruleNameMatch) {
+            throw new BadRequestException('YARA rule must have a valid name followed by {');
+        }
+
+        const openBraces = (trimmedRule.match(/{/g) || []).length;
+        const closeBraces = (trimmedRule.match(/}/g) || []).length;
+        if (openBraces !== closeBraces) {
+            throw new BadRequestException('YARA rule has unbalanced braces');
+        }
+
+        const requiredSections = ['strings:', 'condition:'];
+        for (const section of requiredSections) {
+            if (!trimmedRule.includes(section)) {
+                throw new BadRequestException(`YARA rule must contain ${section} section`);
+            }
+        }
+
+        const stringDefinitions = trimmedRule.match(/\$[a-zA-Z0-9_]*\s*=/g);
+        if (!stringDefinitions) {
+            throw new BadRequestException('YARA rule must contain at least one string definition');
+        }
     }
 }

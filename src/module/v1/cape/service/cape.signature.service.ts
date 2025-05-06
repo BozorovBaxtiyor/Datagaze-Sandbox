@@ -1,7 +1,7 @@
 // cape.signature.service.ts
 import { Injectable, BadRequestException } from '@nestjs/common';
 import FormData from 'form-data';
-import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';
+// import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';
 import { CapeGetSignaturesRepository } from '../repository/cape.get.signatures.repository';
 import { CapeGetUsernameRepository } from '../repository/cape.get.username.repository';
 import { CapeApiService } from './cape.api.service';
@@ -11,7 +11,7 @@ import { UploadSignatureDto } from '../dto/upload.signature.dto';
 @Injectable()
 export class CapeSignatureService {
     constructor(
-        private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
+        // private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
         private readonly capeGetSignaturesRepository: CapeGetSignaturesRepository,
         private readonly capeGetUsernameRepository: CapeGetUsernameRepository,
         private readonly capeApiService: CapeApiService,
@@ -72,12 +72,12 @@ export class CapeSignatureService {
     }
 
     private async storeSignatureRecord(signature: UploadSignatureDto, userId: string): Promise<void> {
-        await this.capeCreateYaraRepository.createSignature({
-            name: signature.name,
-            rule: signature.rule,
-            uploadedBy: userId,
-            category: signature.type,
-        });
+        // await this.capeCreateYaraRepository.createSignature({
+        //     name: signature.name,
+        //     rule: signature.rule,
+        //     uploadedBy: userId,
+        //     category: signature.type,
+        // });
     }
 
     private validateYaraRule(rule: string): void {

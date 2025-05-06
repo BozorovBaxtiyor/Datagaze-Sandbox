@@ -7,7 +7,7 @@ export async function up(knex: Knex): Promise<void> {
         
         table.string('name').notNullable();
         table.text('rule').notNullable();
-        table.enum('status', ['active', 'inactive']).defaultTo('active');
+        table.enum('status', ['active', 'inactive', 'pending']).defaultTo('active');
         table.timestamp('uploadedAt').defaultTo(knex.fn.now());
         table.timestamp('lastModifiedAt').nullable();
         

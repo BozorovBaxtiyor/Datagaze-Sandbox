@@ -30,3 +30,4 @@ fileService.ensureDirectoryExists(dirPath)
     .catch((error: Error) => {
         console.error('Error:', error.message);
     });
+

@@ -7,7 +7,9 @@ import { HttpExceptionFilter } from './common/filters/http-exception/http-except
 import { LoggingInterceptor } from './common/interceptors/logger.interceptor';
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, {
+        logger: ['error', 'warn', 'debug', 'log', 'verbose'],
+    });
 
     app.useGlobalInterceptors(new LoggingInterceptor());
     app.useGlobalFilters(new HttpExceptionFilter());

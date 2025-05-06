@@ -33,7 +33,7 @@ export class CapeApiService {
 
     async getReport(taskId: string, format: string): Promise<any> {
         return axios.get(`${this.baseUrl}/tasks/get/report/${taskId}/${format}`, {
-            headers: { 'Accept': 'application/json' }
+            headers: this.headers
         });
     }
 
@@ -49,5 +49,9 @@ export class CapeApiService {
 
     async getAllSignatures(): Promise<any> {
         return axios.get(`${this.baseUrl}/yara/all/`, { headers: this.headers });
+    }
+
+    async getReportBySha256(sha256: string): Promise<any> {
+        return axios.get(`${this.baseUrl}/files/view/sha256/${sha256}`, { headers: this.headers });
     }
 }

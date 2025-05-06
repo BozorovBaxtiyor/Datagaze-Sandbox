@@ -7,6 +7,12 @@ import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.reposit
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
 import { CapeGetTaskIdRepository } from '../repository/cape.get.taskId.repositry';
 import { CapeGetRealTaskIdRepository } from '../repository/cape.get.real.taskId.repository';
+import { CapeGetTotalTasksSizeRepository } from '../repository/cape.get.total.tasks.size.repository';
+import { CapeGetTotalIncidentsSizeRepository } from '../repository/cape.get.total.incidents.size.repository';
+import { CapeGetTotalTasksByLastSevenDaysRepository } from '../repository/cape.get.total.tasks.by.last.seven.days';
+import { CapeGetTotalPendingTasksSizeRepository } from '../repository/cape.get.total.pending.tasks.size.repository';
+import { CapeGetIncidentDistributionRepository } from '../repository/cape.incident.distribution.repository';
+// import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';
 import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
 import { CapeSignatureService } from './cape.signature.service';
@@ -25,6 +31,12 @@ export class CapeService {
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
         private readonly capeGetRealTaskIdRepository: CapeGetRealTaskIdRepository,
+        private readonly capeGetTotalTasksSizeRepository: CapeGetTotalTasksSizeRepository,
+        private readonly capeGetTotalIncidentsSizeRepository: CapeGetTotalIncidentsSizeRepository,
+        private readonly capeGetTotalTasksByLastSevenDaysRepository: CapeGetTotalTasksByLastSevenDaysRepository,
+        private readonly capeGetTotalPendingTasksSizeRepository: CapeGetTotalPendingTasksSizeRepository,
+        private readonly capeGetIncidentDistributionRepository: CapeGetIncidentDistributionRepository,
+        // private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
     ) {}
 
     async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<any> {
@@ -175,6 +187,7 @@ export class CapeService {
 
     private mapTaskData(taskData: any, taskId: string, userId: string): any {
         const data = taskData.data || taskData; 
+        console.log('Mapped task data:', data);
         return {
             taskId: taskId || data.id,
             target: this.extractFilename(data.target) || '',
@@ -265,6 +278,71 @@ export class CapeService {
        return this.capeApiService.getMachineLists().then(res => res.data);
     }
 
+    async getDashboardData(): Promise<any> {
+        const [
+            totalTasksSize,
+            totalIncidentsSize,
+            rows,
+            pendingTasks,
+            machinesList,
+            incidentRows
+        ] = await Promise.all([
+            this.capeGetTotalTasksSizeRepository.getTotalTasksSize(),
+            this.capeGetTotalIncidentsSizeRepository.getTotalIncidentsSize(),
+            this.capeGetTotalTasksByLastSevenDaysRepository.getTotalTasksByLastSevenDays(),
+            this.capeGetTotalPendingTasksSizeRepository.getTotalPendingTasksSize(),
+            this.capeApiService.getMachineLists(),
+            this.capeGetIncidentDistributionRepository.getIncidentDistribution()
+        ]);
+
+        const tasksLastWeek = {
+            monday:    0,
+            tuesday:   0,
+            wednesday: 0,
+            thursday:  0,
+            friday:    0,
+            saturday:  0,
+            sunday:    0,
+        };
+
+        rows.forEach(({ day_name, total }) => {
+            const key = day_name.trim().toLowerCase() as keyof typeof tasksLastWeek;
+            tasksLastWeek[key] = parseInt(total, 10);
+        });
+
+        const virtualMachines = machinesList.data?.data?.length || 0;
+
+        const incidentDistribution = {
+            malware:     0,
+            ransomware:  0,
+            trojan:      0,
+            virus:       0,
+            worm:        0,
+            spyware:     0,
+            cryptominer: 0,
+            unknown:     0,
+        };
+
+        incidentRows.forEach(({ incidentType, total }) => {
+            const key = incidentType as keyof typeof incidentDistribution;
+            incidentDistribution[key] = parseInt(total, 10);
+        });
+
+        return {
+            totalTasksSize,
+            detectedIncidents: totalIncidentsSize,
+            totalTasksByLastSevenDays: tasksLastWeek,
+            pendingTasks,
+            virtualMachines,
+            incidentDistribution
+        };
+    }
+
+    async getFileBySha256(sha256: string): Promise<any> {
+
+        return this.capeApiService.getReportBySha256(sha256).then(res => res.data);
+    }
+
     // async getSignaturesFromCape(): Promise<void> {
     //     const signatureFiles = await this.fetchSignatureFilesFromCape();
     //     if (!signatureFiles || signatureFiles.length === 0) return;
@@ -290,16 +368,15 @@ export class CapeService {
     // private async processAndStoreSignatureFile(file: any): Promise<void> {
     //     const { name, content } = file;
     //     const baseName = this.extractFilename(name);
-
     //     await this.storeSignatureInDatabase(baseName, content);
     // }
     
-    // private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
-    //     await this.capeCreateYaraRepository.createSignature({
-    //         name,
-    //         rule: content,
-    //         uploadedBy: "4b76aba4-7922-4fac-b7d6-894f63579622",
-    //         category: 'yar',
-    //     });
-    // }
+    private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
+        // await this.capeCreateYaraRepository.createSignature({
+        //     name,
+        //     rule: content,
+        //     uploadedBy: 'f0b33c9c-0019-4046-984b-f6f3d95dea61',
+        //     category: 'yar',
+        // });
+    }
 }

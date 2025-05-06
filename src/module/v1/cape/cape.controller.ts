@@ -106,6 +106,16 @@ export class CapeController {
         return this.capeService.uploadSignature(signature, req.user.userId);
     }
 
+    @Get('tasks/dashboard')
+    async getDashboard(): Promise<any> {
+        return this.capeService.getDashboardData();
+    }
+
+    @Get('files/view/sha256/:sha256')
+    async getFileBySha256(@Param('sha256') sha256: string): Promise<any> {
+        return this.capeService.getFileBySha256(sha256);
+    }
+
     // @Get('tasks/view/all/signatures')
     // async getSignature(): Promise<any> {
     //     return this.capeService.getSignaturesFromCape();

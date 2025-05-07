@@ -1,0 +1,8 @@
+{
+    "name": "BadJoke.yar",
+    "rule": "rule BadJoke {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects BadJoke / Witch\"\n        cape_type = \"BadJoke / Witch Payload\"\n    strings:\n        $s1 = \"msdownld.tmp\" fullword ascii\n        $s2 = \"UPDFILE%lu\" fullword ascii\n        $s3 = \"Command.com /c %s\" fullword ascii\n        $s4 = \"launch.cmd\" fullword ascii\n        $s5 = \"virus.vbs\" fullword ascii\n        $s6 = \"virus.py\" fullword ascii\n        $m1 = \"Message from Google Virus\" ascii\n        $m2 = \"you cannot get rid of this virus\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (all of ($m*) or all of ($s*) or (1 of ($m*) and 2 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.712Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Retefe.yar",
+    "rule": "rule Retefe\n{\n    meta:\n        author = \"Tomasuh\"\n        description = \"Retefe Payload\"\n        cape_type = \"Retefe Payload\"\n    strings:\n        $retefe_encoded_buffer = {48 8b 44 24 20 8b 40 08 48 8b 4c 24 20 48 8d 15}\n        $retefe_xor_seed = {24 20 48 8b 44 24 20 C7 40 08}\n        $retefe_xor_seed_2ndarg = {89 54 24 10 48 89 4c 24 08 48 83 ec 58 ba}\n        $retefe_shift_and_sub_match = {c1 e0 ?? b9}\n    condition:\n        uint16(0) == 0x5A4D and (all of them)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.722Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "BlankStealer.yar",
+    "rule": "rule BlankStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects BlankStealer / BlankGrabber / Blank-c Stealer\"\n        cape_type = \"BlankStealer Payload\"\n    strings:\n        $s1 = \"Blank-c\" ascii\n        $s2 = \"Stealer License\" ascii\n        $s3 = \"UID=\" ascii\n        $h1 = { 42 6c 61 6e 6b 2d 63 0a 53 74 65 61 6c 65 72 20 4c 69 63 65 6e 73 65 0a 55 49 44 3d }\n    condition:\n        (uint16(0) == 0x4152 and 2 of them) or (all of ($s*) or 1 of ($h*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.629Z",
+    "status": "active"
+}

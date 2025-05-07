@@ -1,0 +1,8 @@
+{
+    "name": "DoejoCrypt.yar",
+    "rule": "rule DoejoCrypt {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects DoejoCrypt / DearCry ransomware\"\n        cape_type = \"DoejoCrypt Payload\"\n    strings:\n        $s1 = \"DEARCRY!\" fullword ascii\n        $s2 = \".CRYPT\" fullword ascii\n        $s3 = \"\\\\EncryptFile -svcV2\\\\\" ascii\n        $s4 = \"please send me the following hash!\" ascii\n        $s5 = \"dear!!!\" fullword ascii\n        $s6 = \"/readme.txt\" fullword ascii\n        $o1 = { c3 8b 65 e8 c7 45 fc fe ff ff ff 8b b5 f4 e9 ff }\n        $o2 = { 0f 8c 27 ff ff ff 33 db 57 e8 7b 36 00 00 eb 0a }\n        $o3 = { 0f 8c 2a ff ff ff 53 57 e8 b7 42 00 00 8b 4c 24 }\n    condition:\n        uint16(0) == 0x5a4d and 4 of ($s*) or (all of ($o*) and (2 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.720Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "HiddenWasp.yar",
+    "rule": "rule HiddenWasp {\n    meta:\n        author = \"ditekshen\"\n        description = \"HiddenWasp backdoor payload\"\n        cape_type = \"HiddenWasp payload\"\n    strings:\n        $x1 = \"I_AM_HIDDEN\" fullword ascii\n        $x2 = \"HIDE_THIS_SHELL\" fullword ascii\n        $x3 = \"NewUploadFile\" ascii\n        $x4 = \"fake_processname\" ascii\n        $x5 = \"swapPayload\" ascii\n        $x6 = /Trojan-(Platform|Machine|Hostname|OSersion)/ fullword ascii\n        $s1 = \"FileOpration::GetFileData\" fullword ascii\n        $s2 = \"FileOpration::NewUploadFile\" fullword ascii\n        $s3 = \"Connection::writeBlock\" fullword ascii\n        $s4 = /hiding_(hidefile|enable_logging|hideproc|makeroot)/ fullword ascii\n        $s5 = \"Reverse-Port\" fullword ascii\n        $s6 = \"hidden_services\" fullword ascii\n        $s7 = \"check_config\" fullword ascii\n        $s8 = \"__data_start\" fullword ascii\n        $s9 = /patch_(suger_lib|ld|lib)/ fullword ascii\n        $s10 = \"hexdump -ve '1/1 \\\"%%.2X\\\"' %s | sed \\\"s/%s/%s/g\\\" | xxd -r -p > %s.tmp\"\n    condition:\n        uint16(0) == 0x457f and (4 of ($x*) or all of ($s*) or (3 of ($x*) and 5 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.673Z",
+    "status": "active"
+}

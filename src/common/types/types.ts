@@ -32,6 +32,8 @@ export interface User {
     fullName?: string;
     role?: string;
     roleId?: number;
+    lastLogin?: string;
+    status?: string;
     created_at?: Date;
     updated_at?: Date;
 }

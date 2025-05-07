@@ -116,10 +116,10 @@ export class CapeController {
         return this.capeService.getFileBySha256(sha256);
     }
 
-    // @Get('tasks/view/all/signatures')
-    // async getSignature(): Promise<any> {
-    //     return this.capeService.getSignaturesFromCape();
-    // }
+    @Get('tasks/view/all/signatures')
+    async getSignature(): Promise<any> {
+        return this.capeService.getSignaturesFromCape();
+    }
     
     // @Post('tasks/create/url')
     // async createUrl() {

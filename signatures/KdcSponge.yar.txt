@@ -1,0 +1,8 @@
+{
+    "name": "KdcSponge.yar",
+    "rule": "import \"pe\"\n\nrule KdcSponge {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects KdcSponge\"\n        cape_type = \"KdcSponge Payload\"\n    strings:\n        $x1 = \"\\\\share\\\\kdcdll\\\\user641.pdb\" ascii\n        $x2 = \"5ADSelf@tech*7890\" fullword wide\n        $kdc1 = \"KdcVerifyEncryptedTimeStamp\" ascii wide nocase\n        $kdc2 = \"KerbHashPasswordEx3\" ascii wide nocase\n        $kdc3 = \"KerbFreeKey\" ascii wide nocase\n        $r1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" ascii\n        $r2 = \"KDC Service\" fullword ascii\n        $s1 = \"download//symbols//%S//%S//%S\" fullword wide\n        $s2 = \"c:\\\\windows\\\\system32\\\\kdcsvc.dll\" fullword wide nocase\n        $s3 = /WinHttp(Send|Receive)(Request|Response) failed (0x%.8X)/ fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (\n            (1 of ($x*) and 2 of them) or (all of ($kdc*) and (1 of ($x*) or all of ($r*) or 2 of ($s*))) or (8 of them) or\n            (\n                pe.exports(\"MainFun\") and\n                pe.exports(\"NetApiBufferFree\") and\n                pe.exports(\"BeaEngineRevision\") and\n                pe.exports(\"BeaEngineVersion\") and\n                pe.exports(\"Disasm\") and\n                pe.exports(\"DllRegisterServer\") and\n                pe.exports(\"DsGetDcName\") and\n                2 of them\n            )\n        )\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.644Z",
+    "status": "active"
+}

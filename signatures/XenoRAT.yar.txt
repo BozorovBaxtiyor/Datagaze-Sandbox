@@ -1,0 +1,8 @@
+{
+    "name": "XenoRAT.yar",
+    "rule": "rule XenoRAT {\n    meta:\n        author = \"jeFF0Falltrades\"\n        cape_type = \"XenoRAT payload\"\n    strings:\n        $str_xeno_rat_1 = \"xeno rat\" wide ascii nocase\n        $str_xeno_rat_2 = \"xeno_rat\" wide ascii nocase\n        $str_xeno_update_mgr = \"XenoUpdateManager\" wide ascii\n        $str_nothingset = \"nothingset\" wide ascii \n        $byte_enc_dec_pre = { 1f 10 8d [4] (0a | 0b) }\n        $patt_config = { 72 [3] 70 80 [3] 04 }\n    condition:\n        4 of them and #patt_config >= 5\n }\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.694Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "TimeTime.yar",
+    "rule": "rule TimeTime {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects TimeTime ransomware\"\n        cape_type = \"TimeTime Payload\"\n    strings:\n        $s1 = \"@_DECRYPTOR_@\" ascii wide\n        $s2 = \"@__RECOVER_YOUR_FILES__@\" wide\n        $s3 = \"\\\\TimeTime.pdb\" ascii\n        $s4 = \"runCommand\" fullword ascii\n        $s5 = \"decryptor_file_name\" fullword ascii\n        $s6 = \"encryption_hiding_process\" fullword ascii\n        $s7 = \"admin_hiding_process\" fullword ascii\n        $s8 = \"security_vaccine\" fullword ascii\n        $s9 = \"EncrFiles_Load\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 4 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.694Z",
+    "status": "active"
+}

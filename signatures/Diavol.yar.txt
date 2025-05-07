@@ -1,0 +1,8 @@
+{
+    "name": "Diavol.yar",
+    "rule": "rule Diavol {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Diavol ransomware\"\n        cape_type = \"Diavol Payload\"\n    strings:\n        $s1 = \"README_FOR_DECRYPT.txt\" ascii wide nocase\n        $s2 = \".lock64\" fullword ascii wide\n        $s3 = \"LockMainDIB\" ascii wide\n        $s4 = \"locker.divided\" ascii wide\n        $s5 = \"%tob_dic%/\" wide\n        $s6 = \"%cid_bot%\" wide\n        $m1 = \"GENBOTID\" ascii wide\n        $m2 = \"SHAPELISTS\" ascii wide\n        $m3 = \"REGISTER\" ascii wide\n        $m4 = \"FROMNET\" ascii wide\n        $m5 = \"SERVPROC\" ascii wide\n        $m6 = \"SMBFAST\" ascii wide\n        $c1 = \"/Bnyar8RsK04ug/\" fullword ascii\n        $c2 = \"/landing\" fullword ascii\n        $c3 = \"/wipe\" fullword ascii\n        $c4 = \"&ip_local1=111.111.111.111&ip_local2=222.222.222.222&ip_external=2.16.7.12\" fullword ascii\n        $c5 = \"&group=\" fullword ascii\n        $c6 = \"/BnpOnspQwtjCA/register\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (4 of ($s*) or 5 of ($m*) or 4 of ($c*) or 7 of them)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.658Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "FloodFix.yar",
+    "rule": "import \"pe\"\n\nrule FloodFix {\n     meta:\n        author = \"ditekSHen\"\n        description = \"Detects FloodFix\"\n        cape_type = \"FloodFix Payload\"\n    condition:\n        uint16(0) == 0x5a4d and pe.is_dll() and (pe.exports(\"FloodFix\") or pe.exports(\"FloodFix2\")) and pe.exports(\"crc32\")\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.679Z",
+    "status": "active"
+}

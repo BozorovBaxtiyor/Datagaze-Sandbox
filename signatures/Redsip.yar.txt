@@ -1,0 +1,8 @@
+{
+    "name": "Redsip.yar",
+    "rule": "rule Redsip\n{\n    meta:\n        author = \"kev\"\n        description = \"Redsip Payload\"\n        cape_type = \"Redsip Payload\"\n    strings:\n        $payload1 = {8B 45 F8 99 B9 0A 00 00 00 F7 F9 85 D2 75 1F 8A 55 10 88 55 FF 8B 45 08 03 45 F8 0F BE 08 0F BE 55 FF 33 CA 8B 45 08 03 45 F8 88 08 EB C1}\n    condition:\n        uint16(0) == 0x5A4D and (any of ($payload*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.662Z",
+    "status": "active"
+}

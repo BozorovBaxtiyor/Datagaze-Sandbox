@@ -1,0 +1,8 @@
+{
+    "name": "SunShuttle.yar",
+    "rule": "rule SunShuttle {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects SunShuttle / GoldMax\"\n        cape_type = \"SunShuttle Payload\"\n    strings:\n        $s1 = \"main.beaconing\" fullword ascii\n        $s2 = \"main.clean_file\" fullword ascii\n        $s3 = \"main.decrypt\" fullword ascii\n        $s4 = \"main.define_internal_settings\" fullword ascii\n        $s5 = \"main.delete_empty\" fullword ascii\n        $s6 = \"main.encrypt\" fullword ascii\n        $s7 = \"main.false_requesting\" fullword ascii\n        $s8 = \"main.removeBase64Padding\" fullword ascii\n        $s9 = \"main.resolve_command\" fullword ascii\n        $s10 = \"main.retrieve_session_key\" fullword ascii\n        $s11 = \"main.save_internal_settings\" fullword ascii\n        $s12 = \"main.send_command_result\" fullword ascii\n        $s13 = \"main.send_file_part\" fullword ascii\n        $s14 = \"main.wget_file\" fullword ascii\n        $s15 = \"main.write_file\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 5 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.661Z",
+    "status": "active"
+}

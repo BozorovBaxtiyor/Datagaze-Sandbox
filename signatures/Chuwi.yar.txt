@@ -1,0 +1,8 @@
+{
+    "name": "Chuwi.yar",
+    "rule": "rule Chuwi {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects detected unknown RAT. Called Chuwi based on PDB\"\n        cape_type = \"Chuwi RAT Payload\"\n    strings:\n        $cmd1 = \"shell_command\" fullword ascii\n        $cmd2 = \"check_command\" fullword ascii\n        $cmd3 = \"down_exec\" fullword ascii\n        $cmd4 = \"open_link\" fullword ascii\n        $cmd5 = \"down_exec\" fullword ascii\n        $cmd6 = \"exe_link\" fullword ascii\n        $cmd7 = \"shellCommand\" fullword ascii\n        $cmd8 = \"R_CMMAND\" fullword ascii\n\n        $cnc1 = \"/check_command.php?HWID=\" ascii\n        $cnc2 = \"&act=get_command\" ascii\n        $cnc3 = \"/get_command.php?hwid=\" ascii\n        $cnc4 = \"&command=down_exec\" ascii\n        $cnc5 = \"&command=message\" ascii\n        $cnc6 = \"&command=open_link\" ascii\n        $cnc7 = \"&command=down_exec\" ascii\n        $cnc8 = \"&command=shell\" ascii\n\n        $pdb = \"\\\\Users\\\\CHUWI\\\\Documents\\\\CPROJ\\\\Downloader\\\\svchost\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ($pdb or 5 of ($cmd*) or 4 of ($cnc*) or 8 of them)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.632Z",
+    "status": "active"
+}

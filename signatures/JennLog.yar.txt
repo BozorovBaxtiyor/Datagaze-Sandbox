@@ -1,0 +1,8 @@
+{
+    "name": "JennLog.yar",
+    "rule": "rule JennLog {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects JennLog loader\"\n        cape_type = \"JennLog Loader Payload\"\n    strings:\n        $x1 = \"%windir%\\\\system32\\\\rundll32.exe advapi32.dll,ProcessIdleTasks\" fullword wide\n        $x2 = \"https://fkpageintheworld342.com\" fullword wide\n        $s1 = \"ExecuteInstalledNodeAndDelete\" fullword ascii\n        $s2 = \"ProcessExsist\" fullword ascii\n        $s3 = \"helloworld.Certificate.txt\" fullword wide\n        $s4 = \"ASCII85 encoded data should begin with '\" fullword wide\n        $s5 = \"] WinRE config file path: C:\\\\\" ascii\n        $s6 = \"] Parameters: configWinDir: NULL\" ascii\n        $s7 = \"] Update enhanced config info is enabled.\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($x*) and 3 of ($s*)) or 5 of ($s*) or (all of ($x*) and 2 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.625Z",
+    "status": "active"
+}

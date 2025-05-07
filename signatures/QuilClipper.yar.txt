@@ -1,0 +1,8 @@
+{
+    "name": "QuilClipper.yar",
+    "rule": "rule QuilClipper {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects QuilClipper variants mostly in memory or extracted AutoIt script\"\n        cape_type = \"QuilClipper Payload\"\n    strings:\n        $cnc1 = \"QUILCLIPPER by\" ascii\n        $cnc2 = \"/ UserName:\" ascii\n        $cnc3 = \"/ System:\" ascii\n        $s1 = \"DLLCALL ( \\\"kernel32.dll\\\" , \\\"handle\\\" , \\\"CreateMutexW\\\" , \\\"struct*\\\"\" ascii\n        $s2 = \"SHELLEXECUTE ( @SCRIPTFULLPATH , \\\"\\\" , \\\"\\\" , FUNC_\" ascii\n        $s3 = \"CASE BITROTATE\" ascii\n        $s4 = \"CASE BITXOR\" ascii\n        $s5 = \"CLIP( FUNC_\" ascii\n        $s6 = \"CLIPPUT (\" ascii\n        $s7 = \"FUNC _CLIPPUTFILE(\" ascii\n        $s8 = \"HKEY_LOCAL_MACHINE\\\\SYSTEM\\\\CurrentControlSet\\\\Services\\\\Schedule\" ascii\n    condition:\n        all of ($cnc*) or all of ($s*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.714Z",
+    "status": "active"
+}

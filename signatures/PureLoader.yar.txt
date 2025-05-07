@@ -1,0 +1,8 @@
+{
+    "name": "PureLoader.yar",
+    "rule": "rule PureLoader {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Pure loader / injector\"\n        cape_type = \"PureLoader Payload\"\n    strings:\n        $s1 = \"InvokeMember\" fullword wide\n        $s2 = \"ConcatProducer\" fullword wide\n        $s3 = \".Classes.Resolver\" wide\n        $s4 = \"get_DLL\" fullword ascii\n        $s5 = \"BufferedStream\" fullword ascii\n        $s6 = \"GZipStream\" fullword ascii\n        $s7 = \"MemoryStream\" fullword ascii\n        $s8 = \"Decompress\" fullword ascii\n        $s9 = \"lSystem.Resources.ResourceReader, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089#System.Resources.R\" ascii\n    condition:\n        uint16(0) == 0x5a4d and 8 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.623Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Zeppelin.yar",
+    "rule": "rule Zeppelin\n{\nmeta:\n\tdescription = \"Identifies Zeppelin ransomware and variants (Buran, Vega etc.)\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2019-11\"\n\ttlp = \"White\"\n\tcape_type = \"Zeppelin Payload\"\n\nstrings:\n\t$s1 = \"TUnlockAndEncryptU\" ascii wide\n\t$s2 = \"TDrivesAndShares\" ascii wide\n\t$s3 = \"TExcludeFoldersU\" ascii wide\n\t$s4 = \"TExcludeFiles\" ascii wide\n\t$s5 = \"TTaskKillerU\" ascii wide\n\t$s6 = \"TPresenceU\" ascii wide\n\t$s7 = \"TSearcherU\" ascii wide\n\t$s8 = \"TReadme\" ascii wide\n\t$s9 = \"TKeyObj\" ascii wide\n\n\t$x = \"TZeppelinU\" ascii wide\n\ncondition:\n\t2 of ($s*) or $x\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.701Z",
+    "status": "active"
+}

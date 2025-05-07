@@ -1,0 +1,8 @@
+{
+    "name": "Godzilla.yar",
+    "rule": "rule Godzilla {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Godzilla loader\"\n        cape_type = \"Godzilla Loader Payload\"\n    strings:\n        $x1 = \"MSVBVM60.DLL\" fullword ascii\n        $x2 = \"Loginserver8\" fullword ascii\n        $x3 = \"Proflogger7\" fullword ascii\n        $s1 = \"Badgeless5\" fullword ascii\n        $s2 = \"Montebrasite3\" fullword ascii\n        $s3 = \"Atelomyelia4\" fullword ascii\n        $s4 = \"Xxencoded5\" fullword ascii\n        $s5 = \"Garneau2\" fullword ascii\n        $s6 = \"Hypostasis0\" fullword ascii\n        $s7 = \"Piarhemia4\" fullword ascii\n        $s8 = \"Foredestine8\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of ($x*) and 2 of ($s*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.690Z",
+    "status": "active"
+}

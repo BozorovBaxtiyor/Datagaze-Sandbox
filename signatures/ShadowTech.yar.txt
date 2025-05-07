@@ -1,0 +1,8 @@
+{
+    "name": "ShadowTech.yar",
+    "rule": "rule ShadowTech\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/ShadowTech\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"ShadowTech Payload\"\n\n\tstrings:\n\t\t$a = \"ShadowTech\" nocase\n\t\t$b = \"DownloadContainer\"\n\t\t$c = \"MySettings\"\n\t\t$d = \"System.Configuration\"\n\t\t$newline = \"#-@NewLine@-#\" wide\n\t\t$split = \"pSIL\" wide\n\t\t$key = \"ESIL\" wide\n\n\tcondition:\n\t\t4 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.684Z",
+    "status": "active"
+}

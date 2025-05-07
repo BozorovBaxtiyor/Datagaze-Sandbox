@@ -1,0 +1,8 @@
+{
+    "name": "AcidRain.yar",
+    "rule": "rule AcridRain {\n    meta:\n        author = \"ditekshen\"\n        description = \"AcidRain stealer payload\"\n        cape_type = \"AcidRain payload\"\n    strings:\n        $s1 = { 43 6f 6f 6b 69 65 73 (5c|2e) }\n        $s2 = { 74 65 6d 70 6c 6f 67 69 ?? }\n        $s3 = { 74 65 6d 70 50 ?? 68 }\n        $s4 = \"Connecting to hostname: %s%s%s\" fullword ascii\n        $s5 = \"Found bundle for host %s: %p [%s]\" fullword ascii\n        $s6 = \"encryptedUsernamencryptedPassworERROR Don't copy string\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.675Z",
+    "status": "active"
+}

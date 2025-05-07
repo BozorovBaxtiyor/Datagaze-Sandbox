@@ -1,0 +1,8 @@
+{
+    "name": "FakeWMI.yar",
+    "rule": "rule FakeWMI {\n    meta:\n        author = \"ditekshen\"\n        description = \"FakeWMI payload\"\n        cape_type = \"FakeWMI payload\"\n    strings:\n        $s1 = \"-BEGIN RSA PUBLIC KEY-\" ascii\n        $s2 = \".exe|\" ascii\n        $s3 = \"cmd /c wmic \" ascii\n        $s4 = \"cmd /c sc \" ascii\n        $s5 = \"schtasks\" ascii\n        $s6 = \"taskkill\" ascii\n        $s7 = \"findstr\" ascii\n        $s8 = \"netsh interface\" ascii\n        $s9 = \"CreateService\" ascii\n    condition:\n       uint16(0) == 0x5a4d and (all of ($s*) and #s2 > 10)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.733Z",
+    "status": "active"
+}

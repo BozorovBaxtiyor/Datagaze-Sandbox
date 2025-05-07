@@ -1,0 +1,8 @@
+{
+    "name": "VSSDestroy.yar",
+    "rule": "rule VSSDestroy {\n    meta:\n        author = \"ditekshen\"\n        description = \"VSSDestroy/Matrix ransomware payload\"\n        cape_type = \"VSSDestroy payload\"\n    strings:\n        $o1 = \"[SHARESSCAN]\" wide\n        $o2 = \"[LDRIVESSCAN]\" wide\n        $o3 = \"[LOGSAVED]\" wide\n        $o4 = \"[LPROGRESS]\" wide\n        $o5 = \"[FINISHSAVED]\" wide\n        $o6 = \"[ALL_LOCAL_KID]\" wide\n        $o7 = \"[DIRSCAN\" wide\n        $o8 = \"[GENKEY]\" wide\n        $s1 = \"\\\\cmd.exe\" nocase wide\n        $s2 = \"/C powershell \\\"\" nocase wide\n        $s3 = \"%COMPUTERNAME%\" wide\n        $s4 = \"%USERNAME%\" wide\n        $s5 = \"Error loading Socket interface (ws2_32.dll)!\" wide\n        $s6 = \"Old file list dump found. Want to load it? (y/n):\" fullword wide\n    condition:\n        (uint16(0) == 0x5a4d and 4 of ($o*) and 3 of ($s*)) or (5 of ($o*) and 4 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.673Z",
+    "status": "active"
+}

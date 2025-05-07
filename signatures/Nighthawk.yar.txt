@@ -1,0 +1,8 @@
+{
+    "name": "Nighthawk.yar",
+    "rule": "import \"pe\"\n\nrule Nighthawk\n{\n    meta:\n        author = \"Nikhil Ashok Hegde <@ka1do9>\"\n        description = \"NightHawk C2\"\n        cape_type = \"Nighthawk Payload\"\n\n    strings:\n        // Not wildcarding register to have better yara performance\n        $keying_methods = { 85 C9 74 43 83 E9 01 74 1C 83 F9 01 0F 85 }\n\n        // AES-128 CBC sbox and inverse-sbox used in key expansion\n        $aes_sbox = { 63 7C 77 7B F2 6B 6F C5 30 }\n        $aes_inv_sbox = { 52 09 6A D5 30 36 A5 38 BF }\n\n    condition:\n        pe.is_pe and\n        // Nighthawk DLL is known to contain a \".profile\" section which\n        // contains config\n        for any s in pe.sections: (s.name == \".profile\") and\n        all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.707Z",
+    "status": "active"
+}

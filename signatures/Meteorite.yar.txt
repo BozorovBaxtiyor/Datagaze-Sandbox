@@ -1,0 +1,8 @@
+{
+    "name": "Meteorite.yar",
+    "rule": "rule Meteorite {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Meteorite Downloader\"\n        cape_type = \"Meteorite Downloader Payload\"\n    strings:\n        $x1 = \"MeteoriteDownloader\" fullword ascii wide\n        $x2 = \"Meteorite Downloader\" fullword ascii wide\n        $x3 = \"Meteorite Downloader v\" wide\n        $s1 = \"regwrite\" fullword wide\n        $s2 = \"urlmon\" fullword ascii\n        $s3 = \"wscript.shell\" fullword wide\n        $s4 = \"modMain\" fullword ascii\n        $s5 = \"VBA6.DLL\" fullword ascii\n        $s6 = \"^_http\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (1 of ($x*) or (5 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.647Z",
+    "status": "active"
+}

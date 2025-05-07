@@ -1,0 +1,8 @@
+{
+    "name": "STEALDEAL.yar",
+    "rule": "import \"pe\"\n\nrule STEALDEAL {\n    meta:\n        author = \"ditekShen\"\n        description = \"Hunt for STEALDEAL stealer\"\n        cape_type = \"STEALDEAL Payload\"\n    strings:\n        $x1 = \"stealDll.dll\" fullword ascii\n        $s1 = \"SqlExec\" fullword ascii\n        $s2 = \"etilqs_\" fullword ascii\n        $s3 = \"SUBQUERY %u\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and pe.is_dll() and pe.exports(\"stub\") and (1 of ($x*) or all of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.735Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Orion.yar",
+    "rule": "rule Orion {\n    meta:\n        author = \"ditekshen\"\n        description = \"Orion Keylogger payload\"\n        cape_type = \"Orion payload\"\n    strings:\n        $s1 = \"\\\\Ranger.BrowserLogging\" ascii wide nocase\n        $s2 = \"GrabAccounts\" fullword ascii\n        $s3 = \"DownloadFile\" fullword ascii\n        $s4 = \"Internet Explorer Recovery\" wide\n        $s5 = \"Outlook Recovery\" wide\n        $s6 = \"Thunderbird Recovery\" wide\n        $s7 = \"Keylogs -\" wide\n        $s8 = \"WebCam_Capture.dll\" wide\n        $s9 = \" is not installed on this computer!\" wide\n        $s10 = \"cmd /c bfsvc.exe \\\"\" wide\n        $s11 = \"/Keylogs - PC:\" fullword wide\n        $s12 = \"/PC:\" fullword wide\n        $s13 = \"<p style=\\\"color:#CC7A00\\\">[\" wide\n    condition:\n        (uint16(0) == 0x5a4d and 5 of ($s*)) or (6 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.674Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "SpyGate.yar",
+    "rule": "rule SpyGate\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/SpyGate\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"SpyGate Payload\"\n\n\tstrings:\n\t\t$split = \"abccba\"\n\t\t$a1 = \"abccbaSpyGateRATabccba\" //$a = Version 0.2.6\n\t\t$a2 = \"StubX.pdb\"\n\t\t$a3 = \"abccbaDanabccb\"\n\t\t$b1 = \"monikerString\" nocase //$b = Version 2.0\n\t\t$b2 = \"virustotal1\"\n\t\t$b3 = \"get_CurrentDomain\"\n\t\t$c1 = \"shutdowncomputer\" wide //$c = Version 2.9\n\t\t$c2 = \"shutdown -r -t 00\" wide\n\t\t$c3 = \"set cdaudio door closed\" wide\n\t\t$c4 = \"FileManagerSplit\" wide\n\t\t$c5 = \"Chating With >> [~Hacker~]\" wide\n\n\tcondition:\n\t\t(all of ($a*) and #split > 40) or (all of ($b*) and #split > 10) or (all of ($c*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.667Z",
+    "status": "active"
+}

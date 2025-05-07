@@ -1,0 +1,8 @@
+{
+    "name": "KrakenStealer.yar",
+    "rule": "rule KrakenStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detect Kraken infostealer\"\n        cape_type = \"KrakenStealer Payload\"\n    strings:\n        $x1 = /Kraken(_)?(Stub|Keyboard|Clipboard|GeneratorMachine|PostLogs|Screenshot|Keylogs|Password)/ ascii wide\n        $s1 = /(get|set)_(Clipboard|Keyboard|Screen)Recorder/ fullword ascii\n        $s2 = /Dumping(FileZilla|360_China|Opera|Epic|CocCoc|Thunderbird|Brave)/ fullword ascii\n        $s3 = \"ScreenPostData\" fullword ascii\n        $s4 = \"encrypt_data\" fullword ascii\n        $s5 = \"KeyboardProc\" fullword ascii\n        $s6 = \"UploadsKeyboard\" fullword ascii\n        $s7 = \"ClpUploader\" fullword ascii\n        $s8 = \"StartKeylogger\" fullword ascii\n        $s9 = \"ClipoDetectedRemover\" fullword ascii\n        $s10 = \"Disable_Regis\" fullword ascii\n        $s11 = \"RecordedClips\" fullword ascii\n        $s12 = \"HoneyPotStatus\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($x*) and 2 of ($s*)) or 9 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.646Z",
+    "status": "active"
+}

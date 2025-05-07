@@ -1,0 +1,8 @@
+{
+    "name": "jRat.yar",
+    "rule": "rule jRat\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/jRat\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"Java\"\n        cape_type = \"jRat Payload\"\n\n    strings:\n        $meta = \"META-INF\"\n        $key = \"key.dat\"\n        $conf = \"config.dat\"\n \t\t$jra1 = \"enc.dat\"\n\t\t$jra2 = \"a.class\"\n\t\t$jra3 = \"b.class\"\n\t\t$jra4 = \"c.class\"\n        $reClass1 = /[a-z]\\.class/\n        $reClass2 = /[a-z][a-f]\\.class/\n\n    condition:\n       ($meta and $key and $conf and #reClass1 > 10 and #reClass2 > 10) or ($meta and $key and all of ($jra*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.637Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Gasket.yar",
+    "rule": "rule Gasket {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Gasket\"\n        cape_type = \"Gasket Payload\"\n    strings:\n        $s1 = \"main.checkGasket\" ascii\n        $s2 = \"main.connectGasket\" ascii\n        $s3 = \"/cert/trust/dev/stderr/dev/stdout/index.html\" ascii\n        $f1 = \".SetPingHandler.\" ascii\n        $f2 = \".SetPongHandler.\" ascii\n        $f3 = \".computeMergeInfo.\" ascii\n        $f4 = \".computeDiscardInfo.\" ascii\n        $f5 = \".readPlatformMachineID.\" ascii\n        $f6 = \".(*Session).establishStream.\" ascii\n        $f7 = \".(*Session).handleGoAway.\" ascii\n        $f8 = \".(*Stream).processFlags.\" ascii\n        $f9 = \".(*Session).handlePing.\" ascii\n        $f10 = \".(*windowsService).Install.\" ascii\n        $f11 = \".(*windowsService).Uninstall.\" ascii\n        $f12 = \".(*windowsService).Status.\" ascii\n        $f13 = \".getStopTimeout.\" ascii\n        $f14 = \".DialContext.\" ascii\n        $f15 = \".WriteControl.\" ascii\n        $f16 = \".(*Server).authenticate.\" ascii\n        $f17 = \".(*Server).ServeConn.\" ascii\n        $f18 = \".(*TCPProxy).listen.\" ascii\n        $f19 = \".UserPassAuthenticator.Authenticate.\" ascii\n        $f20 = \".(*InfoPacket).XXX_\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (all of ($s*) or 16 of ($f*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.655Z",
+    "status": "active"
+}

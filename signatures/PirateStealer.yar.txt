@@ -1,0 +1,8 @@
+{
+    "name": "PirateStealer.yar",
+    "rule": "rule PirateStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects PirateStealer\"\n        cape_type = \"PirateStealer Payload\"\n    strings:\n        $s1 = \"PirateStealerBTW\" wide\n        $s2 = \"%WEBHOOK_LINK%\" fullword wide\n        $s3 = \"PirateMonsterInjector\" ascii wide\n        $s4 = \"DiscordProcesses\" fullword ascii\n        $s5 = \"GetDiscords\" fullword ascii\n        $s6 = { 44 6f 77 6e 6c 6f 61 64 53 74 72 69 6e 67 00 47\n               65 74 46 6f 6c 64 65 72 50 61 74 68 00 57 65 62\n               68 6f 6f 6b 00 4b 69 6c 6c 00 50 72 6f 67 72 61\n               6d 00 53 79 73 74 65 6d 00 4d 61 69 6e 00 }\n    condition:\n        uint16(0) == 0x5a4d and 3 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.644Z",
+    "status": "active"
+}

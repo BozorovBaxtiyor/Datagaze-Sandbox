@@ -1,0 +1,8 @@
+{
+    "name": "BlackshadesRAT.yar",
+    "rule": "rule BlackshadesRAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"BlackshadesRAT POS payload\"\n        cape_type = \"BlackshadesRAT payload\"\n    strings:\n        $s1 = \"bhookpl.dll\" fullword wide\n        $s2 = \"drvloadn.dll\" fullword wide\n        $s3 = \"drvloadx.dll\" fullword wide\n        $s4 = \"SPY_NET_RATMUTEX\" fullword wide\n        $s5 = \"\\\\dump.txt\" fullword wide\n        $s6 = \"AUTHLOADERDEFAULT\" fullword wide\n        $pdb = \"*\\\\AC:\\\\Users\\\\Admin\\\\Desktop_old\\\\Blackshades project\\\\bs_bot\\\\bots\\\\bot\\\\bs_bot.vbp\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (4 of ($s*) or ($pdb and 2 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.688Z",
+    "status": "active"
+}

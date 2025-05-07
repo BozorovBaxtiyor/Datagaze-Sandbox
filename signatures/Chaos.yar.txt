@@ -1,0 +1,8 @@
+{
+    "name": "Chaos.yar",
+    "rule": "rule Chaos {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Chaos ransomware\"\n        cape_type = \"Chaos Payload\"\n    strings:\n        $s1 = \"<EncyptedKey>\" fullword wide\n        $s2 = \"<EncryptedKey>\" fullword wide\n        $s3 = \"C:\\\\Users\\\\\" fullword wide\n        $s4 = \"read_it.txt\" fullword wide\n        $s5 = \"#base64Image\" fullword wide\n        $s6 = \"(?:[13]{1}[a-km-zA-HJ-NP-Z1-9]{26,33}|bc1[a-z0-9]{39,59})\" fullword wide\n        $s7 = /check(Spread|Sleep|AdminPrivilage|deleteShadowCopies|disableRecoveryMode|deleteBackupCatalog)/ fullword ascii nocase\n        $s8 = /(delete|disable)(ShadowCopies|RecoveryMode|BackupCatalog)/ fullword ascii nocase\n        $s9 = \"spreadName\" fullword ascii\n        $s10 = \"processName\" fullword ascii\n        $s11 = \"sleepOutOfTempFolder\" fullword ascii\n        $s12 = \"AlreadyRunning\" fullword ascii\n        $s13 = \"random_bytes\" fullword ascii\n        $s14 = \"encryptDirectory\" fullword ascii nocase\n        $s15 = \"EncryptFile\" fullword ascii nocase\n        $s16 = \"intpreclp\" fullword ascii\n        $s17 = \"bytesToBeEncrypted\" fullword ascii\n        $s18 = \"textToEncrypt\" fullword ascii\n        $m1 = \"Chaos is\" wide\n        $m2 = \"Payment informationAmount:\" wide\n        $m3 = \"Coinmama - hxxps://www.coinmama.com Bitpanda - hxxps://www.bitpanda.com\" wide\n        $m4 = \"where do I get Bitcoin\" wide\n    condition:\n        uint16(0) == 0x5a4d and 6 of ($s*) or all of ($m*) or (2 of ($m*) and 4 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.736Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Ekans.yar",
+    "rule": "rule Ekans\n{\nmeta:\n\tdescription = \"Identifies Ekans aka Snake ransomware unpacked or in memory.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-03\"\n\ttlp = \"White\"\n\tcape_type = \"Snake Payload\"\n\nstrings:\n\t$ = \"already encrypted!\" ascii wide\n\t$ = \"cant kill process %v : %v\" ascii wide\n\t$ = \"could not access service: %v\" ascii wide\n\t$ = \"could not retrieve service status: %v\" ascii wide\n\t$ = \"could not send control=%d: %v\" ascii wide\n\t$ = \"error encrypting %v : %v\" ascii wide\n\t$ = \"faild to get process list\" ascii wide\n\t$ = \"priority files: %v\" ascii wide\n\t$ = \"priorityFiles: %v\" ascii wide\n\t$ = \"pub: %v\" ascii wide\n\t$ = \"root: %v\" ascii wide\n\t$ = \"There can be only one\" ascii wide\n\t$ = \"timeout waiting for service to go to state=%d\" ascii wide\n\t$ = \"Toatal files: %v\" ascii wide\n\t$ = \"total lengt: %v\" ascii wide\n\t$ = \"worker %s started job %s\" ascii wide\n\ncondition:\n\t3 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.706Z",
+    "status": "active"
+}

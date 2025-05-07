@@ -1,0 +1,8 @@
+{
+    "name": "Strrat.yar",
+    "rule": "rule Strrat\n{\n\tmeta:\n\t\tauthor = \"enzo\"\n\t\tdescription = \"Strrat Rat\"\n\t\tcape_type = \"Strrat Payload\"\n\tstrings:\n\t\t$string1 = \"config.txt\" ascii\n\t\t$string2 = \"carLambo\" ascii\n\t\t$string3 = \"META-INF\" ascii\n\tcondition:\n\t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.639Z",
+    "status": "active"
+}

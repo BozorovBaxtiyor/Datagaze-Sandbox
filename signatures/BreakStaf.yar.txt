@@ -1,0 +1,8 @@
+{
+    "name": "BreakStaf.yar",
+    "rule": "rule BreakStaf {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects BreakStaf ransomware\"\n        cape_type = \"BreakStaf Payload\"\n    strings:\n        $s1 = \"C:\\\\Program files\" wide\n        $s2 = \"C:\\\\Program files (x86)\" wide\n        $s3 = \"C:\\\\System Volume Information\" wide\n        $s4 = \"C:\\\\$Recycle.Bin\" wide\n        $s5 = \"C:\\\\Windows\" wide\n        $s6 = \".?AVRandomNumberGenerator@Crypto\" ascii\n        $s7 = \".?AV?$SymmetricCipherFinal@\" ascii\n        $s8 = \".breakstaf\" fullword wide nocase\n        $s9 = \"readme.txt\" fullword wide nocase\n        $s10 = \".VHD\" fullword wide nocase\n        $s11 = \".vhdx\" fullword wide nocase\n        $s12 = \".BAK\" fullword wide nocase\n        $s13 = \".BAC\" fullword wide nocase\n    condition:\n        uint16(0) == 0x5a4d and 12 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.696Z",
+    "status": "active"
+}

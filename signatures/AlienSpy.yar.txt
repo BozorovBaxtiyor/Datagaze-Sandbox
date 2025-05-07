@@ -1,0 +1,8 @@
+{
+    "name": "AlienSpy.yar",
+    "rule": "rule AlienSpy\n{\n    meta:\n        author = \"Kevin Breen\"\n        ref = \"http://malwareconfig.com/stats/AlienSpy\"\n        maltype = \"Remote Access Trojan\"\n        filetype = \"jar\"\n        cape_type = \"AlienSpy Payload\"\n\n    strings:\n        $PK = \"PK\"\n        $MF = \"META-INF/MANIFEST.MF\"\n\n        $a1 = \"a.txt\"\n        $a2 = \"b.txt\"\n        $a3 = \"Main.class\"\n\n        $b1 = \"ID\"\n        $b2 = \"Main.class\"\n        $b3 = \"plugins/Server.class\"\n\n        $c1 = \"resource/password.txt\"\n        $c2 = \"resource/server.dll\"\n\n        $d1 = \"java/stubcito.opp\"\n        $d2 = \"java/textito.isn\"\n\n        $e1 = \"java/textito.text\"\n        $e2 = \"java/resources.xsx\"\n\n        $f1 = \"amarillo/asdasd.asd\"\n        $f2 = \"amarillo/adqwdqwd.asdwf\"\n\n        $g1 = \"config/config.perl\"\n        $g2 = \"main/Start.class\"\n\n        $o1 = \"config/config.ini\"\n        $o2 = \"windows/windows.ini\"\n        $o3 = \"components/linux.plsk\"\n        $o4 = \"components/manifest.ini\"\n        $o5 = \"components/mac.hwid\"\n\n\n    condition:\n        $PK at 0 and $MF and\n        (all of ($a*) or all of ($b*) or all of ($c*) or all of ($d*) or all of ($e*) or all of ($f*) or all of ($g*) or any of ($o*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.705Z",
+    "status": "active"
+}

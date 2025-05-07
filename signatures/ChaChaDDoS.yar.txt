@@ -1,0 +1,8 @@
+{
+    "name": "ChaChaDDoS.yar",
+    "rule": "rule ChaChaDDoS {\n    meta:\n        author = \"ditekshen\"\n        description = \"ChaChaDDoS variant of XorDDoS payload\"\n        cape_type = \"ChaChaDDoS payload\"\n    strings:\n        $x1 = \"[kworker/1:1]\" ascii\n        $x2 = \"-- LuaSocket toolkit.\" ascii\n        $x3 = \"/etc/resolv.conf\" ascii\n        $x4 = \"\\\"macaddress=\\\" .. DEVICE_MAC .. \\\"&device=\\\" ..\" ascii\n        $x5 = \"easy_attack_dns\" ascii\n        $x6 = \"easy_attack_udp\" ascii\n        $x7 = \"easy_attack_syn\" ascii\n        $x8 = \"syn_probe\" ascii\n    condition:\n    uint16(0) == 0x457f and 6 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.740Z",
+    "status": "active"
+}

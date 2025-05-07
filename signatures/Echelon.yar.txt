@@ -1,0 +1,8 @@
+{
+    "name": "Echelon.yar",
+    "rule": "rule Echelon {\n    meta:\n        author = \"ditekshen\"\n        description = \"Echelon information stealer payload\"\n        cape_type = \"Echelon payload\"\n    strings:\n        $s1 = \"<GetStealer>b__\" ascii\n        $s2 = \"clearMac\" fullword ascii\n        $s3 = \"path2save\" fullword ascii\n        $s4 = \"Echelon_Size\" fullword ascii\n        $s5 = \"Echelon Stealer by\" wide\n        $s6 = \"get__masterPassword\" fullword ascii\n        $s7 = \"DomainDetect\" fullword ascii\n        $s8 = \"[^\\\\u0020-\\\\u007F]\" fullword wide\n        $s9 = \"/sendDocument?chat_id=\" wide\n        $s10 = \"//setting[@name='Password']/value\" wide\n        $s11 = \"Passwords_Mozilla.txt\" fullword wide\n        $s12 = \"Passwords_Edge.txt\" fullword wide\n        $s13 = \"@madcod\" ascii wide\n        $pdb = \"\\\\Echelon-Stealer-master\\\\obj\\\\Release\\\\Echelon.pdb\" ascii\n    condition:\n        (uint16(0) == 0x5a4d and (8 of ($s*) or $pdb)) or (8 of ($s*) or $pdb)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.730Z",
+    "status": "active"
+}

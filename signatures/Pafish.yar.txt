@@ -1,0 +1,8 @@
+{
+    "name": "Pafish.yar",
+    "rule": "rule Pafish\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Paranoid Fish Sandbox Detection\"\n        cape_type = \"Pafish Payload\"\n    strings:\n        $rdtsc_vmexit = {8B 45 E8 80 F4 00 89 C3 8B 45 EC 80 F4 00 89 C6 89 F0 09 D8 85 C0 75 07}\n        $cape_string = \"cape_options\"\n    condition:\n        uint16(0) == 0x5A4D and $rdtsc_vmexit and not $cape_string\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.697Z",
+    "status": "active"
+}

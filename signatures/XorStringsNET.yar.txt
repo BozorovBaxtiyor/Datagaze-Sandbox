@@ -1,0 +1,8 @@
+{
+    "name": "XorStringsNET.yar",
+    "rule": "import \"dotnet\"\n\nrule XorStringsNET {\n    meta:\n        description = \"Detects XorStringsNET string encryption, and other obfuscators derived from it\"\n        author = \"dr4k0nia\"\n        version = \"1.0\"\n        date = \"26/03/2023\"\n    strings:\n        $pattern = { 06 1e 58 07 8e 69 fe 17 }\n    condition:\n        uint16be(0) == 0x4d5a\n        and dotnet.is_dotnet\n        and $pattern\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.719Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "GarrantDecrypt.yar",
+    "rule": "rule GarrantDecrypt {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects GarrantDecrypt ransomware\"\n        cape_type = \"GarrantDecrypt Payload\"\n    strings:\n        $x1 = \"%appdata%\\\\_uninstalling_.png\" fullword wide\n        $x2 = \"C:\\\\Windows\\\\sysnative\\\\vssadmin.exe\" fullword wide\n        $x3 = /(ICQ|Skype) (@nuncatarde|@supersuso|@Whitehorsedecryption|@likeahorse|@Konwarszawski|@zipzipulya|Whitehorsedecryption|LIKEAHORSE DECRYPTION|Zip Zipulya)/ ascii\n        $s1 = \"your unique ID\" ascii\n        $s2 = \"Google market ICQ\" ascii\n        $s3 = \"If you want to restore them, install ICQ\" ascii\n        $s4 = \"Write to our ICQ @\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ((2 of ($x*) and 1 of ($s*)) or all of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.706Z",
+    "status": "active"
+}

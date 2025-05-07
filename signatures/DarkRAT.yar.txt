@@ -1,0 +1,8 @@
+{
+    "name": "DarkRAT.yar",
+    "rule": "rule DarkRAT\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/DarkRAT\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"DarkRAT Payload\"\n\n\tstrings:\n\t\t$a = \"@1906dark1996coder@\"\n\t\t$b = \"SHEmptyRecycleBinA\"\n\t\t$c = \"mciSendStringA\"\n\t\t$d = \"add_Shutdown\"\n\t\t$e = \"get_SaveMySettingsOnExit\"\n\t\t$f = \"get_SpecialDirectories\"\n\t\t$g = \"Client.My\"\n\n\tcondition:\n\t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.682Z",
+    "status": "active"
+}

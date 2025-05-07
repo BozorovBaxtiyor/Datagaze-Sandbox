@@ -1,0 +1,8 @@
+{
+    "name": "Neshta.yar",
+    "rule": "rule Neshta {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Neshta\"\n        cape_type = \"Neshta Payload\"\n    strings:\n        $s1 = \"Delphi-the best. Fuck off all the rest. Neshta 1.0 Made in Belarus.\" fullword ascii\n        $s2 = \"! Best regards 2 Tommy Salo. [Nov-2005] yours [Dziadulja Apanas]\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.690Z",
+    "status": "active"
+}

@@ -4,7 +4,7 @@ import { JwtAuthModule } from '../auth/jwt-auth.module';
 import { CapeUpsertTaskRepository } from './repository/cape.upsert.task.repository';
 import { CapeGetTasksRepository } from './repository/cape.get.tasks.respositry';
 import { CapeGetTaskIdRepository } from './repository/cape.get.taskId.repositry';
-// import { CapeCreateYaraRepository } from './repository/cape.create.yara.repository';
+import { CapeCreateYaraRepository } from './repository/cape.create.yara.repository';
 import { CapeGetSignaturesRepository } from './repository/cape.get.signatures.repository';
 import { CapeGetUsernameRepository } from './repository/cape.get.username.repository';
 import { CapeGetRealTaskIdRepository } from './repository/cape.get.real.taskId.repository';
@@ -30,7 +30,7 @@ import { CapeSignatureService } from './service/cape.signature.service';
         CapeUpsertTaskRepository,
         CapeGetTasksRepository,
         CapeGetTaskIdRepository,
-        // CapeCreateYaraRepository,
+        CapeCreateYaraRepository,
         CapeGetSignaturesRepository,
         CapeGetUsernameRepository,
         CapeGetRealTaskIdRepository,

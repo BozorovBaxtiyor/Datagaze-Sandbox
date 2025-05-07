@@ -1,0 +1,8 @@
+{
+    "name": "KoadicDOC.yar",
+    "rule": "rule KoadicDOC {\n    meta:\n        author = \"ditekshen\"\n        description = \"Koadic post-exploitation framework document payload\"\n        cape_type = \"KoadicDOC payload\"\n    strings:\n        $s1 = \"&@cls&@set\" ascii\n        $s2 = /:~\\d+,1%+/ ascii\n        $s3 = \"Header Char\" fullword wide\n        $s4 = \"EMBED Package\" ascii\n        $b1 = \".bat\\\"%\" ascii\n        $b2 = \".bat');\\\\\\\"%\" ascii\n        $b3 = \".bat',%\" ascii\n    condition:\n        uint16(0) == 0xcfd0 and all of ($s*) and 2 of ($b*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.672Z",
+    "status": "active"
+}

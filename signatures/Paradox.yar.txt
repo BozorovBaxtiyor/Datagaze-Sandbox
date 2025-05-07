@@ -1,0 +1,8 @@
+{
+    "name": "Paradox.yar",
+    "rule": "rule Paradox\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Paradox\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Paradox Payload\"\n\n\tstrings:\n\t\t$a = \"ParadoxRAT\"\n\t\t$b = \"Form1\"\n\t\t$c = \"StartRMCam\"\n\t\t$d = \"Flooders\"\n\t\t$e = \"SlowLaris\"\n\t\t$f = \"SHITEMID\"\n\t\t$g = \"set_Remote_Chat\"\n\n\tcondition:\n\t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.739Z",
+    "status": "active"
+}

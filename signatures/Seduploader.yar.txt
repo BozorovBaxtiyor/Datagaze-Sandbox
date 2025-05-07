@@ -1,0 +1,8 @@
+{
+    "name": "Seduploader.yar",
+    "rule": "rule Seduploader\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Seduploader decrypt function\"\n        cape_type = \"Seduploader Payload\"\n    strings:\n        $decrypt1 = {8D 0C 30 C7 45 FC 0A 00 00 00 33 D2 F7 75 FC 8A 82 ?? ?? ?? ?? 32 04 0F 88 01 8B 45 0C 40 89 45 0C 3B C3 7C DB}\n    condition:\n        uint16(0) == 0x5A4D and any of ($decrypt*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.623Z",
+    "status": "active"
+}

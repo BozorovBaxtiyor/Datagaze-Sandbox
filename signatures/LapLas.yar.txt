@@ -1,0 +1,8 @@
+{
+    "name": "LapLas.yar",
+    "rule": "rule LapLas {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects LapLas Infostealer\"\n        cape_type = \"LapLas Payload\"\n    strings:\n        // Go variant\n        $c1 = \"/bot/\" ascii\n        $c2 = \"key=\" ascii\n        $f1 = \"main.isRunning\" fullword ascii\n        $f2 = \"main.writePid\" fullword ascii\n        $f3 = \"main.isStartupEnabled\" fullword ascii\n        $f4 = \"main.enableStartup\" fullword ascii\n        $f5 = \"main.waitOpenClipboard\" fullword ascii\n        $f6 = \"main.clipboardWrite\" fullword ascii\n        $f7 = \"main.setOnline\" fullword ascii\n        $f8 = \"main.getRegex\" fullword ascii\n        // .NET variant\n        $v2_1 = \"{0}/bot/{1}?{2}\" wide\n        $v2_2 = /\\{0\\}\\\\\\{1\\}\\.(exe|pid)/ wide\n        $v2_3 = \"schtasks /create /tn\" wide\n        $v2_4 = \"SetOnline\" fullword ascii\n        $v2_5 = \"IsAutoRunInstance\" fullword ascii\n        $v2_6 = \"GetNewAddress\" fullword ascii\n        $v2_7 = \"RefreshRegex\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and ((all of ($c*) and 5 of ($f*)) or (1 of ($c*) and 7 of ($f*)) or (6 of ($v2*)))\n} \n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.710Z",
+    "status": "active"
+}

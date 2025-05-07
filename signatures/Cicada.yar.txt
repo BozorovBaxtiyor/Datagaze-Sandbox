@@ -1,0 +1,8 @@
+{
+    "name": "Cicada.yar",
+    "rule": "rule Cicada3301 {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects Cicada3301\"\n        cape_type = \"Cicada Payload\"\n    strings:\n        $s1 = \"cmd/Cchcp 65001 >nulnet view \\\\\\\\\"\n        $s2 = \"create_file_recovery\"\n        $s3 = \"ecnrypted_files_full\"\n        $s4 = \"get_excluded_directories\"\n        $s5 = \"collect_files_except\"\n        $s6 = \".exe4d5a\" ascii\n        $s7 = \"-accepteula -s -d \\\"\\\" --\" ascii\n        $s8 = \"[*.exe*.EXE*.DLL*.ini*.inf*.pol*.cmd*.ps1*.vbs*.bat*.pagefile.sys*.hiberfil.sys*.drv\" ascii\n        $s9 = \"memtasveeamsvc$backupsqlvssmsexchangesql$mysqlmysql$sophosMSExchange\" ascii\n        $s10 = \"-DATA.txt\" ascii\n        $s11 = /--no_(local|net|impl)/ fullword ascii\n        $c1 = \"fsutil\" ascii\n        $c2 = \"iisreset\" ascii\n        $c3 = \"vssadmin\" ascii\n        $c4 = \"wmic\" ascii\n        $c5 = \"bcdedit\" ascii\n        $c6 = \"wevtutil\" ascii\n    condition: \n        uint16(0) == 0x5a4d and (6 of ($s*) or (4 of ($c*) and 4 of ($s*)) or (all of ($c*) and 2 of ($s*)) or 9 of them)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.698Z",
+    "status": "active"
+}

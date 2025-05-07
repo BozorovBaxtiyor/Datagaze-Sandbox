@@ -1,0 +1,8 @@
+{
+    "name": "Khonsari.yar",
+    "rule": "rule Khonsari {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Khonsari ransomware\"\n        cape_type = \"Khonsari Payload\"\n    strings:\n        $x1 = \".khonsari\" fullword wide nocase\n        $s1 = \"Encrypt\" fullword ascii\n        $s2 = \"CreateEncryptor\" fullword ascii\n        $s3 = \"GenerateKey\" fullword ascii\n        $s4 = \"277e5e6a-4da6-4138-97fa-3fecbdad0176\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($x*) and 2 of ($s*)) or (all of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.653Z",
+    "status": "active"
+}

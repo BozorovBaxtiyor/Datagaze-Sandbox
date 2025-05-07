@@ -1,0 +1,8 @@
+{
+    "name": "Spyro.yar",
+    "rule": "rule Spyro {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Spyro / VoidCrypt / Limbozar ransomware\"\n        cape_type = \"Spyro Payload\"\n    strings:\n        $s1 = \"Decrypt-info.txt\" ascii wide\n        $s2 = \"AbolHidden\" ascii wide\n        $s3 = \"C:\\\\ProgramData\\\\prvkey\" ascii wide\n        $s4 = \".?AV?$TF_CryptoSystemBase@VPK_Encryptor@CryptoPP\" ascii\n        $s5 = \"C:\\\\Users\\\\LEGION\\\\\" ascii\n        $s6 = \"C:\\\\ProgramData\\\\pkey.txt\" fullword ascii\n        $s7 = \".Spyro\" fullword ascii\n        $m1 = \"Go to C:\\\\ProgramData\\\\ or in Your other Drives\" wide\n        $m2 = \"saving prvkey.txt.key file will cause\" wide\n        $m3 = \"in Case of no Answer:\" wide\n        $m4 = \"send us prvkey*.txt.key\" wide\n        $m5 = \"Somerhing went wrong while writing payload on disk\" ascii\n        $m6 = \"this country is forbidden.\\\"}\" ascii\n        $c1 = \"Voidcrypt/1.0\" ascii\n        $c2 = \"h1dd3n.cc\" ascii\n        $c3 = \"/voidcrypt/index.php\" ascii\n        $c4 = \"&user=\" ascii\n        $c5 = \"&disk-size=\" ascii\n        $c6 = \"unique-id=\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (5 of ($s*) or 4 of ($c*) or 3 of ($m*) or 8 of them)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.723Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "EmotetLoader.yar",
+    "rule": "rule EmotetLoader\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Emotet Loader\"\n        cape_type = \"EmotetLoader Payload\"\n    strings:\n        $antihook = {8B 15 ?? ?? ?? ?? 03 15 ?? ?? ?? ?? 89 95 28 FF FF FF A1 ?? ?? ?? ?? 2D 4D 01 00 00 A3 ?? ?? ?? ?? 8B 0D ?? ?? ?? ?? 3B 0D ?? ?? ?? ?? 76 26 8B 95 18 FF FF FF 8B 42 38}\n    condition:\n        //check for MZ Signature at offset 0\n        uint16(0) == 0x5A4D and any of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.625Z",
+    "status": "active"
+}

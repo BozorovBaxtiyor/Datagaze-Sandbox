@@ -1,0 +1,8 @@
+{
+    "name": "Jupyter.yar",
+    "rule": "rule Jupyter\n{\nmeta:\n\tdescription = \"Identifies Jupyter aka SolarMarker, backdoor.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2021-06\"\n\ttlp = \"White\"\n\tcape_type = \"Jupyter Payload\"\n\nstrings:\n\t$ = \"var __addr__=\" ascii wide\n\t$ = \"var __hwid__=\" ascii wide\n\t$ = \"var __xkey__=\" ascii wide\n\t$ = \"solarmarker.dat\" ascii wide\n\ncondition:\n\t3 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.725Z",
+    "status": "active"
+}

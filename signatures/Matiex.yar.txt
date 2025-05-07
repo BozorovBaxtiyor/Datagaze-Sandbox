@@ -1,0 +1,8 @@
+{
+    "name": "Matiex.yar",
+    "rule": "rule Matiex {\n    meta:\n        author = \"ditekshen\"\n        description = \"Matiex keylogger payload\"\n        cape_type = \"Matiex Payload\"\n    strings:\n      $id = \"--M-A-T-I-E-X--K-E-Y-L-O-G-E-R--\" ascii wide\n\n      $s1 = \"StartKeylogger\" fullword ascii\n      $s2 = \"_KeyboardLoggerTimer\" ascii\n      $s3 = \"_ScreenshotLoggerTimer\" ascii\n      $s4 = \"_VoiceRecordLogger\" ascii\n      $s5 = \"_ClipboardLoggerTimer\" ascii\n      $s6 = \"get_logins\" fullword ascii\n      $s7 = \"get_processhackerFucked\" fullword ascii\n      $s8 = \"_ThePSWDSenders\" fullword ascii\n\n      $pdb = \"\\\\Before FprmT\\\\Document VB project\\\\FireFox Stub\\\\FireFox Stub\\\\obj\\\\Debug\\\\VNXT.pdb\" ascii\n    condition:\n      uint16(0) == 0x5a4d and ($id or 4 of ($s*) or ($pdb and 2 of them))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.708Z",
+    "status": "active"
+}

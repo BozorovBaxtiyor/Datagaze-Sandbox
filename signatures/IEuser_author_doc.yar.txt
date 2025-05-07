@@ -1,0 +1,8 @@
+{
+    "name": "IEuser_author_doc.yar",
+    "rule": "rule IEuser_author_doc\n{\nmeta:\n\tdescription = \"Identifies Microsoft Word documents created with the default user on IE11 test VMs.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-12\"\n\treference = \"https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/\"\n\ttlp = \"White\"\n\nstrings:\n\t$doc = {D0 CF 11 E0}\n\t$ieuser = {49 00 45 00 55 00 73 00 65 00 72} //i.e.u.s.e.r\n\ncondition:\n\t$doc at 0 and $ieuser\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.605Z",
+    "status": "active"
+}

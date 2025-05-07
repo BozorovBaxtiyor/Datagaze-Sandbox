@@ -1,0 +1,8 @@
+{
+    "name": "DarkComet.yar",
+    "rule": "rule DarkComet\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/DarkComet\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"DarkComet Payload\"\n\n\tstrings:\n\t\t// Versions 2x\n\t\t$a1 = \"#BOT#URLUpdate\"\n\t\t$a2 = \"Command successfully executed!\"\n\t\t$a3 = \"MUTEXNAME\" wide\n\t\t$a4 = \"NETDATA\" wide\n\t\t// Versions 3x & 4x & 5x\n\t\t$b1 = \"FastMM Borland Edition\"\n\t\t$b2 = \"%s, ClassID: %s\"\n\t\t$b3 = \"I wasn't able to open the hosts file\"\n\t\t$b4 = \"#BOT#VisitUrl\"\n\t\t$b5 = \"#KCMDDC\"\n\n\n\n\tcondition:\n\t\tall of ($a*) or all of ($b*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.691Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "SmallNet.yar",
+    "rule": "rule SmallNet\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/SmallNet\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"SmallNet Payload\"\n\n\tstrings:\n\t\t$split1 = \"!!<3SAFIA<3!!\"\n\t\t$split2 = \"!!ElMattadorDz!!\"\n\t\t$a1 = \"stub_2.Properties\"\n\t\t$a2 = \"stub.exe\" wide\n\t\t$a3 = \"get_CurrentDomain\"\n\n\tcondition:\n\t\t($split1 or $split2) and (all of ($a*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.730Z",
+    "status": "active"
+}

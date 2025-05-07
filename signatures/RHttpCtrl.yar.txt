@@ -1,0 +1,8 @@
+{
+    "name": "RHttpCtrl.yar",
+    "rule": "rule RHttpCtrl {\n    meta:\n        author = \"ditekshen\"\n        description = \"RHttpCtrl backdoor payload\"\n        cape_type = \"RHttpCtrl payload\"\n    strings:\n        $s1 = \"%d_%04d%02d%02d%02d%02d%02d.\" ascii\n        $s2 = \"ver=%s&id=%06d&type=\" ascii\n        $s3 = \"ver=%d&id=%s&random=%d&\" ascii\n        $s4 = \"id=%d&output=%s\" ascii\n        $s5 = \"Error:WinHttpCrackUrl failed!/n\" ascii\n        $s6 = \"Error:SendRequest failed!/n\" ascii\n        $s7 = \".exe a %s %s\" ascii\n        $s8 = \"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0\" fullword wide\n        $pdb = \"\\\\WorkSources\\\\RHttpCtrl\\\\Server\\\\Release\\\\svchost.pdb\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (5 of ($s*) or ($pdb and 2 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.738Z",
+    "status": "active"
+}

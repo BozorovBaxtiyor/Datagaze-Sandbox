@@ -1,0 +1,8 @@
+{
+    "name": "CryLock.yar",
+    "rule": "rule CryLock\n{\nmeta:\n\tdescription = \"Identifies CryLock aka Cryakl ransomware.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-09\"\n\ttlp = \"White\"\n\tcape_type = \"CryLock payload\"\n\nstrings:\n\t$ = \"///END ENCRYPT ONLY EXTENATIONS\" ascii wide\n\t$ = \"///END UNENCRYPT EXTENATIONS\" ascii wide\n\t$ = \"///END COMMANDS LIST\" ascii wide\n\t$ = \"///END PROCESSES KILL LIST\" ascii wide\n\t$ = \"///END SERVICES STOP LIST\" ascii wide\n\t$ = \"///END PROCESSES WHITE LIST\" ascii wide\n\t$ = \"///END UNENCRYPT FILES LIST\" ascii wide\n\t$ = \"///END UNENCRYPT FOLDERS LIST\" ascii wide\n\t$ = \"{ENCRYPTENDED}\" ascii wide\n\t$ = \"{ENCRYPTSTART}\" ascii wide\n\ncondition:\n\t2 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.679Z",
+    "status": "active"
+}

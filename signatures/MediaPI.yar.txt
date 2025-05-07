@@ -1,0 +1,8 @@
+{
+    "name": "MediaPI.yar",
+    "rule": "import \"pe\"\n\nrule MediaPI {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects MediaPI\"\n        cape_type = \"MediaPI Payload\"\n    strings:\n        $s1 = \"SomeFunction\" ascii\n        $s2 = \"\\\"stealth\" ascii\n        $s3 = \"\\\"ServAddr\" ascii\n        $s4 = \"\\\"ServPort\" ascii\n        $s5 = \"\\\"ServIp\" ascii\n        $s6 = \"\\\"wsaData\" ascii\n        $s7 = \"\\\"-socket\" ascii\n    condition:\n        uint16(0) == 0x5a4d and pe.is_dll() and ((6 of them) or (3 of them and pe.exports(\"SomeFunction\")))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.665Z",
+    "status": "active"
+}

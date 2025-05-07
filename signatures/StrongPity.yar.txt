@@ -1,0 +1,8 @@
+{
+    "name": "StrongPity.yar",
+    "rule": "rule StrongPity {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects StrongPity\"\n        cape_type = \"StrongPity Payload\"\n    strings:\n        $s1 = \"Boundary%08X\" ascii wide\n        $s2 = \"Content-Disposition: form-data; name=\\\"file\\\";\" fullword ascii\n        $s3 = \"%sfilename=\\\"%ls\\\"\" fullword ascii\n        $s4 = \"name=%ls&delete=\" fullword ascii\n        $s5 = \"Content-Type: application/octet-stream\" fullword ascii\n        $s6 = \"cmd.exe /C ping\" wide\n        $s7 = \"& rmdir /Q /S \\\"\" wide\n    condition:\n        uint16(0) == 0x5a4d and 5 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.720Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "CasperTroy.yar",
+    "rule": "rule CasperTroy {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects CasperTroy payload\"\n        cape_type = \"CasperTroy Payload\"\n    strings:\n        $s1 = \"DllTroy.dll\" fullword ascii\n        $s2 = \"Content-Disposition: form-data; name=\\\"image\\\"; filename=\\\"title.gif\\\"\" fullword ascii\n        $s3 = \"Content-Disposition: form-data; name=\\\"COOKIE_ID\\\"\" fullword ascii\n        $s4 = \"Content-Disposition: form-data; name=\\\"PHP_SESS_ID\\\"\" fullword ascii\n        $s5 = \"Content-Disposition: form-data; name=\\\"SESS_ID\\\"\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 4 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.658Z",
+    "status": "active"
+}

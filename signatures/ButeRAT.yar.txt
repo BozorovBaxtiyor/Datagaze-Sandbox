@@ -1,0 +1,8 @@
+{
+    "name": "ButeRAT.yar",
+    "rule": "rule ButeRAT {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects ButeRAT\"\n        cape_type = \"ButeRAT Payload\"\n    strings:\n        $x1 = \"TVqQAAMAA\" ascii\n        $s1 = \"ipinfo.io/geo\" wide\n        $s2 = \"/index.php\" wide\n        $s3 = \"Copy-Item -Path\" wide\n        $s4 = \";Start-Process\" wide\n        $s5 = \"Microsoft\\\\Windows\\\\Start Menu\\\\Programs\\\\Startup\" wide\n        $s6 = \"LOCALAPPDATA\" fullword wide\n        $s7 = \"passwords.json\" wide\n        $s8 = \"Scripting.FileSystemObject\" fullword wide\n        $z1 = /(edge|chrome|opera|exodus|jaxx|atomic|coinomi)\\.zip/ ascii wide nocase\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($x*) or 1 of ($z*)) and (4 of ($s*)) or (6 of ($s*)) or (#z1 > 4 and 2 of them))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.680Z",
+    "status": "active"
+}

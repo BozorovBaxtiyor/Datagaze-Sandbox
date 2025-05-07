@@ -1,0 +1,8 @@
+{
+    "name": "KPortScan.yar",
+    "rule": "rule KPortScan\n{\nmeta:\n\tdescription = \"Identifies KPortScan, port scanner.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-08\"\n\ttlp = \"White\"\n\tcape_type = \"KPortScan Payload\"\n\nstrings:\n\t$s1 = \"KPortScan 3.0\" ascii wide\n\t$s2 = \"KPortScan3.exe\" ascii wide\n\n\t$x1 = \"Count of goods:\" ascii wide\n\t$x2 = \"Current range:\" ascii wide\n\t$x3 = \"IP ranges list is clear\" ascii wide\n\t$x4 = \"ip,port,state\" ascii wide\n\t$x5 = \"on_loadFinished(QNetworkReply*)\" ascii wide\n\t$x6 = \"on_scanDiapFinished()\" ascii wide\n\t$x7 = \"on_scanFinished()\" ascii wide\n\t$x8 = \"scanDiapFinished()\" ascii wide\n\t$x9 = \"scanFinished()\" ascii wide\n\t$x10 = \"with port\" ascii wide\n\t$x11 = \"without port\" ascii wide\n\ncondition:\n\tany of ($s*) or 3 of ($x*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.704Z",
+    "status": "active"
+}

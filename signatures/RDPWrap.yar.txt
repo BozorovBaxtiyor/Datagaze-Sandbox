@@ -1,0 +1,8 @@
+{
+    "name": "RDPWrap.yar",
+    "rule": "rule RDPWrap\n{\nmeta:\n\tdescription = \"Identifies RDP Wrapper, sometimes used by attackers to maintain persistence.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-05\"\n\treference = \"https://github.com/stascorp/rdpwrap\"\n\ttlp = \"White\"\n\nstrings:\n\t$ = \"rdpwrap.dll\" ascii wide\n\t$ = \"rdpwrap.ini\" ascii wide\n\t$ = \"RDP Wrapper\" ascii wide\n\t$ = \"RDPWInst\" ascii wide\n\t$ = \"Stas'M Corp.\" ascii wide\n\t$ = \"stascorp\" ascii wide\n\ncondition:\n\t2 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.670Z",
+    "status": "active"
+}

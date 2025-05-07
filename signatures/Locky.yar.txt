@@ -1,0 +1,8 @@
+{
+    "name": "Locky.yar",
+    "rule": "rule Locky\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Locky Payload\"\n        cape_type = \"Locky Payload\"\n    strings:\n        $string1 = \"wallet.dat\" wide\n        $string2 = \"Locky_recover\" wide\n        $string3 = \"opt321\" wide\n    condition:\n        //check for MZ Signature at offset 0\n        uint16(0) == 0x5A4D and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.721Z",
+    "status": "active"
+}

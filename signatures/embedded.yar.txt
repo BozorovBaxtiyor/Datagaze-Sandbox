@@ -1,0 +1,8 @@
+{
+    "name": "embedded.yar",
+    "rule": "rule embedded_pe\n{\n    meta:\n        author = \"nex\"\n        description = \"Contains an embedded PE32 file\"\n\n    strings:\n        $a = \"PE32\"\n        $b = \"This program\"\n        $mz = { 4d 5a }\n    condition:\n        ($a or $b) and not ($mz at 0)\n}\n\nrule embedded_win_api\n{\n    meta:\n        author = \"nex\"\n        description = \"A non-Windows executable contains win32 API functions names\"\n\n    strings:\n        $mz = { 4d 5a }\n        $api1 = \"CreateFileA\"\n        $api2 = \"GetProcAddress\"\n        $api3 = \"LoadLibraryA\"\n        $api4 = \"WinExec\"\n        $api5 = \"GetSystemDirectoryA\"\n        $api6 = \"WriteFile\"\n        $api7 = \"ShellExecute\"\n        $api8 = \"GetWindowsDirectory\"\n        $api9 = \"URLDownloadToFile\"\n        $api10 = \"IsBadReadPtr\"\n        $api11 = \"IsBadWritePtr\"\n        $api12 = \"SetFilePointer\"\n        $api13 = \"GetTempPath\"\n        $api14 = \"GetWindowsDirectory\"\n    condition:\n        not ($mz at 0) and any of ($api*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.742Z",
+    "status": "active"
+}

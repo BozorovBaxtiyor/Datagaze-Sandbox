@@ -1,0 +1,8 @@
+{
+    "name": "Mole.yar",
+    "rule": "rule Mole\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Mole Payload\"\n        cape_type = \"Mole Payload\"\n    strings:\n        $a1 = \".mole0\" wide\n        $a2 = \"_HELP_INSTRUCTION.TXT\" wide\n        $a3 = \"-----BEGIN PUBLIC KEY----- MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQ\"\n    condition:\n        uint16(0) == 0x5A4D and (all of ($a*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.721Z",
+    "status": "active"
+}

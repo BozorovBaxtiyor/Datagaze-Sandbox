@@ -1,0 +1,8 @@
+{
+    "name": "Generic_Phishing_PDF.yar",
+    "rule": "rule Generic_Phishing_PDF\n{\nmeta:\n\tdescription = \"Identifies generic phishing PDFs.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2019-03\"\n\treference = \"https://bartblaze.blogspot.com/2019/03/analysing-massive-office-365-phishing.html\"\n\ttlp = \"White\"\n\nstrings:\n\t$pdf = {25504446} //%PDF\n\t$s1 = \"<xmp:CreatorTool>RAD PDF</xmp:CreatorTool>\"\n\t$s2 = \"<x:xmpmeta xmlns:x=\\\"adobe:ns:meta/\\\" x:xmptk=\\\"DynaPDF\"\n\ncondition:\n\t$pdf at 0 and all of ($s*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.603Z",
+    "status": "active"
+}

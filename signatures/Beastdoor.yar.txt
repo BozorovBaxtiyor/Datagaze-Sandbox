@@ -1,0 +1,8 @@
+{
+    "name": "Beastdoor.yar",
+    "rule": "rule Beastdoor {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Beastdoor backdoor\"\n        cape_type = \"Beastdoor Backdoor Payload\"\n    strings:\n        $s1 = \"shellx.pif\" fullword ascii nocase\n        $s2 = \"Beasty\" fullword ascii\n        $s3 = \"* Boot:[\" ascii\n        $s4 = \"^ Shut Down:[\" ascii\n        $s5 = \"set cdaudio door\" ascii\n        $s6 = \"This \\\"Portable Network Graphics\\\" image is not valid\" wide\n        $n1 = \".aol.com\" ascii\n        $n2 = \"web.icq.com\" ascii\n        $n3 = \"&fromemail=\" fullword ascii\n        $n4 = \"&subject=\" fullword ascii\n        $n5 = \"&Send=\" fullword ascii\n        $n6 = \"POST /scripts/WWPMsg.dll HTTP/1.0\" fullword ascii\n        $n7 = \"mirabilis.com\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (all of ($s*) or 5 of ($n*) or (3 of ($s*) and 3 of ($n*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.657Z",
+    "status": "active"
+}

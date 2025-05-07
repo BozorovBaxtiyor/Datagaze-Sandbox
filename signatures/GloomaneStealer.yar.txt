@@ -1,0 +1,8 @@
+{
+    "name": "GloomaneStealer.yar",
+    "rule": "rule GloomaneStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects GloomaneStealer\"\n        cape_type = \"GloomaneStealer Payload\"\n    strings:\n        $x1 = \"=GLOOMANE STEALER=\" wide\n        $x2 = \"Maded by GLOOMANE\" wide\n        $s1 = \"\\\\44CALIBER\" ascii\n        $s2 = \"Ethernet()\" fullword wide\n        $s3 = \":spy: NEW LOG FROM\" wide\n        $s4 = \":eye: IP:\" wide\n        $s5 = \":file_folder: Grabbed Files\" wide\n        $s6 = \"$ebc25cf6-9120-4283-b972-0e5520d0000C\" fullword ascii\n        $s7 = \"$3b0e2d3d-3d66-42bb-8f9c-d6e188f359ae\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (all of ($x*) or (1 of ($x*) and 3 of ($s*)) or 5 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.725Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Farfli.yar",
+    "rule": "rule Farfli {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Farfli backdoor\"\n        cape_type = \"Farfli Payload\"\n    strings:\n        $s1 = \"%ProgramFiles%\\\\Google\\\\\" fullword ascii\n        $s2 = \"%s\\\\%d.bak\" fullword ascii\n        $s3 = \"%s Win7\" fullword ascii\n        $s4 = \"%s:%d:%s\" fullword ascii\n        $s5 = \"C:\\\\2.txt\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.689Z",
+    "status": "active"
+}

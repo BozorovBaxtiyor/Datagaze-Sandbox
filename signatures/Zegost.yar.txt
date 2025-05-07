@@ -1,0 +1,8 @@
+{
+    "name": "Zegost.yar",
+    "rule": "rule Zegost {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Zegost\"\n        cape_type = \"Zegost Payload\"\n    strings:\n        $s1 = \"rtvscan.exe\" fullword ascii\n        $s2 = \"ashDisp.exe\" fullword ascii\n        $s3 = \"KvMonXP.exe\" fullword ascii\n        $s4 = \"egui.exe\" fullword ascii\n        $s5 = \"avcenter.exe\" fullword ascii\n        $s6 = \"K7TSecurity.exe\" fullword ascii\n        $s7 = \"TMBMSRV.exe\" fullword ascii\n        $s8 = \"RavMonD.exe\" fullword ascii\n        $s9 = \"kxetray.exe\" fullword ascii\n        $s10 = \"mssecess.exe\" fullword ascii\n        $s11 = \"QUHLPSVC.EXE\" fullword ascii\n        $s12 = \"360tray.exe\" fullword ascii\n        $s13 = \"QQPCRTP.exe\" fullword ascii\n        $s14 = \"knsdtray.exe\" fullword ascii\n        $s15 = \"V3Svc.exe\" fullword ascii\n        $s16 = \"??1_Winit@std@@QAE@XZ\" fullword ascii\n        $s17 = \"ClearEventLogA\" fullword ascii\n        $s18 = \"SeShutdownPrivilege\" fullword ascii\n        $s19 = \"%s\\\\shell\\\\open\\\\command\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.706Z",
+    "status": "active"
+}

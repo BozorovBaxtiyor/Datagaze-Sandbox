@@ -1,0 +1,8 @@
+{
+    "name": "MetaStealer.yar",
+    "rule": "rule MetaStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects MetaStealer infostealer\"\n        cape_type = \"MetaStealer Payload\"\n    strings:\n        $s1 = \"! #\\\"'&(&*)>=@?POQOROSOTOUOVOWOXOYOZO[O^]{z|z}z~z\" fullword wide\n        $s2 = \"{0}{1}{2}\" fullword wide\n        $s3 = \"localhost\" fullword wide\n        $s4 = \"\\\\tdata\" fullword wide\n        $s5 = \"DecryptBlob\" fullword ascii\n        $s6 = \"GetMac\" fullword ascii\n        $s7 = \"GetHdc\" fullword ascii\n        $s8 = \"FindProc\" fullword ascii\n        $s9 = \"targetPid\" fullword ascii\n        $s10 = \"MessageSecurityOverTcp\" fullword ascii\n        $s11 = \"ListOfProcesses\" fullword ascii\n        $s12 = \"ListOfPrograms\" fullword ascii\n        $s13 = \"browserPaths\" fullword ascii\n        $s14 = \"configs\" fullword ascii\n        $s15 = \"scanners\" fullword ascii\n        $s16 = \"FileScannerRule\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 7 of ($s*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.741Z",
+    "status": "active"
+}

@@ -1,14 +1,13 @@
 // auth.module.ts
 import { Module } from '@nestjs/common';
-import { JwtAuthModule } from './jwt-auth.module';
+import { AuthService } from './auth.service';
+import { AuthRepository } from './auth.repository';
 import { AuthController } from './auth.controller';
-import { AuthService } from './service/auth.service';
-import { AuthLoginRepository } from './repository/auth.login.repository';
-// import { AuthRepository } from './auth.repository';
+import { JwtAuthModule } from './jwt-auth.module';
 
 @Module({
     imports: [JwtAuthModule],
-    providers: [AuthService, AuthLoginRepository],
+    providers: [AuthService, AuthRepository],
     controllers: [AuthController],
 })
 export class AuthModule {}

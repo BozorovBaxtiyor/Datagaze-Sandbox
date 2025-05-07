@@ -1,0 +1,8 @@
+{
+    "name": "Hermes.yar",
+    "rule": "rule Hermes\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Hermes Payload\"\n        cape_type = \"Hermes Payload\"\n    strings:\n        $ext = \".HRM\" wide\n        $vss = \"vssadmin Delete\"\n        $email = \"supportdecrypt@firemail.cc\" wide\n    condition:\n        uint16(0) == 0x5A4D and all of ($*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.700Z",
+    "status": "active"
+}

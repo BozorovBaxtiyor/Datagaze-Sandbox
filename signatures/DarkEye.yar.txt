@@ -1,0 +1,8 @@
+{
+    "name": "DarkEye.yar",
+    "rule": "rule DarkEye {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects DarkEye infostealer\"\n        cape_type = \"DarkEye Payload\"\n    strings:\n        $c1 = /Prynt(\\s)?Stealer/ ascii wide\n        $c2 = /WorldWind(\\s)?Stealer/ ascii wide\n        $c3 = \"ToxicEye\" ascii wide\n        $x2 = \"@FlatLineStealer\" ascii wide\n        $x3 = \"@CashOutGangTalk\" ascii wide\n        $s1 = \"--- Clipper\" wide\n        $s2 = \"Downloading file: \\\"{file}\\\"\" wide\n        $s3 = \"/bot{0}/getUpdates?offset={1}\" wide\n        $s4 = \"send command to bot!\" wide\n        $s5 = \" *Keylogger \" fullword wide\n        $s6 = \"*Stealer\" wide\n        $s7 = \"Bot connected\" wide\n    condition:\n        uint16(0) == 0x5a4d and not any of ($c*) and ((1 of ($x*) and 2 of ($s*)) or (4 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.721Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "ObliqueRAT.yar",
+    "rule": "rule ObliqueRAT {\n    meta:\n        author = \"ditekSHen\"\n        description = \"ObliqueRAT payload\"\n        cape_type = \"ObliqueRAT Payload\"\n    strings:\n        $s1 = \"C:\\\\ProgramData\\\\auto.txt\" fullword ascii\n        $s2 = \"C:\\\\ProgramData\\\\System\\\\Dump\\\\\" fullword ascii\n        $s3 = \"C:\\\\ProgramData\\\\a.txt\" fullword ascii\n        $s4 = \"Oblique\" fullword ascii\n        $s5 = /(Removable|Hard|Network|CD|RAM)\\sDisk\\|/ ascii\n        $s6 = \"backed\" fullword ascii\n        $s7 = \"restart\" fullword ascii\n        $s8 = \"kill\" fullword ascii\n        $s9 = /(John|JOHN|Test|TEST|Johsnson|Artifact|Vince|Serena|Lisa|JOHNSON|VINCE|SERENA)/ ascii nocase\n        $v1 = \"C:\\\\ProgramData\" fullword ascii\n        $v2 = \"auto\" fullword ascii\n        $v3 = \"plit\" fullword ascii\n        $v4 = \":image/jpeg\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and 8 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.658Z",
+    "status": "active"
+}

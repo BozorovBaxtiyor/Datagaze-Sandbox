@@ -1,0 +1,8 @@
+{
+    "name": "Neteagle.yar",
+    "rule": "rule Neteagle {\n    meta:\n        author = \"ditekshen\"\n        description = \"Neteagle backdoor payload\"\n        cape_type = \"Neteagle payload\"\n    strings:\n        $s1 = \"Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Internet Settings\" fullword ascii\n        $s2 = \"System\\\\CurrentControlSet\\\\control\\\\ComputerName\\\\ComputerName\" fullword ascii\n        $s3 = \"Mozilla/4.0 (compatible; MSIE 5.0; Win32)\" fullword ascii\n        $s4 = \"/index.htm\" fullword ascii\n        $s5 = \"Help_ME\" fullword ascii\n        $s6 = \"GOTO ERROR\" ascii\n        $s7 = \"127.0.0.1\" fullword ascii\n        $s8 = /pic\\d\\.bmp/ ascii wide\n    condition:\n        uint16(0) == 0x5a4d and 7 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.653Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "NetTraveler.yar",
+    "rule": "rule NetTraveler\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"NetTraveler Payload\"\n        cape_type = \"NetTraveler Payload\"\n    strings:\n        $string1 = {4E 61 6D 65 3A 09 25 73 0D 0A 54 79 70 65 3A 09 25 73 0D 0A 53 65 72 76 65 72 3A 09 25 73 0D 0A} // \"Name: %s  Type: %s  Server: %s \"\n        $string2 = \"Password Expiried Time:\"\n        $string3 = \"Memory: Total:%dMB,Left:%dMB (for %.2f%s)\"\n\n    condition:\n        uint16(0) == 0x5A4D and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.698Z",
+    "status": "active"
+}

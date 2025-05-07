@@ -1,0 +1,8 @@
+{
+    "name": "KoadicBAT.yar",
+    "rule": "rule KoadicBAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"Koadic post-exploitation framework BAT payload\"\n        cape_type = \"KoadicBAT payload\"\n    strings:\n        $v1_1 = \"&@cls&@set\" ascii\n        $v2_1 = { 26 63 6c 73 0d 0a 40 25 }\n        $m1 = /:~\\d+,1%+/ ascii\n    condition:\n        uint16(0) == 0xfeff and ((1 of ($v1*) or 1 of ($v2*)) and #m1 > 100)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.663Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "TOITOIN.yar",
+    "rule": "rule TOITOINKritaLoader {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects TOITOIN KritaLoader\"\n        cape_type = \"TOITOIN Payload\"\n    strings:\n       $p1 = \":\\\\Trabalho_2023\\\\OFF_2023\\\\\" ascii\n       $p2 = \"DLL_Start_OK.pdb\" ascii\n       $s1 = \"krita_main\" fullword ascii\n    condition:\n       uint16(0) == 0x5a4d and (1 of ($p*) and 1 of ($s*))\n}\n\nrule TOITOINInjectorDLL {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects TOITOIN InjectorDLL\"\n        cape_type = \"TOITOIN Payload\"\n    strings:\n       $p1 = \":\\\\Trabalho_2023\\\\OFF_2023\\\\\" ascii\n       $p2 = \"DLL_START_IN.pdb\" ascii\n       $s1 = \".ini\" fullword ascii\n       $s2 = \"\\\\users\\\\Public\\\\Documents\\\\\" fullword ascii\n    condition:\n       uint16(0) == 0x5a4d and (1 of ($p*) and all of ($s*))\n}\n\nrule TOITOINDownloader {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects TOITOIN Downloader\"\n        cape_type = \"TOITOIN Payload\"\n    strings:\n       $p1 = \":\\\\Trabalho_2023\\\\OFF_2023\\\\\" ascii\n       $s1 = { 20 2f 63 20 22 [6-15] 63 00 6d 00 64 00 00 00 6f 00 70 00 65 00 6e }\n       $o1 = { 48 83 fa 10 72 34 48 8b 8d 10 ?? 00 00 48 ff c2 }\n    condition:\n       uint16(0) == 0x5a4d and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.676Z",
+    "status": "active"
+}

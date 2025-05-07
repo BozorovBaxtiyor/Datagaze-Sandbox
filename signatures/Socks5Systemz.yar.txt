@@ -1,0 +1,8 @@
+{
+    "name": "Socks5Systemz.yar",
+    "rule": "rule Socks5Systemz\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Socks5Systemz Payload\"\n        cape_type = \"Socks5Systemz Payload\"\n        packed = \"9b997d0de3fe83091726919a0dc653e22f8f8b20b1bb7d0b8485652e88396f29\"\n    strings:\n        $chunk1 = {0F B6 84 8A [4] E9 [3] (00|FF)}\n        $chunk2 = {0F B6 04 8D [4] E9 [3] (00|FF)}\n        $chunk3 = {0F B6 04 8D [4] E9 [3] (00|FF)}\n        $chunk4 = {0F B6 04 8D [4] E9 [3] (00|FF)}\n        $chunk5 = {66 0F 6F 05 [4] E9 [3] (00|FF)}\n        $chunk6 = {F0 0F B1 95 [4] E9 [3] (00|FF)}\n        $chunk7 = {83 FA 04 E9 [3] (00|FF)}\n    condition:\n        uint16(0) == 0x5A4D and 6 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.738Z",
+    "status": "active"
+}

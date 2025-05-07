@@ -1,0 +1,8 @@
+{
+    "name": "Babuk.yar",
+    "rule": "rule Babuk {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Babuk ransomware\"\n        cape_type = \"Babuk Payload\"\n    strings:\n        $s1 = \"ecdh_pub_k.bin\" wide\n        $s2 = \"How To Restore Your Files.txt\" wide\n        $s3 = /(babuk|babyk)\\s(ransomware|locker)/ ascii nocase\n        $s4 = \"/login.php?id=\" ascii\n        $s5 = \"http://babuk\" ascii\n        $s6 = \"bootsect.bak\" fullword wide\n        $s7 = \"Can't open file after killHolder\" ascii\n        $s8 = \"Can't OpenProcess\" ascii\n        $s9 = \"DoYouWantToHaveSexWithCuongDong\" ascii\n        $arg1 = \"-lanfirst\" fullword ascii\n        $arg2 = \"-lansecond\" fullword ascii\n        $arg3 = \"-nolan\" fullword ascii\n        $arg4 = \"shares\" fullword wide\n        $arg5 = \"paths\" fullword wide\n        $arg6 = \"gdebug\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (3 of ($s*) or (3 of ($arg*) and 2 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.628Z",
+    "status": "active"
+}

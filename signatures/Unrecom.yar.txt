@@ -1,0 +1,8 @@
+{
+    "name": "Unrecom.yar",
+    "rule": "rule Unrecom\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/AAR\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Unrecom Payload\"\n\n\tstrings:\n\t\t$meta = \"META-INF\"\n\t\t$conf = \"load/ID\"\n\t\t$a = \"load/JarMain.class\"\n\t\t$b = \"load/MANIFEST.MF\"\n        $c = \"plugins/UnrecomServer.class\"\n\n\tcondition:\n\t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.704Z",
+    "status": "active"
+}

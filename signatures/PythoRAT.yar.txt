@@ -1,0 +1,8 @@
+{
+    "name": "PythoRAT.yar",
+    "rule": "rule PythoRAT\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/PythoRAT\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"PythoRAT Payload\"\n\n\tstrings:\n\t\t$a = \"TKeylogger\"\n\t\t$b = \"uFileTransfer\"\n\t\t$c = \"TTDownload\"\n\t\t$d = \"SETTINGS\"\n\t\t$e = \"Unknown\" wide\n\t\t$f = \"#@#@#\"\n\t\t$g = \"PluginData\"\n\t\t$i = \"OnPluginMessage\"\n\n\tcondition:\n\t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.655Z",
+    "status": "active"
+}

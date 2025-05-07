@@ -1,0 +1,8 @@
+{
+    "name": "Laturo.yar",
+    "rule": "rule Laturo {\n    meta:\n        author = \"ditekshen\"\n        description = \"Laturo information stealer payload\"\n        cape_type = \"Laturo Payload\"\n    strings:\n        $str1 = \"cmd.exe /c ping 127.0.0.1\" ascii wide\n        $str2 = \"cmd.exe /c start\" ascii wide\n        $str3 = \"\\\\RapidLoader\\\\\" ascii\n        $str4 = \"loader/gate.php\" ascii wide\n        $str5 = \"Hwid:\" ascii wide\n        $str6 = \"Special:\" ascii wide\n        $str7 = \"logs=%s\" ascii\n        $data1 = \"cookies.%u.txt\" nocase ascii wide\n        $data2 = \"passwords.%u.txt\" nocase ascii wide\n        $data3 = \"credentials.%u.txt\" nocase ascii wide\n        $data4 = \"cards.%u.txt\" nocase ascii wide\n        $data5 = \"autofill.%u.txt\" nocase ascii wide\n        $data6 = \"loginusers.vdf\" ascii wide\n        $data7 = \"screenshot.bmp\" nocase ascii wide\n        $data8 = \"webcam.bmp\" nocase ascii wide\n    condition:\n        uint16(0) == 0x5a4d and 5 of ($str*) and 1 of ($data*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.732Z",
+    "status": "active"
+}

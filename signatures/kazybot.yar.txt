@@ -1,0 +1,8 @@
+{
+    "name": "kazybot.yar",
+    "rule": "// Copyright (C) 2015 KillerInstinct\n// The contents of this file are Yara rules processed by procmemory.py processing\n// module. Add your signatures here.\nrule KazyBot_RAT\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Strings indicitive of unpacked KazyBot RAT\"\n\t\tmalfamily = \"kazybot\"\n\n    strings:\n        $pdb1 = /[A-Za-z]:\\\\[^\\\\]+\\\\KazyBot\\\\PluginServer\\\\[^\\.]+.pdb/\n        $pdb2 = /[A-Za-z]:\\\\[^\\\\]+\\\\KazyBot\\\\SharedCode\\\\[^\\.]+.pdb/\n        $cmd1 = \"MonitorOn\" fullword ascii\n        $cmd2 = \"MonitorOff\" fullword ascii\n        $cmd3 = \"StartLiveKeylogger\" fullword ascii\n        $cmd4 = \"StopLiveKeylogger\" fullword ascii\n        $cmd5 = \"LiveKeyLog\" fullword ascii\n        $cmd6 = \"GetKeyLog\" fullword ascii\n        $cmd7 = \"GetPasswords\" fullword ascii\n        $cmd8 = \"StartStress\" fullword ascii\n        $cmd9 = \"StopStress\" fullword ascii\n        $cmd10 = \"ChromeStealer\" fullword ascii\n\n    condition:\n        any of ($pdb*) or 8 of ($cmd*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.597Z",
+    "status": "active"
+}

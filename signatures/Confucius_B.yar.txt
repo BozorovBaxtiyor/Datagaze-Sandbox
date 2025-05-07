@@ -1,0 +1,8 @@
+{
+    "name": "Confucius_B.yar",
+    "rule": "rule Confucius_B\n{\nmeta:\n\tdescription = \"Identifies Confucius malware.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-04\"\n\treference = \"https://unit42.paloaltonetworks.com/unit42-confucius-says-malware-families-get-further-by-abusing-legitimate-websites/\"\n\ttlp = \"White\"\n\tcape_type = \"Confucius_B Payload\"\n\nstrings:\n\t$ = \"----BONE-79A8DE0E314C50503FF2378aEB126363-\" ascii wide\n\t$ = \"----MUETA-%.08x%.04x%.04x%.02x%.02x%.02x%.02x%.02x%.02x%.02x%.02x-\" ascii wide\n\t$ = \"C:\\\\Users\\\\DMITRY-PC\\\\Documents\\\\JKE-Agent-Win32\\\\JKE_Agent_DataCollectorPlugin\\\\output\\\\Debug\\\\JKE_Agent_DumbTestPlugin.dll\" ascii wide\n\ncondition:\n\tany of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.740Z",
+    "status": "active"
+}

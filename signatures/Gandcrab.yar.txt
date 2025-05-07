@@ -1,0 +1,8 @@
+{
+    "name": "Gandcrab.yar",
+    "rule": "rule Gandcrab\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Gandcrab Payload\"\n        cape_type = \"Gandcrab Payload\"\n    strings:\n        $string1 = \"GDCB-DECRYPT.txt\" wide\n        $string2 = \"GandCrabGandCrabnomoreransom.coinomoreransom.bit\"\n        $string3 = \"action=result&e_files=%d&e_size=%I64u&e_time=%d&\" wide\n        $string4 = \"KRAB-DECRYPT.txt\" wide\n    condition:\n        uint16(0) == 0x5A4D and any of ($string*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.635Z",
+    "status": "active"
+}

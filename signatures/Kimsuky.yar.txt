@@ -1,0 +1,8 @@
+{
+    "name": "Kimsuky.yar",
+    "rule": "rule Kimsuky {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects Kimsuky backdoor\"\n        cape_type = \"Kimsuky Payload\"\n    strings:\n        $s1 = \"Win%d.%d.%dx64\" fullword ascii\n        $s2 = \".zip\" fullword ascii\n        $s3 = \".enc\" fullword ascii\n        $s4 = \"&p2=a\" fullword ascii\n        $s5 = \"Content-Disposition: form-data; name=\\\"binary\\\"; filename=\\\"\" fullword ascii\n        $s6 = \"%s/?m=a&p1=%s&p2=%s-%s-v%d\" fullword ascii\n        $s7 = \"/?m=b&p1=\" fullword ascii\n        $s8 = \"/?m=c&p1=\" fullword ascii\n        $s9 = \"/?m=d&p1=\" fullword ascii\n        $s10 = \"http://%s/%s/?m=e&p1=%s&p2=%s&p3=%s\" fullword ascii\n        $s11 = \"taskkill.exe /im iexplore.exe /f\" fullword ascii\n        $s12 = \"GetParent\" fullword ascii\n        $s13 = \"DllRegisterServer\" fullword ascii\n        $dll1 = \"AutoUpdate.dll\" fullword ascii\n        $dll2 = \"dropper-ie64.dll\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($dll*) and 7 of ($s*)) or (11 of ($*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.724Z",
+    "status": "active"
+}

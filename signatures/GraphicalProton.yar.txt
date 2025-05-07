@@ -1,0 +1,8 @@
+{
+    "name": "GraphicalProton.yar",
+    "rule": "rule GraphicalProton_rsockstun {\n    meta:\n        author = \"ditekShen\"\n        description = \"Detects GraphicalProton custom rsockstun\"\n        cape_type = \"GraphicalProton Payload\"\n    strings:\n        $m1 = \"main.connectviaproxy\" ascii\n        $m2 = \"main.connectForSocks\" ascii\n        $m3 = \"main.listenForClients\" ascii\n        $m4 = \"main.listenForSocks\" ascii\n        $s1 = \"Proxy-Authorization: NTLM TlRMTVNTUAABAAAABoIIAAAAAAAAAAAAAAAAAAAAAAA=\" ascii\n        $s2 = \"Server: nginx/1.14.1\" ascii\n        $s3 = \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36\" ascii\n        $s4 = \"wine_get\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ((all of ($m*) and 2 of ($s*)) or (all of ($s*) and 1 of ($m*)) or 7 of them)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.621Z",
+    "status": "active"
+}

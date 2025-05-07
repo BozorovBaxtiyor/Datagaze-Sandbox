@@ -1,0 +1,8 @@
+{
+    "name": "xRAT.yar",
+    "rule": "rule xRAT\n{\n    meta:\n        author = \" Kevin Breen <kevin@techanarchy.net>\"\n        ref = \"http://malwareconfig.com/stats/xRat\"\n        maltype = \"Remote Access Trojan\"\n        filetype = \"exe\"\n        cape_type = \"xRAT Payload\"\n\n    strings:\n        $v1a = \"DecodeProductKey\"\n        $v1b = \"StartHTTPFlood\"\n        $v1c = \"CodeKey\"\n        $v1d = \"MESSAGEBOX\"\n        $v1e = \"GetFilezillaPasswords\"\n        $v1f = \"DataIn\"\n        $v1g = \"UDPzSockets\"\n        $v1h = {52 00 54 00 5F 00 52 00 43 00 44 00 41 00 54 00 41}\n\n        $v2a = \"<URL>k__BackingField\"\n        $v2b = \"<RunHidden>k__BackingField\"\n        $v2c = \"DownloadAndExecute\"\n        $v2d = \"-CHECK & PING -n 2 127.0.0.1 & EXIT\" wide\n        $v2e = \"england.png\" wide\n        $v2f = \"Showed Messagebox\" wide\n    condition:\n        all of ($v1*) or all of ($v2*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.679Z",
+    "status": "active"
+}

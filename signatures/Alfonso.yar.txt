@@ -1,0 +1,8 @@
+{
+    "name": "Alfonso.yar",
+    "rule": "rule Alfonoso {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Alfonoso / Shurk / HunterStealer infostealer\"\n        cape_type = \"Alfonso Payload\"\n    strings:\n        $s1 = \"%s\\\\etilqs_\" fullword ascii\n        $s2 = \"SELECT name, rootpage, sql FROM '%q'.%s\" fullword ascii\n        $s3 = \"%s-mj%08X\" fullword ascii\n        $s4 = \"| Site:\" ascii\n        $s5 = \"| Login:\" ascii\n        $s6 = \"| Password:\" ascii\n        $s7 = \"| BUILD NAME:\" ascii\n        $s8 = \"recursive_directory_iterator\" ascii\n        $s9 = { 2e 7a 69 70 00 00 00 00 2e 7a 6f 6f 00 00 00 00\n                2e 61 72 63 00 00 00 00 2e 6c 7a 68 00 00 00 00\n                2e 61 72 6a 00 00 00 00 2e 67 7a 00 2e 74 67 7a\n                00 00 00 00 }\n        $s10 = \"Shurk Steal\" fullword ascii\n        $s11 = \":memory:\" fullword ascii\n        $s12 = \"current_path()\" fullword ascii\n        $s13 = \"vtab:%p:%p\" fullword ascii\n        $f1 = \"chatlog.txt\" ascii\n        $f2 = \"servers.fav\" ascii\n        $f3 = \"\\\\USERDATA.DAT\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (8 of ($s*) or (6 of ($s*) and 2 of ($f*)) or (all of ($f*) and 5 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.719Z",
+    "status": "active"
+}

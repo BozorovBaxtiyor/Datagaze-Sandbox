@@ -1,0 +1,8 @@
+{
+    "name": "Nemty.yar",
+    "rule": "rule Nemty\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Nemty Ransomware Payload\"\n        cape_type = \"Nemty Payload\"\n    strings:\n        $tordir = \"TorDir\"\n        $decrypt = \"DECRYPT.txt\"\n        $nemty = \"NEMTY\"\n    condition:\n        uint16(0) == 0x5A4D and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.688Z",
+    "status": "active"
+}

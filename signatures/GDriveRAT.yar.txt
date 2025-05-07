@@ -1,0 +1,8 @@
+{
+    "name": "GDriveRAT.yar",
+    "rule": "rule GDriveRAT {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects GDriveRAT\"\n        cape_type = \"GDriveRAT Payload\"\n    strings:\n        $h1 = \"https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart\" fullword wide\n        $h2 = \"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36\" fullword wide\n        $h3 = \"multipart/related; boundary=\\\"boundary_tag\\\"\" fullword wide\n        $h4 = \"https://www.googleapis.com/drive/v3/files\" fullword wide\n        $s1 = \"move gdrive.exe \\\"C:\\\\Users\\\\\" fullword wide\n        $s2 = \"file_data\" fullword ascii\n        $s3 = \"comp_id\" fullword ascii\n        $s4 = \"file_name\" fullword ascii\n        $s5 = \"refresh_token\" fullword ascii\n        $s6 = \"commands\" fullword ascii\n        $s7 = \"execute\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 3 of ($h*) and 5 of ($s*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.656Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "Remcos.yar",
+    "rule": "rule Remcos\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Remcos Payload\"\n        cape_type = \"Remcos Payload\"\n    strings:\n        $name  = \"Remcos\" nocase\n        $time   = \"%02i:%02i:%02i:%03i\"\n        $crypto1 = {81 E1 FF 00 00 80 79 ?? 4? 81 C9 00 FF FF FF 4? 8A ?4 8?}\n        $crypto2 = {0F B6 [1-7] 8B 45 08 [0-2] 8D 34 07 8B 01 03 C2 8B CB 99 F7 F9 8A 84 95 ?? ?? FF FF 30 06 47 3B 7D 0C 72}\n    condition:\n        uint16(0) == 0x5A4D and ($name) and ($time) and any of ($crypto*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.738Z",
+    "status": "active"
+}

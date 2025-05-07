@@ -1,0 +1,8 @@
+{
+    "name": "XpertRAT.yar",
+    "rule": "rule XpertRAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"XpertRAT payload\"\n        cape_type = \"XpertRAT Payload\"\n    strings:\n        $v1 = \"[XpertRAT-Mutex]\" fullword wide\n        $v2 = \"XPERTPLUGIN\" fullword wide\n        $v3 = \"+Xpert+3.\" wide\n        $v4 = \"keylog.tmp\" fullword wide\n        $v5 = \"\\\\TempReg.reg\" fullword wide\n\n        $s1 = \"ClsKeylogger\" fullword ascii nocase\n        $s2 = \"clsCamShot\" fullword ascii nocase\n        $s3 = \"ClsShellCommand\" fullword ascii nocase\n        $s4 = \"ClsRemoteDesktop\" fullword ascii nocase\n        $s5 = \"ClsScreenRemote\" fullword ascii nocase\n        $s6 = \"ClsSoundRemote\" fullword ascii nocase\n        $s7 = \"MdlHidder\" fullword ascii\n        $s8 = \"modKeylog\" fullword ascii\n        $s9 = \"modWipe\" fullword ascii\n        $s10 = \"modDelProcInUse\" fullword ascii\n        $s11= \"Socket_DataArrival\" fullword ascii\n        $s12 = \"cZip_EndCompress\" fullword ascii\n\n    condition:\n        uint16(0) == 0x5a4d and (3 of ($v*) or 6 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.674Z",
+    "status": "active"
+}

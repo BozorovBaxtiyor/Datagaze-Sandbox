@@ -1,0 +1,8 @@
+{
+    "name": "Punisher.yar",
+    "rule": "rule Punisher\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Punisher\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Punisher Payload\"\n\n\tstrings:\n\t\t$a = \"abccba\"\n\t\t$b = {5C 00 68 00 66 00 68 00 2E 00 76 00 62 00 73}\n\t\t$c = {5C 00 73 00 63 00 2E 00 76 00 62 00 73}\n\t\t$d = \"SpyTheSpy\" wide ascii\n\t\t$e = \"wireshark\" wide\n\t\t$f = \"apateDNS\" wide\n\t\t$g = \"abccbaDanabccb\"\n\n\tcondition:\n\t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.721Z",
+    "status": "active"
+}

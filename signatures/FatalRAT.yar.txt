@@ -1,0 +1,8 @@
+{
+    "name": "FatalRAT.yar",
+    "rule": "rule FatalRAT {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects FatalRAT\"\n        cape_type = \"FatalRAT Payload\"\n    strings:\n        $x1 = \"XXAcQbcXXfRSScR\" fullword ascii\n        $s1 = \"CHROME_NO_DATA\" fullword ascii\n        $s2 = \"CHROME_UNKNOW\" fullword ascii\n        $s3 = \"-Thread running...\" ascii\n        $s4 = \"InetCpl.cpl,ClearMyTracksByProcess\" ascii nocase\n        $s5 = \"MSAcpi_ThermalZoneTemperature\" ascii nocase\n        $s6 = \"taskkill /f /im rundll32.exe\" fullword ascii nocase\n        $s7 = \"del /s /f %appdata%\\\\Mozilla\\\\Firefox\" ascii nocase\n        $s8 = \"\\\\\\\\%s\\\\C$\\\\\" ascii\n        $s9 = \"fnGetChromeUserInfo\" fullword ascii\n        $s10 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Svchost\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($x*) and 3 of ($s*)) or 5 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.736Z",
+    "status": "active"
+}

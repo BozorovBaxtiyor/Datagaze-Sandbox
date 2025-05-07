@@ -1,0 +1,8 @@
+{
+    "name": "Robbinhood.yar",
+    "rule": "rule Robbinhood {\n    meta:\n        author = \"ditekshen\"\n        description = \"Robbinhood ransomware payload\"\n        cape_type = \"Robbinhood payload\"\n    strings:\n        $go = \"Go build ID:\" ascii\n        $cmd1 = \"cmd.exe /c\" ascii\n        $cmd2 = \"net use * /DELETE\" nocase ascii\n        $cmd3 = \"sc.exe stop\" ascii\n        $cmd4 = \"vssadmin resize shadowstorage\" nocase ascii\n        $s1 = /Skipping\\s(file|dir)/ ascii\n        $s2 = \"Encrypt[ERR] GET Size:\" ascii\n        $s3 = \".taskkilltasklistunknown(\" ascii\n        $s4 = \".sysvssadmin.exewevtutil.exe MB released\" ascii\n        $s5 = \".sysvssadmin.exewevtutil.exewinlogin.exewinlogon.exe MB released\" ascii\n        $s6 = \".enc_robbinhood\" ascii\n        $s7 = \"c:\\\\windows\\\\temp\\\\pub.key\" nocase ascii\n        $s8 = \"main.CoolMaker\" ascii\n        $s9 = \"/valery/go/src/oldboy/\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ($go and 1 of ($cmd*) and 3 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.658Z",
+    "status": "active"
+}

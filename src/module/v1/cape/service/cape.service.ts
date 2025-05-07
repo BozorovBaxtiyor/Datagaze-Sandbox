@@ -12,7 +12,7 @@ import { CapeGetTotalIncidentsSizeRepository } from '../repository/cape.get.tota
 import { CapeGetTotalTasksByLastSevenDaysRepository } from '../repository/cape.get.total.tasks.by.last.seven.days';
 import { CapeGetTotalPendingTasksSizeRepository } from '../repository/cape.get.total.pending.tasks.size.repository';
 import { CapeGetIncidentDistributionRepository } from '../repository/cape.incident.distribution.repository';
-// import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';
+import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';
 import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
 import { CapeSignatureService } from './cape.signature.service';
@@ -36,7 +36,7 @@ export class CapeService {
         private readonly capeGetTotalTasksByLastSevenDaysRepository: CapeGetTotalTasksByLastSevenDaysRepository,
         private readonly capeGetTotalPendingTasksSizeRepository: CapeGetTotalPendingTasksSizeRepository,
         private readonly capeGetIncidentDistributionRepository: CapeGetIncidentDistributionRepository,
-        // private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
+        private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
     ) {}
 
     async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<any> {
@@ -187,7 +187,6 @@ export class CapeService {
 
     private mapTaskData(taskData: any, taskId: string, userId: string): any {
         const data = taskData.data || taskData; 
-        console.log('Mapped task data:', data);
         return {
             taskId: taskId || data.id,
             target: this.extractFilename(data.target) || '',
@@ -343,40 +342,40 @@ export class CapeService {
         return this.capeApiService.getReportBySha256(sha256).then(res => res.data);
     }
 
-    // async getSignaturesFromCape(): Promise<void> {
-    //     const signatureFiles = await this.fetchSignatureFilesFromCape();
-    //     if (!signatureFiles || signatureFiles.length === 0) return;
+    async getSignaturesFromCape(): Promise<void> {
+        const signatureFiles = await this.fetchSignatureFilesFromCape();
+        if (!signatureFiles || signatureFiles.length === 0) return;
         
-    //     await this.processAndStoreSignatureFiles(signatureFiles);
-    // }
+        await this.processAndStoreSignatureFiles(signatureFiles);
+    }
     
-    // private async fetchSignatureFilesFromCape(): Promise<any[]> {
-    //     const response = await this.capeApiService.getAllSignatures();
-    //     if (!response.data || !response.data.files) {
-    //         return [];
-    //     }
+    private async fetchSignatureFilesFromCape(): Promise<any[]> {
+        const response = await this.capeApiService.getAllSignatures();
+        if (!response.data || !response.data.files) {
+            return [];
+        }
         
-    //     return response.data.files;
-    // }
+        return response.data.files;
+    }
 
-    // private async processAndStoreSignatureFiles(files: any[]): Promise<void> {
-    //     for (const file of files) {
-    //         await this.processAndStoreSignatureFile(file);
-    //     }
-    // }
+    private async processAndStoreSignatureFiles(files: any[]): Promise<void> {
+        for (const file of files) {
+            await this.processAndStoreSignatureFile(file);
+        }
+    }
 
-    // private async processAndStoreSignatureFile(file: any): Promise<void> {
-    //     const { name, content } = file;
-    //     const baseName = this.extractFilename(name);
-    //     await this.storeSignatureInDatabase(baseName, content);
-    // }
+    private async processAndStoreSignatureFile(file: any): Promise<void> {
+        const { name, content } = file;
+        const baseName = this.extractFilename(name);
+        await this.storeSignatureInDatabase(baseName, content);
+    }
     
     private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
-        // await this.capeCreateYaraRepository.createSignature({
-        //     name,
-        //     rule: content,
-        //     uploadedBy: 'f0b33c9c-0019-4046-984b-f6f3d95dea61',
-        //     category: 'yar',
-        // });
+        await this.capeCreateYaraRepository.createSignature({
+            name,
+            rule: content,
+            uploadedBy: 'f0b33c9c-0019-4046-984b-f6f3d95dea61',
+            category: 'yar',
+        });
     }
 }

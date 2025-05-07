@@ -1,0 +1,8 @@
+{
+    "name": "PoisonIvy.yar",
+    "rule": "rule PoisonIvy\n{\n\t// Modified for CAPE in 2017/03\n    meta:\n\t\tauthor = \"Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/PoisonIvy\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"PoisonIvy Payload\"\n\n    strings:\n    \t//$stub = {04 08 00 53 74 75 62 50 61 74 68 18 04}\n    \t$stub = \"StubPath\"\n        $string1 = \"CONNECT %s:%i HTTP/1.0\"\n        $string2 = \"ws2_32\"\n        $string3 = \"cks=u\"\n        $string4 = \"thj@h\"\n        //$string5 = \"advpack\"\n        $regvalue1 = \"SOFTWARE\\\\Classes\\\\http\\\\shell\\\\open\\\\command\"\n        $regvalue2 = \"Software\\\\Microsoft\\\\Active Setup\\\\Installed Components\\\\\"\n    condition:\n\t\t//$stub at 0x1620 and all of ($string*) or (all of them)\n        all of ($string*) or ($stub and all of ($regvalue*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.654Z",
+    "status": "active"
+}

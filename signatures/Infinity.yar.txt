@@ -1,0 +1,8 @@
+{
+    "name": "Infinity.yar",
+    "rule": "rule Infinity\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Infinity\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Infinity Payload\"\n\n\tstrings:\n\t\t$a = \"CRYPTPROTECT_PROMPTSTRUCT\"\n\t\t$b = \"discomouse\"\n\t\t$c = \"GetDeepInfo\"\n\t\t$d = \"AES_Encrypt\"\n\t\t$e = \"StartUDPFlood\"\n\t\t$f = \"BATScripting\" wide\n\t\t$g = \"FBqINhRdpgnqATxJ.html\" wide\n\t\t$i = \"magic_key\" wide\n\n\tcondition:\n\t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.737Z",
+    "status": "active"
+}

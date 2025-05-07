@@ -1,0 +1,8 @@
+{
+    "name": "LegionLocker.yar",
+    "rule": "rule LegionLocker {\n     meta:\n        author = \"ditekSHen\"\n        description = \"Detects LegionLocker ransomware\"\n        cape_type = \"LegionLocker Payload\"\n    strings:\n        $m1 = \"+Do not run task manager, powershell, cmd etc.\" ascii wide\n        $m2 = \"3 hours your files will be deleted.\" ascii wide\n        $m3 = \"files have been encrypted by Legion Locker\" ascii wide\n        $s1 = \"passwordBytes\" fullword ascii\n        $s2 = \"_start_enc_\" ascii\n        $s3 = \"_del_desktop_\" ascii\n        $s4 = \"Processhacker\" wide\n        $s5 = \"/k color 47 && del /f /s /q %userprofile%\\\\\" wide\n        $s6 = \"Submit code\" fullword wide\n        $pdb1 = \"\\\\obj\\\\Debug\\\\LegionLocker.pdb\" ascii\n        $pdb2 = \"\\\\obj\\\\Release\\\\LegionLocker.pdb\" ascii\n    condition:\n      uint16(0) == 0x5a4d and (1 of ($m*) or 1 of ($pdb*) or 4 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.723Z",
+    "status": "active"
+}

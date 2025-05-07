@@ -1,0 +1,8 @@
+{
+    "name": "JavaDropper.yar",
+    "rule": "rule JavaDropper\n{\n    meta:\n\t    author = \" Kevin Breen <kevin@techanarchy.net>\"\n\t    ref = \"http://malwareconfig.com/stats/AlienSpy\"\n\t    maltype = \"Remote Access Trojan\"\n\t    filetype = \"exe\"\n        cape_type = \"JavaDropper Payload\"\n\n    strings:\n\t$jar = \"META-INF/MANIFEST.MF\"\n\n        $b1 = \"config.ini\"\n        $b2 = \"password.ini\"\n\n        $c1 = \"stub/stub.dll\"\n\n        $d1 = \"c.dat\"\n\n    condition:\n        $jar and (all of ($b*) or all of ($c*) or all of ($d*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.668Z",
+    "status": "active"
+}

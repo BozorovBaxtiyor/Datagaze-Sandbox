@@ -1,0 +1,8 @@
+{
+    "name": "ValidAlpha.yar",
+    "rule": "rule ValidAlpha {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects ValidApha / BlackRAT\"\n        cape_type = \"ValidAlpha Payload\"\n    strings:\n        $x1 = \"RAT/Black/\" ascii\n        $x2 = \"RAT/Black/Client_Go/\" ascii\n        $s1 = \"main.RunTask\" fullword ascii\n        $s2 = \"main.CmdShell\" fullword ascii\n        $s3 = \"main.SelfDelete\" fullword ascii\n        $s4 = \"main.RecvPacket\" fullword ascii\n        $s5 = \"main.FileDownload\" fullword ascii\n        $s6 = \"main.CaptureScreen\" fullword ascii\n        $s7 = \"main.PeekNamedPipe\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($x*) and 2 of ($s*)) or (6 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.739Z",
+    "status": "active"
+}

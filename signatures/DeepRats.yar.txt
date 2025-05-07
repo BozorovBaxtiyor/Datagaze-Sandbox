@@ -1,0 +1,8 @@
+{
+    "name": "DeepRats.yar",
+    "rule": "rule DeepRats {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects DeepRats\"\n        cape_type = \"DeepRats Payload\"\n    strings:\n        $s1 = \"https://freegeoip.live/json/https://myexternalip.com/rawin\" ascii\n        $s2 = \"github.com/cretz/bine\" ascii\n        $s3 = \"github.com/kbinani/screenshot\" ascii\n        $s4 = \"socks5://%s:%d\" ascii\n        $s5 = \"socks5://%s:%s@%s:%d\" ascii\n        $s6 = \"http://%s:%d\" ascii\n        $s7 = \"http://%s@%s:%d\" ascii\n        $s8 = \"%SystemRoot%\\\\system32\\\\--CookieAuthentication\" ascii\n        $s9 = \"tor_addr_\" ascii\n        $f1 = \".GetVnc\" ascii\n        $f2 = \".GetCommand\" ascii\n        $f3 = \".GetPayload\" ascii\n        $f4 = \".ListenCommands\" ascii\n        $f5 = \".ReceiveFile\" ascii\n        $f6 = \".RegisterImplant\" ascii\n        $f7 = \".Screenshot\" ascii\n        $f8 = \".SendFile\" ascii\n        $f9 = \".StartShell\" ascii\n        $f10 = \".UnregisterImplant\" ascii\n        $f11 = \".VncInstalled\" ascii\n        $f12 = \".PingPong\" ascii\n        $f13 = \".ListenCMD\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (7 of ($s*) or 8 of ($f*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.738Z",
+    "status": "active"
+}

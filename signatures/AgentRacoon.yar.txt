@@ -1,0 +1,8 @@
+{
+    "name": "AgentRacoon.yar",
+    "rule": "rule AgentRacoon {\n    meta:\n        author = \"ditekShen\"\n        description = \"Detects AgentRacoon\"\n        cape_type = \"AgentRacoon Payload\"\n    strings:\n        $s1 = \"UdpClient\" fullword ascii\n        $s2 = \"IPEndPoint\" fullword ascii\n        $s3 = \"get_Client\" fullword ascii\n        $s4 = \"set_ReceiveTimeout\" fullword ascii\n        $s5 = \"Command failed:\" wide\n        $s6 = \"uploaded\" wide\n        $s7 = \"downloaded\" wide\n        $s8 = \".telemetry.\" wide\n        $s9 = \"xn--\" wide\n    condition:\n      uint16(0) == 0x5a4d and 7 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.638Z",
+    "status": "active"
+}

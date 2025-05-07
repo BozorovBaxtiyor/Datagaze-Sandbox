@@ -1,0 +1,8 @@
+{
+    "name": "HawkEye.yar",
+    "rule": "rule HawkEye\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/HawkEye\"\n\t\tmaltype = \"KeyLogger\"\n\t\tfiletype = \"exe\"\n        cape_type = \"HawkEye Payload\"\n\n\tstrings:\n\t\t$key = \"HawkEyeKeylogger\" wide\n\t\t$salt = \"099u787978786\" wide\n\t\t$string1 = \"HawkEye_Keylogger\" wide\n\t\t$string2 = \"holdermail.txt\" wide\n\t\t$string3 = \"wallet.dat\" wide\n\t\t$string4 = \"Keylog Records\" wide\n        $string5 = \"<!-- do not script -->\" wide\n        $string6 = \"\\\\pidloc.txt\" wide\n        $string7 = \"BSPLIT\" wide\n\n\n\tcondition:\n\t\t$key and $salt and all of ($string*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.739Z",
+    "status": "active"
+}

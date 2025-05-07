@@ -1,0 +1,8 @@
+{
+    "name": "Gaudox.yar",
+    "rule": "rule Gaudox {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects Gaudox RAT\"\n        cape_type = \"Gaudox Payload\"\n    strings:\n        $s1 = \"hdr=%s&tid;=%s&cid;=%s&trs;=%i\" ascii wide\n        $s2 = \"\\\\\\\\\\\\\\\\.\\\\\\\\PhysicalDrive%u\" ascii wide\n        //$s3 = \"Mozilla/5.0 (X11; Linux i586; rv:31.0) Gecko/20100101 Firefox/31.0\" ascii wide\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.703Z",
+    "status": "active"
+}

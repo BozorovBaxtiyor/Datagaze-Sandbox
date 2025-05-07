@@ -1,0 +1,8 @@
+{
+    "name": "Torisma.yar",
+    "rule": "rule Torisma {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Torisma. Assocaited with Lazarus\"\n        cape_type = \"Torisma Payload\"\n    strings:\n        $s1 = \"ACTION=PREVPAGE&CODE=C%s&RES=%d\" fullword ascii\n        $s2 = \"ACTION=VIEW&PAGE=%s&CODE=%s&CACHE=%s&REQUEST=%d\" fullword ascii\n        $s3 = \"ACTION=NEXTPAGE&CODE=S%s&CACHE=%s&RES=%d\" fullword ascii\n        $s4 = \"Your request has been accepted. ClientID: {\" ascii\n        $s5 = \"Proxy-Connection: Keep-Alive\" fullword wide\n        $s6 = \"Content-Length: %d\" fullword wide\n        $o0 = { f7 f9 8b c2 89 44 24 34 48 63 44 24 34 48 8b 4c }\n        $o1 = { 48 c7 00 ff ff ff ff 48 8b 84 24 90 }\n        $o2 = { f3 aa 83 7c 24 30 01 75 34 c7 44 24 20 01 }\n    condition:\n        uint16(0) == 0x5a4d and 4 of ($s*) or (all of ($o*) and 3 of ($s*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.707Z",
+    "status": "active"
+}

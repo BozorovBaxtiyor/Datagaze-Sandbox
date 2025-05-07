@@ -1,0 +1,8 @@
+{
+    "name": "Salfram.yar",
+    "rule": "rule Salfram {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Salfram executables\"\n        cape_type = \"Salfram Payload\"\n    strings:\n        $s1 = \"!This Salfram cannot be run in DOS mode.\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.684Z",
+    "status": "active"
+}

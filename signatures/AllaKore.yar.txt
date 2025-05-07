@@ -1,0 +1,8 @@
+{
+    "name": "AllaKore.yar",
+    "rule": "rule AllaKore {\n     meta:\n        author = \"ditekSHen\"\n        description = \"Detects AllaKore\"\n        cape_type = \"AllaKore Payload\"\n    strings:\n        $x1 = \"AllaKore Remote - Chat\" fullword wide\n        $x2 = \"AllaKore Remote - Share Files\" fullword wide\n        $x3 = \"CYRUS - Chat\" fullword wide\n        $x4 = \"CYRUS - Share Files\" fullword wide\n        $x5 = \"<|REDIRECT|><|GETFOLDERS|>\" fullword wide\n        $x6 = \"<|REDIRECT|><|DOWNLOADFILE|>\" fullword wide\n        $x7 = \"<|REDIRECT|><|WHEELMOUSE|>\" fullword wide\n        $x8 = \"<|REDIRECT|><|SETMOUSE\" wide\n        $x9 = \"<|CHECKIDPASSWORD|>\" fullword wide\n        $x10 = \"<|KEYBOARDSOCKET|>\" fullword wide\n        $x11 = \"<|REDIRECT|><|CLIPBOARD|>\" fullword wide\n        $x12 = \"<|IDEXISTS!REQUESTPASSWORD|>\" fullword wide\n        $x13 = \"<|GETFULLSCREENSHOT|>\" fullword wide\n        $x14 = \"<|MAINSOCKET|>\" fullword ascii\n        $s1 = \"You can not connect with yourself!\" wide\n        $s2 = \"Waiting for authentication...\" wide\n        $s3 = \"Connected support!\" wide\n        $s4 = \"ID does nor exists.\" wide\n        $s5 = \"Finding the ID...\" wide\n        $s6 = \"PC is Busy!\" wide\n        $s7 = \"Upload &  Execute\" fullword ascii\n        $s8 = \"Download file selected\" fullword ascii\n        $s9 = \"CaptureKeys_TimerTimer\" fullword ascii\n        $s10 = \"Remote File Manager\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (4 of ($x*) or 4 of ($s*) or (3 of ($s*) and 2 of ($x*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.739Z",
+    "status": "active"
+}

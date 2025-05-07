@@ -1,0 +1,8 @@
+{
+    "name": "Impacket.yar",
+    "rule": "rule Impacket\n{\nmeta:\n\tdescription = \"Identifies Impacket, a collection of Python classes for working with network protocols.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-08\"\n\treference = \"https://github.com/SecureAuthCorp/impacket\"\n\ttlp = \"White\"\n\nstrings:\n\t$ = \"impacket.crypto\" ascii wide\n\t$ = \"impacket.dcerpc\" ascii wide\n\t$ = \"impacket.examples\" ascii wide\n\t$ = \"impacket.hresult_errors\" ascii wide\n\t$ = \"impacket.krb5\" ascii wide\n\t$ = \"impacket.nmb\" ascii wide\n\t$ = \"impacket.nt_errors\" ascii wide\n\t$ = \"impacket.ntlm\" ascii wide\n\t$ = \"impacket.smb\" ascii wide\n\t$ = \"impacket.smb3\" ascii wide\n\t$ = \"impacket.smb3structs\" ascii wide\n\t$ = \"impacket.smbconnection\" ascii wide\n\t$ = \"impacket.spnego\" ascii wide\n\t$ = \"impacket.structure\" ascii wide\n\t$ = \"impacket.system_errors\" ascii wide\n\t$ = \"impacket.uuid\" ascii wide\n\t$ = \"impacket.version\" ascii wide\n\t$ = \"impacket.winregistry\" ascii wide\n\ncondition:\n\tany of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.662Z",
+    "status": "active"
+}

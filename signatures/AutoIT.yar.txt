@@ -1,0 +1,8 @@
+{
+    "name": "AutoIT.yar",
+    "rule": "rule AutoIT_Compiled\n{\nmeta:\n\tdescription = \"Identifies compiled AutoIT script (as EXE).\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-09\"\n\ttlp = \"White\"\n\nstrings:\n\t$ = \"#OnAutoItStartRegister\" ascii wide\n\t$ = \"#pragma compile\" ascii wide\n\t$ = \"/AutoIt3ExecuteLine\" ascii wide\n\t$ = \"/AutoIt3ExecuteScript\" ascii wide\n\t$ = \"/AutoIt3OutputDebug\" ascii wide\n\t$ = \">>>AUTOIT NO CMDEXECUTE<<<\" ascii wide\n\t$ = \">>>AUTOIT SCRIPT<<<\" ascii wide\n\t$ = \"This is a third-party compiled AutoIt script.\" ascii wide\n\ncondition:\n\tuint16(0) == 0x5A4D and any of them\n}\n\nrule AutoIT_Script\n{\nmeta:\n\tdescription = \"Identifies AutoIT script.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-09\"\n\ttlp = \"White\"\n\nstrings:\n\t$ = \"#OnAutoItStartRegister\" ascii wide\n\t$ = \"#pragma compile\" ascii wide\n\t$ = \"/AutoIt3ExecuteLine\" ascii wide\n\t$ = \"/AutoIt3ExecuteScript\" ascii wide\n\t$ = \"/AutoIt3OutputDebug\" ascii wide\n\t$ = \">>>AUTOIT NO CMDEXECUTE<<<\" ascii wide\n\t$ = \">>>AUTOIT SCRIPT<<<\" ascii wide\n\t$ = \"This is a third-party compiled AutoIt script.\" ascii wide\n\t$ = \"AU3!EA06\" ascii wide\n\ncondition:\n\tuint16(0) != 0x5A4D and any of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.605Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "StrifeWater.yar",
+    "rule": "rule StrifeWater {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects StrifeWater RAT\"\n        cape_type = \"StrifeWater RAT Payload\"\n    strings:\n        $s1 = \"example/1.0\" fullword wide\n        $s2 = \"coname:\" fullword ascii\n        $s3 = \"*elev:\" fullword ascii\n        $s4 = \"*uname:\" fullword ascii\n        $s5 = \"--BoundrySign\" ascii\n        $s6 = \"000000c:\\\\users\\\\public\\\\libraries\\\\tmp.bi\" ascii\n        $s7 = \"9c4arSBr32g6IOni\" fullword ascii\n        $pdb = \"\\\\win8\\\\Desktop\\\\ishdar_win8\\\\\" ascii\n        $xn1 = \"techzenspace.com\" fullword wide\n        $xn2 = \"87.120.8.210\" wide\n        $xn3 = \"192.168.40.27\" wide\n        $n1 = /RVP\\/index\\d+\\.php/ fullword wide\n        $n2 = \"tid=%d&code=%s&fname=%s&apiData=%s\" fullword ascii\n        $n3 = \"code=%s&tid=%d&fname=%s&apiData=%s\" fullword ascii\n        $n4 = \"Content-Disposition: form-data; name=\\\"token\\\"\" fullword ascii\n        $n5 = \"Content-Disposition: form-data; name=\\\"apiData\\\"\" fullword ascii\n        $n6 = \"Content-Disposition: form-data; name=\\\"data\\\"; filename=\\\"\" fullword ascii\n        $n7 = \"Content-Disposition: form-data; name=\\\"tid\\\"\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (2 of ($xn*) or 6 of ($s*) or 6 of ($n*) or (1 of ($xn*) and 4 of them) or ($pdb and 4 of them) or (3 of ($s*) and 3 of ($n*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.657Z",
+    "status": "active"
+}

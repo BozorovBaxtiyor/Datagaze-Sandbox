@@ -1,0 +1,8 @@
+{
+    "name": "VMProtectStub.yar",
+    "rule": "rule VMProtectStub\n{\nmeta:\n\tdescription = \"Identifies VMProtect packer stub.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-05\"\n\ttlp = \"White\"\n\nstrings:\n$ = \".?AV?$VirtualAllocationManager@VRealAllocationStrategy@@@@\" ascii wide\n$ = \".?AVEncryptedFastDllStream@@\" ascii wide\n$ = \".?AVGetBlock_CC@HardwareID@@\" ascii wide\n$ = \".?AVHookManager@@\" ascii wide\n$ = \".?AVIDllStream@@\" ascii wide\n$ = \".?AVIGetBlock@HardwareID@@\" ascii wide\n$ = \".?AVIHookManager@@\" ascii wide\n$ = \".?AVIUrlBuilderSource@@\" ascii wide\n$ = \".?AVIVirtualAllocationManager@@\" ascii wide\n$ = \".?AVMyActivationSource@@\" ascii wide\n\ncondition:\n\t2 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.604Z",
+    "status": "active"
+}

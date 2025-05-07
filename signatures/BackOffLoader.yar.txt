@@ -1,0 +1,8 @@
+{
+    "name": "BackOffLoader.yar",
+    "rule": "rule BackOffLoader\n{\n    meta:\n        author = \"enzo\"\n        description = \"BackOffLoader Payload\"\n        cape_type = \"BackOffLoader Payload\"\n    strings:\n        $str1 = \"uid=%I64u&uinfo=%s&win=%d.%d&bits=%d&vers=%s&build=%s\"\n        $str2 = \"&bots=\"\n        $str3 = \"{b:%s|%s}\"\n        $str4 = \"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0)\"\n    condition:\n        all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.662Z",
+    "status": "active"
+}

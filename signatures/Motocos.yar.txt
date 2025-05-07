@@ -1,0 +1,8 @@
+{
+    "name": "Motocos.yar",
+    "rule": "rule Motocos {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Motocos ransomware\"\n        cape_type = \"Motocos Payload\"\n    strings:\n        $s1 = \"Block Investigation Tools\" wide\n        $s2 = \"powershell.exe,taskmgr.exe,procexp.exe,procmon.exe\" wide\n        $s3 = \"google.com,youtube.com,baidu.com,facebook.com,amazon.com,360.cn,yahoo.com,wikipedia.org,zoom.us,live.com,reddit.com,netflix.com,microsoft.com,instagram.com,vk.com,\" wide\n        $s4 = \"START ----\" wide\n        $s5 = \"TEngine.Clear_EventLog_Result\" wide\n        $s6 = \"TEngine.EncryptLockFiles\" wide\n        $s7 = \"TEngine.CleanShadowFiles\" wide\n        $s8 = \"TDNSUtils.SendCommand\" wide\n    condition:\n        uint16(0) == 0x5a4d and 4 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.689Z",
+    "status": "active"
+}

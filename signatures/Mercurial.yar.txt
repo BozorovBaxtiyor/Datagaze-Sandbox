@@ -1,0 +1,8 @@
+{
+    "name": "Mercurial.yar",
+    "rule": "rule Mercurial {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Mercurial infostealer\"\n        cape_type = \"Mercurial Payload\"\n    strings:\n        $x1 = \"mercurial grabber\" wide nocase\n        $x2 = \"\\\"text\\\":\\\"Mercurial Grabber |\" wide\n        $x3 = \"/nightfallgt/mercurial-grabber\" wide\n        $s1 = \"/LimerBoy/Adamantium-Thief/\" ascii\n        $s2 = \"Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0\" fullword wide\n        $s3 = \"StealCookies\" fullword ascii\n        $s4 = \"StealPasswords\" fullword ascii\n        $s5 = \"DetectDebug\" fullword ascii\n        $s6 = \"CaptureScreen\" fullword ascii\n        $s7 = \"WebhookContent\" fullword ascii\n        $s8 = /Grab(Token|Product|IP|Hardware)/ fullword ascii\n        $p1 = \"[\\\\w-]{24}\\\\.[\\\\w-]{6}\\\\.[\\\\w-]{27}\" fullword ascii wide\n        $p2 = \"mfa\\\\.[\\\\w-]{84}\" fullword ascii wide\n    condition:\n        uint16(0) == 0x5a4d and (1 of ($x*) or 5 of ($s*) or (all of ($p*) and 3 of ($s*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.693Z",
+    "status": "active"
+}

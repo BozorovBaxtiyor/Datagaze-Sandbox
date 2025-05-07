@@ -1,0 +1,8 @@
+{
+    "name": "Petya.yar",
+    "rule": "rule Petya\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Petya Payload\"\n        cape_type = \"Petya Payload\"\n    strings:\n        $a1 = \"CHKDSK is repairing sector\"\n        $a2 = \"wowsmith123456@posteo.net\"\n        $a3 = \"1Mz7153HMuxXTuR2R1t78mGSdzaAtNbBWX\" wide\n    condition:\n        uint16(0) == 0x5A4D and (all of ($a*))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.672Z",
+    "status": "active"
+}

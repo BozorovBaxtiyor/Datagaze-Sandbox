@@ -1,0 +1,8 @@
+{
+    "name": "Avaddon.yar",
+    "rule": "rule Avaddon {\n    meta:\n      author = \"ditekshen\"\n      description = \"Avaddon Payload\"\n      cape_type = \"Avaddon payload\"\n    strings:\n      $s1 = \"\\\\IMAGEM~1.%d\\\\VISUA~1\\\\BIN\\\\%s.exe\" ascii\n      $s2 = \"\\\\IMAGEM~1.%.2d-\\\\VISUA~1\\\\BIN\\\\%s.exe\" ascii\n      $s3 = \"\\\\IMAGEM~1.%d-Q\\\\VISUA~1\\\\BIN\\\\%s.exe\" ascii\n      $s4 = \"\\\\IMAGEM~1.%d\\\\%s.exe\" ascii\n      $s5 = \"EW6]>mFXDS?YBi?W5] CY 4Z8Y BY7Y BZ8Z CY7Y AY8Z CZ8Y!Y:Z\" ascii\n      $s6 = \"FY  AY 'Z      ;W      @Y  @Y 'Z    Y  @Y (Z\" ascii\n      $s7 = \"\\\"rcid\\\":\\\"\" fullword ascii\n      $s8 = \"\\\"ip\\\":\\\"\" fullword ascii wide\n      $s9 = \".?AUANEventIsGetExternalIP@@\" fullword ascii\n      $s10 = \".?AUANEventGetCpuMax@@\" fullword ascii\n      $s11 = \"\\\"hdd\\\":\\\"\" fullword ascii\n      $s12 = \"\\\"ext\\\":\\\"\" fullword ascii wide\n   condition:\n      uint16(0) == 0x5a4d and 8 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.625Z",
+    "status": "active"
+}

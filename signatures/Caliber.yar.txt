@@ -1,0 +1,8 @@
+{
+    "name": "Caliber.yar",
+    "rule": "import \"pe\"\n\nrule Caliber {\n    meta:\n        author      = \"c3rb3ru5\"\n        description = \"44Caliber Stealer\"\n        type        = \"malware.stealer\"\n        os          = \"windows\"\n        tlp         = \"white\"\n        rev         = \"1\"\n        cape_type   = \"Caliber Payload\"\n    strings:\n        $stealer_name = \"44 CALIBER STEALER\" ascii wide\n        $webhooks     = /https?:\\/\\/discord.com\\/api\\/webhooks\\// ascii wide\n    condition:\n        uint16(0) == 0x5a4d and\n        uint32(uint32(0x3c)) == 0x00004550 and\n        pe.imports(\"mscoree.dll\") and\n        filesize < 1MB and\n        $stealer_name and\n        $webhooks\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.708Z",
+    "status": "active"
+}

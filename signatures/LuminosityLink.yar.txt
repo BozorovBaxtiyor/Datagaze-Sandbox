@@ -1,0 +1,8 @@
+{
+    "name": "LuminosityLink.yar",
+    "rule": "rule LuminosityLink\n{\n    meta:\n        author = \" Kevin Breen <kevin@techanarchy.net>\"\n        ref = \"http://malwareconfig.com/stats/LuminosityLink\"\n        maltype = \"Remote Access Trojan\"\n        filetype = \"exe\"\n        cape_type = \"LuminosityLink Payload\"\n\n    strings:\n        $a = \"SMARTLOGS\" wide\n        $b = \"RUNPE\" wide\n        $c = \"b.Resources\" wide\n        $d = \"CLIENTINFO*\" wide\n        $e = \"Invalid Webcam Driver Download URL, or Failed to Download File!\" wide\n        $f = \"Proactive Anti-Malware has been manually activated!\" wide\n        $g = \"REMOVEGUARD\" wide\n        $h = \"C0n1f8\" wide\n        $i = \"Luminosity\" wide\n        $j = \"LuminosityCryptoMiner\" wide\n        $k = \"MANAGER*CLIENTDETAILS*\" wide\n\n    condition:\n        all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.678Z",
+    "status": "active"
+}

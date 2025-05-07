@@ -1,0 +1,8 @@
+{
+    "name": "GhostEmperor.yar",
+    "rule": "import \"pe\"\n\nrule GhostEmperorRC {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects / Hunts for GhostEmperor Stage 4 Remote Control Payload\"\n        cape_type = \"GhostEmperor Remote Control Payload\"\n    condition:\n        uint16(0) == 0x5a4d and pe.is_dll() and pe.number_of_exports == 2 and pe.exports(\"1\") and pe.exports(\"__acrt_iob_func\")\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.671Z",
+    "status": "active"
+}

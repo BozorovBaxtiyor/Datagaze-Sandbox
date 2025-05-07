@@ -1,0 +1,8 @@
+{
+    "name": "CobaltStrikeStager.yar",
+    "rule": "rule CobaltStrikeStager\n{\n    meta:\n        author = \"@dan__mayer <daniel@stairwell.com>\"\n        description = \"Cobalt Strike Stager Payload\"\n        cape_type = \"CobaltStrikeStager Payload\"\n    strings:\n        $smb = { 68 00 B0 04 00 68 00 B0 04 00 6A 01 6A 06 6A 03 52 68 45 70 DF D4 }\n        $http_x86 = { 68 6E 65 74 00 68 77 69 6E 69 54 68 4C 77 26 07 }\n        $http_x64 = { 49 BE 77 69 6E 69 6E 65 74 00 41 56 49 89 E6 4C 89 F1 41 BA 4C 77 26 07 }\n        $dns = { 68 00 10 00 00 68 FF FF 07 00 6A 00 68 58 A4 53 E5 }\n\n    condition:\n        any of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.626Z",
+    "status": "active"
+}

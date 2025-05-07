@@ -1,0 +1,8 @@
+{
+    "name": "MalScript_Tricks.yar",
+    "rule": "rule MalScript_Tricks\n{\nmeta:\n\tdescription = \"Identifies tricks often seen in malicious scripts such as moving the window off-screen or resizing it to zero.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-12\"\n\ttlp = \"White\"\n\nstrings:\n\t$s1 = \"window.moveTo -\" ascii wide nocase\n\t$s2 = \"window.resizeTo 0\" ascii wide nocase\n\n\t$x1 = \"window.moveTo(-\" ascii wide nocase\n\t$x2 = \"window.resizeTo(\" ascii wide nocase\n\ncondition:\n\t(\n\tall of ($s*) or\n\tall of ($x*)\n\t) and\n\tfilesize <50KB\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.606Z",
+    "status": "active"
+}

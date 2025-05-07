@@ -1,0 +1,8 @@
+{
+    "name": "KlingonRAT.yar",
+    "rule": "rule KlingonRAT {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects KlingonRAT\"\n        cape_type = \"KlingonRAT Payload\"\n    strings:\n        $go = \"Go build ID:\" ascii\n        $s1 = \"/UCRelease/src/client/uac/once/\"\n        $s2 = \"%T\\\\AppData\\\\Local\\\\Windows Update\\\\\"\n        $s3 = \"%TSoftware\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Image File Execution Options\\\\\"\n        $s4 = \"wmic /namespace:'\\\\\\\\root\\\\subscription' PATH\"\n        $s5 = \"C:\\\\Windows\\\\System32\\\\fodhelper.exeCaption,ParentProcessId,ProcessId\"\n        $s6 = \"ldpro.exelsass.exeluall.exeluspt.exe\"\n        $s7 = \"scangui.exedeps/lsass.exeetrustcipe.exefile\"\n        $s8 = \"alogserv.exeaplica32.exeapvxdwin.exeatro55en.exeautodown.exeavconsol.exeavgserv9.exeavkwctl9.exeavltmain.exeavpdos32.exeavsynmgr.exeavwupd32.exeavwupsrv.exe\"\n        $c1 = \"%s/keyLogger?machineId=%s\" ascii\n        $c2 = \"%s/stealer?machineId=%s\" ascii\n        $c3 = \"%s/lsass?machineId=%s\" ascii\n        $c4 = \"%s/logger?machineId=%s\" ascii\n        $c5 = \"%s/machineInfo?machineId=%s\" ascii\n        $c6 = \"failurehttps://%s:%d/botif-modified-sinceillegal\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ($go) and (3 of ($c*) or 5 of ($s*) or (3 of ($s*) and 1 of ($c*)))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.709Z",
+    "status": "active"
+}

@@ -1,0 +1,8 @@
+{
+    "name": "BlackShades.yar",
+    "rule": "rule BlackShades\n{\n    meta:\n        author = \"Brian Wallace (@botnet_hunter)\"\n        ref = \"http://blog.cylance.com/a-study-in-bots-blackshades-net\"\n        family = \"blackshades\"\n        cape_type = \"BlackShades Payload\"\n\n    strings:\n        $string1 = \"bss_server\"\n        $string2 = \"txtChat\"\n        $string3 = \"UDPFlood\"\n    condition:\n        all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.657Z",
+    "status": "active"
+}

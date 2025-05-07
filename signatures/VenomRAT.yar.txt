@@ -1,0 +1,8 @@
+{
+    "name": "VenomRAT.yar",
+    "rule": "rule VenomRAT {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects VenomRAT\"\n        cape_type = \"VenomRAT Payload\"\n    strings:\n        $x1 = \"Venom RAT + HVNC\" fullword ascii\n        $x2 = \"Venom\" fullword ascii\n        $x3 = \"VenomByVenom\" fullword wide\n        $s1 = \"/c schtasks /create /f /sc onlogon /rl highest /tn \\\"\" fullword wide\n        $s2 = \"UmVjZWl2ZWQ\" wide\n        $s3 = \"Pac_ket\" fullword wide\n        $s4 = \"Po_ng\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (1 of ($x*) and 2 of ($s*))\n}\n\nrule venomrat_kingrat {\n    meta:\n        author = \"jeFF0Falltrades\"\n        cape_type = \"VenomRAT Payload\"\n    strings:\n        $str_id_venomrat = \"venomrat\" wide ascii nocase\n        $str_hvnc = \"HVNC_REPLY_MESSAGE\" wide ascii\n        $str_offline_keylogger = \"OfflineKeylog sending....\" wide ascii\n        $str_videocontroller = \"select * from Win32_VideoController\" wide ascii\n        $byte_aes_key_base = { 7E [3] 04 73 [3] 06 80 }\n        $patt_config = { 72 [3] 70 80 [3] 04 }\n        $patt_keylog = {73 [3] 06 80 [3] 04}\n        $patt_verify_hash = { 7e [3] 04 6f [3] 0a 6f [3] 0a 74 [3] 01 }\n\n    condition:\n        5 of them and #patt_config >= 10\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.661Z",
+    "status": "active"
+}

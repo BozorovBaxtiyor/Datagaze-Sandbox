@@ -1,0 +1,8 @@
+{
+    "name": "LostDoor.yar",
+    "rule": "rule LostDoor\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/LostDoor\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"LostDoor Payload\"\n\n    strings:\n    \t$a0 = {0D 0A 2A 45 44 49 54 5F 53 45 52 56 45 52 2A 0D 0A}\n        $a1 = \"*mlt* = %\"\n        $a2 = \"*ip* = %\"\n        $a3 = \"*victimo* = %\"\n        $a4 = \"*name* = %\"\n        $b5 = \"[START]\"\n        $b6 = \"[DATA]\"\n        $b7 = \"We Control Your Digital World\" wide ascii\n        $b8 = \"RC4Initialize\" wide ascii\n        $b9 = \"RC4Decrypt\" wide ascii\n\n    condition:\n    \tall of ($a*) or all of ($b*)\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.674Z",
+    "status": "active"
+}

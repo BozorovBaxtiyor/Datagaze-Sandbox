@@ -1,0 +1,8 @@
+{
+    "name": "KTLVdoor.yar",
+    "rule": "rule KTLVdoor {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects KTLVdoor\"\n        cape_type = \"KTLVdoor Payload\"\n    strings:\n        $s1 = \"/cmd/acc/agent_acc\" ascii\n        $s2 = \"main.DLLWMain\" ascii\n        $s3 = \"main.checkSilent\" ascii\n        $h1 = \".handleInteractiveShell\" ascii\n        $h2 = \".handleNetstat\" ascii\n        $h3 = \".handleProcess\" ascii\n        $h4 = \".handleRefreshHostInfo\" ascii\n        $h5 = \".handleTimestomp\" ascii\n        $h6 = \".handleSoInject\" ascii\n        $h7 = \".HandleRegInfo\" ascii\n        $h8 = \".handlePortscan\" ascii\n        $h9 = \".handleReflectDllInject\" ascii\n        $h10 = \".handleFileDownload\" ascii\n        $f1 = \".RdpWithNTLM.\" ascii\n        $f2 = \".FingerPrintOs.\" ascii\n        $f3 = \".ScanWMI.\" ascii\n        $f4 = \".ScanWinRM.\" ascii\n        $f5 = \".ScanWeb.\" ascii\n        $f6 = \".ScanSmb2.\" ascii\n        $f7 = \".ScanRDP.\" ascii\n        $f8 = \".ScanPing.\" ascii\n        $f9 = \".ScanOxid.\" ascii\n        $f10 = \".ScanMssql.\" ascii\n        $f11 = \".ScanBanner.\" ascii\n        $fr1 = /\\.proxy[CS]2[CS](TC|UD)P/ ascii\n        $fr2 = /\\.Scan(WMI|WinRM|Web|Smb2|RDP|Ping|Oxid|Mssql|Banner)\\./ ascii\n    condition:\n        (uint16(0) == 0x5a4d or uint16(0) == 0x457f) and ((6 of ($h*)) or (12 of ($f*)) or (2 of ($h*) and 4 of ($f*)) or (1 of ($s*) and (4 of ($h*) or 4 of ($f*))) or (13 of them))\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.652Z",
+    "status": "active"
+}

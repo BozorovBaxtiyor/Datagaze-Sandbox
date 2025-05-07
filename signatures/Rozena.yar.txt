@@ -1,0 +1,8 @@
+{
+    "name": "Rozena.yar",
+    "rule": "rule Rozena\n{\n    meta:\n        cape_type = \"Rozena Payload\"\n    strings:\n        $ip_port = {FF D5 6A 0A 68 [4] 68 [4] 89 E6 50 50 50 50 40 50 40 50 68 [4] FF D5}\n        $socket = {6A 00 6A 04 56 57 68 [4] FF D5 [0-5] 8B 36 6A 40 68 00 10 00 00 56 6A 00 68}\n    condition:\n        all of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.720Z",
+    "status": "active"
+}

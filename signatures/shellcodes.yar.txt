@@ -1,0 +1,8 @@
+{
+    "name": "shellcodes.yar",
+    "rule": "rule shellcode_patterns\n{\n    meta:\n        author = \"nex\"\n        description = \"Matched shellcode byte patterns\"\n\n    strings:\n        $mz = { 4d 5a }\n        $shell1 = { 64 8b 64 }\n        $shell2 = { 64 a1 30 }\n        $shell3 = { 64 8b 15 30 }\n        $shell4 = { 64 8b 35 30 }\n        $shell5 = { 55 8b ec 83 c4 }\n        $shell6 = { 55 8b ec 81 ec }\n        $shell7 = { 55 8b ec e8 }\n        $shell8 = { 55 8b ec e9 }\n    condition:\n        not ($mz at 0) and\n        any of ($shell*)\n}\n\nrule shellcode_get_eip\n{\n    meta:\n        author = \"William Ballenthin\"\n        email = \"william.ballenthin@fireeye.com\"\n        license = \"Apache 2.0\"\n        copyright = \"FireEye, Inc\"\n        description = \"Match x86 that appears to fetch $PC.\"\n\n    strings:\n       // 0:  e8 00 00 00 00          call   5 <_main+0x5>\n       // 5:  58                      pop    eax\n       // 6:  5b                      pop    ebx\n       // 7:  59                      pop    ecx\n       // 8:  5a                      pop    edx\n       // 9:  5e                      pop    esi\n       // a:  5f                      pop    edi\n       $x86 = { e8 00 00 00 00 (58 | 5b | 59 | 5a | 5e | 5f) }\n\n    condition:\n       $x86\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.743Z",
+    "status": "active"
+}

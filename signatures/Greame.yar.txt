@@ -1,0 +1,8 @@
+{
+    "name": "Greame.yar",
+    "rule": "rule Greame\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Greame\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Greame Payload\"\n\n\tstrings:\n    \t\t$a = {23 23 23 23 40 23 23 23 23 E8 EE E9 F9 23 23 23 23 40 23 23 23 23}\n            $b = {23 23 23 23 40 23 23 23 23 FA FD F0 EF F9 23 23 23 23 40 23 23 23 23}\n            $c = \"EditSvr\"\n            $d = \"TLoader\"\n\t\t\t$e = \"Stroks\"\n            $f = \"Avenger by NhT\"\n\t\t\t$g = \"####@####\"\n\t\t\t$h = \"GREAME\"\n\n\n\n    condition:\n    \t\tall of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.691Z",
+    "status": "active"
+}

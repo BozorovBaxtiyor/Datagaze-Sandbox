@@ -1,0 +1,8 @@
+{
+    "name": "Kinsing.yar",
+    "rule": "rule Kinsing {\n    meta:\n      author = \"ditekshen\"\n      description = \"Kinsing RAT payload\"\n      cape_type = \"Kinsing payload\"\n    strings:\n      $s1 = \"backconnect\" ascii\n      $s2 = \"connectForSocks\" ascii\n      $s3 = \"downloadAndExecute\" ascii\n      $s4 = \"download_and_exec\" ascii\n      $s5 = \"masscan\" ascii\n      $s6 = \"UpdateCommand:\" ascii\n      $s7 = \"exec_out\" ascii\n      $s8 = \"doTask with type %s\" ascii\n   condition:\n      uint16(0) == 0x457f and 6 of them\n}\n",
+    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
+    "category": "yar",
+    "uploadedAt": "2025-05-07T09:54:43.627Z",
+    "status": "active"
+}

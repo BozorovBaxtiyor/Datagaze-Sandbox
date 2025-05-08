@@ -1,8 +1,0 @@
-{
-    "name": "NetSupport.yar",
-    "rule": "rule NetSupport {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects NetSupport client\"\n        cape_type = \"NetSupport Payload\"\n    strings:\n        $s1 = \":\\\\nsmsrc\\\\nsm\\\\\" fullword ascii\n        $s2 = \"name=\\\"NetSupport Client Configurator\\\"\" fullword ascii\n        $s3 = \"<description>NetSupport Manager Remote Control.</description>\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 2 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.739Z",
-    "status": "active"
-}

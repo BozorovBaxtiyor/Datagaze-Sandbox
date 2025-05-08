@@ -1,8 +1,0 @@
-{
-    "name": "Adfind.yar",
-    "rule": "rule Adfind\n{\nmeta:\n\tdescription = \"Identifies Adfind, a Command line Active Directory query tool.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-08\"\n\treference = \"http://www.joeware.net/freetools/tools/adfind/\"\n\ttlp = \"White\"\n\tcape_type = \"Adfind Payload\"\n\nstrings:\n\t$ = \"E:\\\\DEV\\\\cpp\\\\vs\\\\AdFind\\\\AdFind\\\\AdFind.cpp\" ascii wide\n\t$ = \"adfind.cf\" ascii wide\n\t$ = \"adfind -\" ascii wide\n\t$ = \"adfind /\" ascii wide\n\t$ = \"you have encountered a STAT binary blob that\" ascii wide\n\ncondition:\n\tany of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.648Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "PWSHCUMII.yar",
-    "rule": "rule PWSHCUMII {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects multi-dropper PowerShell\"\n        cape_type = \"CUMII Payload\"\n    strings:\n        $s1 = \".('{1}{$}'.replace('$','0')\" ascii nocase\n        $s2 = \",'I').replace('!','ex')\" ascii nocase\n        $s3 = \"'.replace('*','0001')\" ascii nocase\n        $s4 = \"Remove-Item $\" ascii nocase\n        $s5 = \"the File will start cumiing\" ascii nocase\n        $b1 = \"011001100111010101101110011*\" ascii\n        $b2 = \"0101001000*1110110*010011111\" ascii\n        $b3 = \"01001101010110101001*11*0000\" ascii\n    condition:\n       (3 of ($s*) and 1 of ($b*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.677Z",
-    "status": "active"
-}

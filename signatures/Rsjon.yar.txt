@@ -1,8 +1,0 @@
-{
-    "name": "Rsjon.yar",
-    "rule": "rule Rsjon {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Rsjon / Ryzerlo / HiddenTear ransomware\"\n        cape_type = \"Rsjon Payload\"\n    strings:\n        $pdb1 = \"C:\\\\Users\\\\brknc\\\\source\\\\repos\\\\\" ascii\n        $pdb2 = \"\\\\rs-jon\\\\obj\\\\Debug\\\\rs-jon.pdb\" ascii\n        $pdb3 = \"\\\\rs-jon\\\\obj\\\\Release\\\\rs-jon.pdb\" ascii\n        $x1 = \"READ_ME_PLZ.txt\" wide\n        $x2 = \"Files has been encrypted with rs-jon\" wide\n        $x3 = \".rsjon\" wide\n        $x4 = \"bitcoins or kebab\" wide\n        $x5 = /rs[-_]jon/ fullword ascii wide\n        $s1 = \"SPIF_UPDATEINIFILE\" fullword ascii\n        $s2 = \"SPI_SETDESKWALLPAPER\" fullword ascii\n        $s3 = \"bytesToBeEncrypted\" fullword ascii // Same as Apsotle\n        $s4 = \"SendPassword\" fullword ascii\n        $s5 = \"EncryptFile\" ascii\n        $s6 = \"fWinIni\" fullword ascii\n        $s7 = \"BTCAdress\" fullword ascii\n        $s8 = \"self_destruck\" fullword ascii // Simialr to Apsotle (SelfDelete)\n        $c1 = \"?computer_name=\" wide\n        $c2 = \"&serialnumber=\" wide\n        $c3 = \"&password=\" wide\n        $c4 = \"&allow=ransom\" wide\n        $c5 = \"://darkjon.tk/\" wide\n        $c6 = \"/rnsm/write.php\" wide\n    condition:\n        uint16(0) == 0x5a4d and (3 of ($x*) or 6 of ($s*) or 4 of ($c*) or (2 of ($c*) and 4 of ($s*)) or (1 of ($pdb*) and 1 of them))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.715Z",
-    "status": "active"
-}

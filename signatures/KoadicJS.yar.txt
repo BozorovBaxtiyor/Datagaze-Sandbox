@@ -1,8 +1,0 @@
-{
-    "name": "KoadicJS.yar",
-    "rule": "rule KoadicJS {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Koadic post-exploitation framework JS payload\"\n        cape_type = \"KoadicJS Payload\"\n    strings:\n        $s1 = \"window.moveTo(-\" ascii\n        $s2 = \"window.onerror = function(sMsg, sUrl, sLine) { return false; }\" fullword ascii\n        $s3 = \"window.onfocus = function() { window.blur(); }\" fullword ascii\n        $s4 = \"window.resizeTo(\" ascii\n        $s5 = \"window.blur();\" fullword ascii\n        $hf1 = \"<hta:application caption=\\\"no\\\" windowState=\\\"minimize\\\" showInTaskBar=\\\"no\\\"\" fullword ascii\n        $hf2 = \"<hta:application caption=\\\"no\\\" showInTaskBar=\\\"no\\\" windowState=\\\"minimize\\\" navigable=\\\"no\\\" scroll=\\\"no\\\"\"\n        $ht1 = \"<hta:application\" ascii\n        $ht2 = \"caption=\\\"no\\\"\" ascii\n        $ht3 = \"showInTaskBar=\\\"no\\\"\" ascii\n        $ht4 = \"windowState=\\\"minimize\\\"\" ascii\n        $ht5 = \"navigable=\\\"no\\\"\" ascii\n        $ht6 = \"scroll=\\\"no\\\"\" ascii\n    condition:\n        all of ($s*) and (1 of ($hf*) or all of ($ht*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.739Z",
-    "status": "active"
-}

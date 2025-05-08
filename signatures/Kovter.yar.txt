@@ -1,8 +1,0 @@
-{
-    "name": "Kovter.yar",
-    "rule": "rule Kovter\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Kovter Payload\"\n        cape_type = \"Kovter Payload\"\n    strings:\n        $a1 = \"chkok\"\n        $a2 = \"k2Tdgo\"\n        $a3 = \"13_13_13\"\n        $a4 = \"Win Server 2008 R2\"\n    condition:\n        uint16(0) == 0x5A4D and (all of ($a*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.657Z",
-    "status": "active"
-}

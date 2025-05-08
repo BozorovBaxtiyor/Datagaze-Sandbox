@@ -1,8 +1,0 @@
-{
-    "name": "PredatorPain.yar",
-    "rule": "rule PredatorPain\n{\n\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/PredatorPain\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"PredatorPain Payload\"\n\n\tstrings:\n\t\t$string1 = \"holderwb.txt\" wide\n\t\t$string3 = \"There is a file attached to this email\" wide\n\t\t$string4 = \"screens\\\\screenshot\" wide\n\t\t$string5 = \"Disablelogger\" wide\n\t\t$string6 = \"\\\\pidloc.txt\" wide\n        $string7 = \"clearie\" wide\n        $string8 = \"clearff\" wide\n        $string9 = \"emails should be sent to you shortly\" wide\n        $string10 = \"jagex_cache\\\\regPin\" wide\n        $string11 = \"open=Sys.exe\" wide\n\t\t$ver1 = \"PredatorLogger\" wide\n\t\t$ver2 = \"EncryptedCredentials\" wide\n        $ver3 = \"Predator Pain\" wide\n\n\tcondition:\n\t\t7 of ($string*) and any of ($ver*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.741Z",
-    "status": "active"
-}

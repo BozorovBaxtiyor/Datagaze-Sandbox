@@ -1,8 +1,0 @@
-{
-    "name": "PingBack.yar",
-    "rule": "rule PingBack {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects PingBack ICMP backdoor\"\n        cape_type = \"PingBack Payload\"\n    strings:\n        $s1 = \"Sniffer ok!\" fullword ascii\n        $s2 = \"recv icmp packet!\" fullword ascii\n        $s3 = \"WSASocket() failed: %d\" fullword ascii\n        $s4 = \"file on remote computers success\" ascii\n        $s5 = \"listen port error!\" fullword ascii\n        $s6 = \"\\\\PingBackService\" ascii\n        $c1 = \"exec\" fullword ascii\n        $c2 = \"rexec\" fullword ascii\n        $c3 = \"exep\" fullword ascii\n        $c4 = \"download\" fullword ascii\n        $c5 = \"upload\" fullword ascii\n        $c6 = \"shell\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (3 of ($s*) or all of ($c*) or (4 of ($c*) and 2 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.727Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "Conti.yar",
-    "rule": "rule Conti\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Conti Ransomware\"\n        cape_type = \"Conti Payload\"\n    strings:\n        $crypto1 = {8A 07 8D 7F 01 0F B6 C0 B9 ?? 00 00 00 2B C8 6B C1 ?? 99 F7 FE 8D [2] 99 F7 FE 88 ?? FF 83 EB 01 75 DD}\n        $website1 = \"https://contirecovery.info\" ascii wide\n        $website2 = \"https://contirecovery.best\" ascii wide\n    condition:\n        uint16(0) == 0x5A4D and any of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.663Z",
-    "status": "active"
-}

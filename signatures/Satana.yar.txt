@@ -1,8 +1,0 @@
-{
-    "name": "Satana.yar",
-    "rule": "rule Satana {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Satana ransomware\"\n        cape_type = \"Satana Payload\"\n    strings:\n        $bf1 = \"Try Decrypt: uc_size = %d, c_size = %d\" ascii\n        $bf2 = \"dwMailSelector = %d  dwBtcSelector = %d\" ascii\n        $bf3 = \"%s: Error DecB: 0x%X\" ascii\n        $bf4 = \"MBR written to Disk# %d\" ascii\n        $bf5 = \"!SATANA!\" ascii wide nocase\n        $bf6 = \"1 -th start\" fullword ascii\n        $bf7 = \"id=%d&code=%d&sdata=%d.%d.%d %d %d %s %s %d&name=%s&md5=%s&dlen=%s\" ascii\n        $bf8 = \"threadAdminFlood: %s %s %s\" wide\n        $bf9 = \"%s: NET RES FOUND: %s\" wide\n    condition:\n        (uint16(0) == 0x5a4d and 4 of ($bf*)) or (5 of ($bf*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.740Z",
-    "status": "active"
-}

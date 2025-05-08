@@ -1,8 +1,0 @@
-{
-    "name": "SilentMoon.yar",
-    "rule": "rule SilentMoon {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects SilentMoon\"\n        cape_type = \"SilentMoon Payload\"\n    strings:\n        $s1 = \"\\\\\\\\.\\\\Global\\\\PIPE\\\\\" fullword wide\n        $s2 = \"REMOTE_NS:ERROR:%d\" fullword ascii\n        $s3 = \"REMOTE:ERROR:%d\" fullword ascii\n        $s4 = \"COMNAP,COMNODE,SQLQUERY,SPOOLSS,LLSRPC,browser\" fullword wide\n        $s5 = \"Mem alloc err\" fullword ascii\n        $s6 = \"block %d: crc = 0x%08x, combined CRC = 0x%08x, size = %d\" ascii\n        $x1 = \"ACTION:UNSUPPORTED\" fullword ascii\n        $x2 = \"?ServiceMain@@YAXKPAPA_W@Z\" fullword ascii\n        $x3 = \"?ServiceCtrlHandler@@YGKKKPAX0@Z\" fullword ascii\n        $x4 = \"%d socks, %d sorted, %d scanned\" ascii\n        $x5 = \"GoldenSky\" fullword wide\n        $x6 = \"SilentMoon\" fullword wide\n        $x7 = \"internalstoragerpc\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (all of ($s*) or 3 of ($x*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.628Z",
-    "status": "active"
-}

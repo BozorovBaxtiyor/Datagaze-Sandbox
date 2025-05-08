@@ -1,8 +1,0 @@
-{
-    "name": "Arkei.yar",
-    "rule": "rule Arkei\n{\n    meta:\n        author = \"kevoreilly, YungBinary\"\n        description = \"Arkei Payload\"\n        cape_type = \"Arkei Payload\"\n    strings:\n        $string1 = \"Windows_Antimalware_Host_System_Worker\"\n        $string2 = \"Arkei\"\n        $string3 = \"Bitcoin\\\\wallet.dat\"\n        $string4 = \"Ethereum\\\\keystore\"\n\n        $v1 = \"C:\\\\Windows\\\\System32\\\\cmd.exe\" fullword ascii wide\n        $v2 = \"/c taskkill /im \" fullword ascii\n        $v3 = \"card_number_encrypted FROM credit_cards\" ascii\n        $v4 = \"\\\\wallet.dat\" ascii\n        $v5 = \"Arkei/\" wide\n        $v6 = \"files\\\\passwords.\" ascii wide\n        $v7 = \"files\\\\cc_\" ascii wide\n        $v8 = \"files\\\\autofill_\" ascii wide\n        $v9 = \"files\\\\cookies_\" ascii wide\n        \n        $loaded_modules = {\n            64 A1 30 00 00 00\n            8B 40 0C\n            8B 40 0C\n            8B 00\n            8B 00\n            8B 40 18\n            89 45 FC\n            8B 45 FC\n            8B E5\n            5D\n            C3\n        }\n\n        $language_check = {\n            FF 15 ?? ?? ?? ??\n            0F B7 C0\n            89 45 ??\n            81 7D ?? 3F 04 ?? ??\n            7F\n        }\n\n        $ext1 = \".zoo\" ascii\n        $ext2 = \".arc\" ascii\n\n    condition:\n        uint16(0) == 0x5A4D and (($loaded_modules and $language_check and $ext1 and $ext2) or (all of ($string*) or 7 of ($v*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.710Z",
-    "status": "active"
-}

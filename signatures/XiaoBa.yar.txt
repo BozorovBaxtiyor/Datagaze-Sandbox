@@ -1,8 +1,0 @@
-{
-    "name": "XiaoBa.yar",
-    "rule": "rule XiaoBa\n{\nmeta:\n\tdescription = \"Identifies XiaoBa ransomware unpacked or in memory.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2019-09\"\n\ttlp = \"White\"\n\tcape_type = \"XiaoBa Payload\"\n\nstrings:\n\t$ = \"BY:TIANGE\" ascii wide\n\t$ = \"Your disk have a lock\" ascii wide\n\t$ = \"Please enter the unlock password\" ascii wide\n\t$ = \"Please input the unlock password\" ascii wide\n\t$ = \"I am very sorry that all your files have been encrypted\" ascii wide\n\ncondition:\n\tany of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.717Z",
-    "status": "active"
-}

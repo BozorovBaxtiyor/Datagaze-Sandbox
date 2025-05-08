@@ -1,8 +1,0 @@
-{
-    "name": "Rhadamanthys.yar",
-    "rule": "rule Rhadamanthys\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Rhadamanthys Loader\"\n        cape_type = \"Rhadamanthys Loader\"\n    strings:\n        $rc4 = {88 4C 01 08 41 81 F9 00 01 00 00 7C F3 89 75 08 33 FF 8B 4D 08 3B 4D 10 72 04 83 65 08 00}\n        $code = {8B 4D FC 3B CF 8B C1 74 0D 83 78 04 02 74 1C 8B 40 1C 3B C7 75 F3 3B CF 8B C1 74 57 83 78 04 17 74 09 8B 40 1C 3B C7 75 F3 EB}\n        $conf = {46 BB FF 00 00 00 23 F3 0F B6 44 31 08 03 F8 23 FB 0F B6 5C 39 08 88 5C 31 08 88 44 39 08 02 C3 8B 5D 08 0F B6 C0 8A 44 08 08}\n        $cape_string = \"cape_options\"\n    condition:\n        2 of them and not $cape_string\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.688Z",
-    "status": "active"
-}

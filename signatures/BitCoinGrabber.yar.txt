@@ -1,8 +1,0 @@
-{
-    "name": "BitCoinGrabber.yar",
-    "rule": "rule BitCoinGrabber {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects generic bitcoin stealer\"\n        cape_type = \"BitCoinGrabber Payload\"\n    strings:\n        $s1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" wide\n        $s2 = \"Bitcoin-Grabber\" ascii\n        $s3 = \"Bitcoin_Grabber\" ascii\n        $s4 = \"encrypt resources [compress]T\" fullword ascii\n        $s5 = \"code control flow obfuscationT\" fullword ascii\n        $s6 = \"\\\\Users\\\\lakol\\\\Desktop\\\\a\\\\Crypto Currency Wallet Changer\\\\\" ascii\n        $pat1 = \"\\\\b(bc1|[13])[a-zA-HJ-NP-Z0-9]{26,35}\\\\b\" fullword wide\n        $pat2 = \"\\\\b0x[a-fA-F0-9]{40}\\\\b\" fullword wide\n        $pat3 = \"\\\\b4([0-9]|[A-B])(.){93}\\\\b\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and 4 of ($s*) or (all of ($pat*) and 2 of ($s*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.667Z",
-    "status": "active"
-}

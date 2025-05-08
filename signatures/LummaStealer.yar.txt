@@ -1,8 +1,0 @@
-{
-    "name": "LummaStealer.yar",
-    "rule": "rule LummaStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Lumma Stealer\"\n        cape_type = \"LummaStealer Payload\"\n    strings:\n        $x1 = /Lum[0-9]{3}xedmaC2,\\sBuild/ ascii\n        $x2 = /LID\\(Lu[0-9]{3}xedmma\\sID\\):/ ascii\n        $s1 = /os_c[0-9]{3}xedrypt\\.encry[0-9]{3}xedpted_key/ fullword ascii\n        $s2 = \"c2sock\" wide\n        $s3 = \"c2conf\" wide\n        $s4 = \"TeslaBrowser/\" wide\n        $s5 = \"Software.txt\" fullword wide\n        $s6 = \"SysmonDrv\" fullword\n        $s7 = \"*.eml\" fullword wide nocase\n        $s8 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Uninstall\" wide\n        $s9 = \"- Screen Resoluton:\" ascii\n        $s10 = \"lid=%s\" ascii\n        $s11 = \"&ver=\" ascii\n        $s12 = \"769cb9aa22f4ccc412f9cbc81feedd\" fullword wide\n        $s13 = \"gapi-node.io\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (all of ($x*) or (1 of ($x*) and 2 of ($s*)) or 5 of ($s*) or 7 of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.742Z",
-    "status": "active"
-}

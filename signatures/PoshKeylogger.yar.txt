@@ -1,8 +1,0 @@
-{
-    "name": "PoshKeylogger.yar",
-    "rule": "rule PoshKeylogger {\n    meta:\n      author = \"ditekSHen\"\n      description = \"Detects PowerShell PoshKeylogger\"\n      cape_type = \"PoshKeylogger Payload\"\n    strings:\n        $s1 = \"::GetKeyboardState\" ascii\n        $s2 = \"GetAsyncKeyState(\" ascii\n        $s3 = \"::MapVirtualKey(\" ascii\n        $s4 = \"::GetAsyncKeyState\" ascii\n        $s5 = \"Start-Sleep\" ascii\n        $s6 = \"send-mailmessage\" ascii\n        $s7 = \"[System.IO.File]::AppendAllText($\" ascii\n        $s8 = \"new-object Management.Automation.PSCredential $\" ascii\n    condition:\n        6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.633Z",
-    "status": "active"
-}

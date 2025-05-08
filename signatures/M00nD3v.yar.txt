@@ -1,8 +1,0 @@
-{
-    "name": "M00nD3v.yar",
-    "rule": "rule M00nD3v {\n    meta:\n        author = \"ditekshen\"\n        description = \"M00nD3v keylogger payload\"\n        cape_type = \"M00nD3v payload\"\n    strings:\n        $s1 = \"M00nD3v Stub\" ascii wide\n        $s2 = \"M00nD3v{0}{1} Logs{0}{2} \\\\ {3}{0}{0}{4}\" fullword wide\n        $s3 = \"Anti-Keylogger Elite\" wide\n        $s4 = \"/C TASKKILL /F /IM\" wide\n        $s5 = \"echo.>{0}:Zone.Identifier\" fullword wide\n        $s6 = \"> Nul & Del \\\"{0}\\\" & start \\\"\\\" \\\"{1}.exe\\\"\" wide\n        $s7 = \"> Nul & start \\\"\\\" \\\"{1}.exe\\\"\" wide\n        $s8 = \"Stealer\" fullword wide\n        $s9 = \"{0}{0}++++++++++++{1} {2}++++++++++++{0}{0}\" wide\n        $s10 = \"{4}Application: {3}{4}URL: {0}{4}Username: {1}{4}Password: {2}{4}\" wide\n        $s11 = \"encrypted_key\\\":\\\"(?<Key>.+?)\\\"\" wide\n        $s12 = \"Botkiller\" fullword ascii\n        $s13 = \"AVKiller\" fullword ascii\n        $s14 = \"get_pnlPawns\" fullword ascii\n    condition:\n        (uint16(0) == 0x5a4d and 6 of them) or (9 of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.663Z",
-    "status": "active"
-}

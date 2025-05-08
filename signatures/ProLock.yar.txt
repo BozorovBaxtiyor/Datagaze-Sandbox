@@ -1,8 +1,0 @@
-{
-    "name": "ProLock.yar",
-    "rule": "rule ProLock {\n    meta:\n      author = \"ditekshen\"\n      description = \"ProLock ransomware payload\"\n      cape_type = \"ProLock payload\"\n    strings:\n      $s1 = \".flat\" fullword ascii\n      $s2 = \".data\" fullword ascii\n      $s3 = \".api\" fullword ascii\n      $s4 = \"RtlZeroMemory\" fullword ascii\n      $s5 = \"LoadLibraryA\" fullword ascii\n      $s6 = \"Sleep\" fullword ascii\n      $s7 = \"lstrcatA\" fullword ascii\n      $s8 = { 55 89 E5 8B 45 08 EB 00 89 45 EC 8D 15 4F 10 40 00 8D 05 08 10 40 00 83 E8 08 29 C2 8B 45 EC 01 C2 31 }\n   condition:\n      uint16(0) == 0x5a4d and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.703Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "SoftCNApp.yar",
-    "rule": "rule SoftCNApp {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects SoftCNApp\"\n        cape_type = \"SoftCNApp Payload\"\n    strings:\n        $s1 = \"\\\\\\\\.\\\\PIPE\\\\SOC%d\" fullword ascii\n        $s2 = \"Mozilla/5.0 (Windows NT 6.1)\" fullword ascii\n        $s3 = \"Param: sl=%d; sl=%d; sl=%d; sl=%d; sl=%d;\" fullword ascii\n        $s4 = \".?AVCHPPlugin@@\" fullword ascii\n        $s5 = \".?AVCHPCmd@@\" fullword ascii\n        $s6 = \".?AVCHPExplorer@@\" fullword ascii\n        $s7 = \"%s\\\\svchost.exe -O\" fullword wide\n        $s8 = \"\\\"%s\\\\%s\\\" -P\" fullword ascii\n        $n1 = \"45.63.58.34\" fullword ascii\n        $n2 = \"127.0.0.1\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (4 of ($s*) or (all of ($n*) and 2 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.722Z",
-    "status": "active"
-}

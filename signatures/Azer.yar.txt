@@ -1,8 +1,0 @@
-{
-    "name": "Azer.yar",
-    "rule": "rule Azer\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Azer Payload\"\n        cape_type = \"Azer Payload\"\n    strings:\n        $a1 = \"webmafia@asia.com\" wide\n        $a2 = \"INTERESTING_INFORMACION_FOR_DECRYPT.TXT\" wide\n        $a3 = \"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQ\"  //-----BEGIN PUBLIC KEY-----\n    condition:\n        uint16(0) == 0x5A4D and (all of ($a*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.664Z",
-    "status": "active"
-}

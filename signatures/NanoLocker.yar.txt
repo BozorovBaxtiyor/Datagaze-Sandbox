@@ -1,8 +1,0 @@
-{
-    "name": "NanoLocker.yar",
-    "rule": "rule NanoLocker\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"NanoLocker Payload\"\n        cape_type = \"NanoLocker Payload\"\n    strings:\n        $a1 = \"NanoLocker\"\n        $a2 = \"$humanDeadline\"\n        $a3 = \"Decryptor.lnk\"\n    condition:\n        uint16(0) == 0x5A4D and (all of ($a*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.740Z",
-    "status": "active"
-}

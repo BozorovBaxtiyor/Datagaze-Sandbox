@@ -1,8 +1,0 @@
-{
-    "name": "PLEAD.yar",
-    "rule": "rule PLEADLinux {\n    meta:\n        author = \"ditekshen\"\n        description = \"PLEAD Linux payload\"\n        cape_type = \"PLEAD Linux Payload\"\n    strings:\n        $x1 = \"CFileTransfer\" ascii\n        $x2 = \"CFileManager\" ascii\n        $x3 = \"CPortForward\" ascii\n        $x4 = \"CPortForwardManager\" ascii\n        $x5 = \"CRemoteShell\" ascii\n        $x6 = \"CSockClient\" ascii\n\n        $s1 = \"/proc/self/exe\" fullword ascii\n        $s2 = \"/bin/sh\" fullword ascii\n        $s3 = \"echo -e '\" ascii\n        $s4 = \"%s       <DIR>   %s\" ascii\n        $s5 = \"%s       %lld    %s\" ascii\n        $s6 = \"Files: %d                Size: %lld\" ascii\n        $s7 = \"Dirs: %d\" ascii\n        $s8 = \"%s(%s)/\" ascii\n        $s9 = \"%s %s %s %s\" ascii\n    condition:\n    uint16(0) == 0x457f and (all of ($x*) or all of ($s*) or 12 of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.737Z",
-    "status": "active"
-}

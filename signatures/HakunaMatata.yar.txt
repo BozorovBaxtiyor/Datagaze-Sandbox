@@ -1,8 +1,0 @@
-{
-    "name": "HakunaMatata.yar",
-    "rule": "rule HakunaMatata {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects HakunaMatata ransomware\"\n        cape_type = \"HakunaMatata Payload\"\n    strings:\n        $s1 = \"SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run\" wide\n        $s2 = \"(?:[13]{1}[a-km-zA-HJ-NP-Z1-9]{26,33}|bc1[a-z0-9]{39,59})\" wide\n        $s3 = \"<RSAKeyValue><Modulus>\" wide\n        $s4 = \"HAKUNA MATATA\" ascii wide nocase\n        $s5 = \"EXCEPTIONAL_FILE\" ascii\n        $s6 = \"TRIPLE_ENCRYPT\" ascii\n        $s7 = \"FULL_ENCRYPT\" ascii\n        $s8 = \"TARGETED_EXTENSIONS\" ascii\n        $s9 = \"CHANGE_PROCESS_NAME\" ascii\n        $s10 = \"KILL_APPS_ENCRYPT_AGAIN\" ascii\n        $s11 = \"<ALL_DRIVES>b__\" ascii\n        $s12 = \"dataToEncrypt\" ascii\n        $s13 = \"<RECURSIVE_DIRECTORY_LOOK>\" ascii\n        $b1 = \"ENCRYPT FILES IN PROCESS\" wide\n        $b2 = \"#TARGET_FILES\" ascii wide\n        $b3 = \"#PRIVATE_KEY\" ascii wide\n        $b4 = \"/target:winexe /platform:anycpu /optimize+\" wide\n        $b5 = \"/win32icon:\" fullword wide\n        $b6 = \"SkippedFolders\" ascii\n        $b7 = \"RECURSIVE_DIRECTORY_LOOK(\" ascii\n        $b8 = \"DRAW_WALLPAPER(\" ascii\n        $b9 = \"startupKey.SetValue(MESSAGE_FILE.Split('.')[0], executablePath);\" ascii\n        $b10 = /\\\\obj\\\\(Debug|Release)\\\\Hakuna\\sMatata\\.pdb/ ascii\n    condition:\n        uint16(0) == 0x5a4d and 6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.706Z",
-    "status": "active"
-}

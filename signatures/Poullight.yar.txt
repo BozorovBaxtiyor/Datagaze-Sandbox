@@ -1,8 +1,0 @@
-{
-    "name": "Poullight.yar",
-    "rule": "rule Poullight {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Poullight infostealer payload\"\n        cape_type = \"Poullight Payload\"\n    strings:\n        $s1 = \"zipx\" fullword wide\n        $s2 = \"{0}Windows Defender.exe\" fullword wide\n        $s3 = \"pll_test\" fullword wide\n        $s4 = \"loginusers.vdf\" wide\n        $s5 = \"Stealer by Nixscare\" wide\n        $s6 = \"path_lad\" fullword ascii\n        $s7 = \"<CheckVM>\" ascii\n        $s8 = \"Poullight.Properties\" ascii\n        $s9 = \"</ulfile>\" fullword wide\n        $s10 = \"{0}processlist.txt\" fullword wide\n        $s11 = \"{0}Browsers\\\\Passwords.txt\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and 7 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.706Z",
-    "status": "active"
-}

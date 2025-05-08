@@ -1,8 +1,0 @@
-{
-    "name": "LokiBot.yar",
-    "rule": "rule LokiBot\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"LokiBot Payload\"\n        cape_type = \"LokiBot Payload\"\n    strings:\n        $a1 = \"DlRycq1tP2vSeaogj5bEUFzQiHT9dmKCn6uf7xsOY0hpwr43VINX8JGBAkLMZW\"\n        $a2 = \"last_compatible_version\"\n    condition:\n        uint16(0) == 0x5A4D and (all of ($a*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.736Z",
-    "status": "active"
-}

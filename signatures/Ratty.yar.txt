@@ -1,8 +1,0 @@
-{
-    "name": "Ratty.yar",
-    "rule": "rule Ratty {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects Ratty Java RAT\"\n        cape_type = \"Ratty Payload\"\n    strings:\n        $s1 = \"/rat/RattyClient.class\" ascii\n        $s2 = \"/rat/ActiveConnection.class\" ascii\n        $s3 = \"/rat/attack/\" ascii\n        $s4 = \"/rat/gui/swing/Ratty\" ascii\n        $s5 = \"/rat/packet/PasswordPacket\" ascii\n        $s6 = \"/rat/packet/\" ascii\n        $e1 = \"/engine/Keyboard.class\" ascii\n        $e2 = \"/engine/IMouseListener.class\" ascii\n        $e3 = \"/engine/Screen$ResizeBehavior.class\" ascii\n        $e4 = \"/engine/fx/ISoundListener.class\" ascii\n        $e5 = \"/engine/net/TCPServer.class\"  ascii\n        $e6 = \"/engine/noise/PerlinNoise.class\" ascii\n    condition:\n        (uint16(0) == 0x5a4d or uint16(0) == 0xcfd0 or uint16(0) == 0x4b50) and (3 of ($s*) or all of ($e*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.657Z",
-    "status": "active"
-}

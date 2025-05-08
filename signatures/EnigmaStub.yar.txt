@@ -1,8 +1,0 @@
-{
-    "name": "EnigmaStub.yar",
-    "rule": "rule EnigmaStub\n{\nmeta:\n\tdescription = \"Identifies Enigma packer stub.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-03\"\n\ttlp = \"White\"\n\nstrings:\n\t$ = \"Enigma anti-emulators plugin - GetProcAddress\" ascii wide\n\t$ = \"Enigma anti-debugger plugin - CheckRemoteDebuggerPresent\" ascii wide\n\t$ = \"Enigma anti-debugger plugin - IsDebuggerPresent\" ascii wide\n\t$ = \"Enigma Sandboxie Detect plugin\" ascii wide\n\t$ = \"Enigma_Plugin_Description\" ascii wide\n\t$ = \"Enigma_Plugin_About\" ascii wide\n\t$ = \"Enigma_Plugin_OnFinal\" ascii wide\n\t$ = \"EnigmaProtector\" ascii wide\n\t$ = \"Enigma_Plugin_OnInit\" ascii wide\n\ncondition:\n\tany of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.720Z",
-    "status": "active"
-}

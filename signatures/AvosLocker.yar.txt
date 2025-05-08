@@ -1,8 +1,0 @@
-{
-    "name": "AvosLocker.yar",
-    "rule": "rule AvosLocker {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detect/Hunt for AvosLocker ransomware\"\n        cape_type = \"AvosLocker Payload\"\n    strings:\n        $s1 = \"GET_YOUR_FILES_BACK.txt\" ascii wide\n        $s2 = \".avos\" fullword ascii wide\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.696Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "dyre.yar",
-    "rule": "// Copyright (C) 2010-2014 Cuckoo Foundation.\n// This file is part of Cuckoo Sandbox - http://www.cuckoosandbox.org\n// See the file 'docs/LICENSE' for copying permission.\n\n// The contents of this file are Yara rules processed by procmemory.py processing\n// module. Add your signatures here.\nrule DyreCfgServerList\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Configuration element for Dyre server list\"\n\t\tmalfamily = \"dyre\"\n\n    strings:\n        $buf = /\\<serverlist\\>.*\\<\\/serverlist\\>/s\n\n    condition:\n        $buf\n}\n\nrule DyreCfgInjectsList\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Configuration element for Dyre web injects\"\n\t\tmalfamily = \"dyre\"\n\n    strings:\n        $buf = /\\<litem\\>.*\\<\\/litem\\>/s\n\n    condition:\n        $buf\n}\n\nrule DyreCfgRedirectList\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Configuration element for Dyre redirects list\"\n\t\tmalfamily = \"dyre\"\n\n    strings:\n        $buf = /\\<rpcgroup\\>.*\\<\\/rpcgroup\\>/s\n\n    condition:\n        $buf\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.596Z",
-    "status": "active"
-}

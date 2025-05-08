@@ -1,8 +1,0 @@
-{
-    "name": "dridex.yar",
-    "rule": "// Copyright (C) 2010-2014 Cuckoo Foundation.\n// This file is part of Cuckoo Sandbox - http://www.cuckoosandbox.org\n// See the file 'docs/LICENSE' for copying permission.\n\n// The contents of this file are Yara rules processed by procmemory.py processing\n// module. Add your signatures here.\nrule DridexCfgBotID\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Configuration element for Dridex Bot ID\"\n\t\tmalfamily = \"dridex\"\n\n    strings:\n        $buf = /(\\<cfg net)?=\\\"\\d+\\\"\\shash=.*bottickmin=\\\"\\d+\\\"\\sbottickmax=\\\"\\d+\\\"\\snodetickmin=\\\"\\d+\\\"\\snodetickmax=\\\"\\d+\\\"\\sport=\\\"\\d+\\\"\\sstatus=\\\"\\d+\\\"\\sbuild=\\\"\\d+\\\"\\>/s\n\n    condition:\n        $buf\n}\n\nrule DridexCfgNodeList\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Configuration element for Dridex node list\"\n\t\tmalfamily = \"dridex\"\n\n    strings:\n        $buf = /\\<node\\>\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}.*\\<\\/node\\>/s\n\n    condition:\n        $buf\n}\n\nrule DridexCfgKeylog\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Configuration element for Dridex keylogger\"\n\t\tmalfamily = \"dridex\"\n\n    strings:\n        $buf = /\\<latest.*\\keylog=.*\\/\\>/s\n\n    condition:\n        $buf\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.594Z",
-    "status": "active"
-}

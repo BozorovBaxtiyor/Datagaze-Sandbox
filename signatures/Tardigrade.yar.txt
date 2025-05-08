@@ -1,8 +1,0 @@
-{
-    "name": "Tardigrade.yar",
-    "rule": "import \"pe\"\n\nrule Tardigrade {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Tardigrade\"\n        cape_type = \"Tardigrade Payload\"\n    strings:\n        $x1 = \"cmd.exe /c echo kOJAdtQoDcMuogIZIl>\\\"%s\\\"&exit\" fullword ascii\n        $x2 = \"cmd.exe /c echo HBnBcZPeUevCDQmKGzXxYJHqpzRAbRCQCihOxiLi>\\\"%s\\\"&exit\" fullword ascii\n        $x3 = \"cmd.exe /c set kpUUCjoLWLZvJFc=3167 & reg add HKCU\\\\SOFTWARE\\\\EQwIobTRgsJ /v PDMXPmqSYnUx /t REG_DWORD /d 10080 & exit\" fullword ascii\n        //$x4 = \"DEMOBLABLA\" fullword ascii\n        $s1 = \"ReplaceFileA\" ascii\n        $s2 = \"FlushFileBuffers\" ascii\n        $s3 = \"WaitNamedPipeA\" ascii\n        $s4 = \"ImpersonateNamedPipeClient\" ascii\n        $s5 = \"RegFlushKey\" ascii\n        $s6 = /cmd\\.exe \\/c (echo|set)/ ascii\n        $s7 = \">\\\"%s\\\"&exit\" ascii\n    condition:\n        uint16(0) == 0x5a4d and pe.is_dll() and (1 of ($x*) or 6 of ($s*)) and\n        (\n            pe.exports(\"DllGetClassObject\") and\n            pe.exports(\"DllMain\") and\n            pe.exports(\"DllRegisterServer\") and\n            pe.exports(\"DllUnregisterServer\") and\n            pe.exports(\"InitHelperDll\") and\n            pe.exports(\"StartW\")\n        )\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.672Z",
-    "status": "active"
-}

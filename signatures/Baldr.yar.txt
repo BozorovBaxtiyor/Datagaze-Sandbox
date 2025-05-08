@@ -1,8 +1,0 @@
-{
-    "name": "Baldr.yar",
-    "rule": "rule Baldr {\n    meta:\n        author = \"ditekshen\"\n        description = \"Baldr payload\"\n        cape_type = \"Baldr payload\"\n    strings:\n        $x1 = \"BALDR VERSION : {0}\" fullword wide\n        $x2 = \"Baldr\" fullword ascii wide\n        $x3 = \"{0}\\\\{1:n}.exe\" fullword wide\n        $x4 = \".doc;.docx;.log;.txt;\" fullword wide\n        $s1 = \"<GetMAC>b__\" ascii\n        $s2 = \"<ExtractPrivateKey3>b__\" ascii\n        $s3 = \"UploadData\" fullword ascii\n        $s6 = \"get_NetworkInterfaceType\" fullword ascii\n        $s5 = \"get_Passwordcheck\" fullword ascii\n    condition:\n        (uint16(0) == 0x5a4d and all of ($x*)) or (2 of ($x*) and 4 of ($s*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.737Z",
-    "status": "active"
-}

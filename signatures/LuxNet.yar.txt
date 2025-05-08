@@ -1,8 +1,0 @@
-{
-    "name": "LuxNet.yar",
-    "rule": "rule LuxNet\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/LuxNet\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"LuxNet Payload\"\n\n\tstrings:\n\t\t$a = \"GetHashCode\"\n\t\t$b = \"Activator\"\n\t\t$c = \"WebClient\"\n\t\t$d = \"op_Equality\"\n\t\t$e = \"dickcursor.cur\" wide\n\t\t$f = \"{0}|{1}|{2}\" wide\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.740Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "CyberGate.yar",
-    "rule": "rule CyberGate\n{\n\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/CyberGate\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"CyberGate Payload\"\n\n\tstrings:\n\t\t$string1 = {23 23 23 23 40 23 23 23 23 E8 EE E9 F9 23 23 23 23 40 23 23 23 23}\n\t\t$string2 = {23 23 23 23 40 23 23 23 23 FA FD F0 EF F9 23 23 23 23 40 23 23 23 23}\n\t\t$string3 = \"EditSvr\"\n\t\t$string4 = \"TLoader\"\n\t\t$string5 = \"Stroks\"\n\t\t$string6 = \"####@####\"\n\t\t$res1 = \"XX-XX-XX-XX\"\n\t\t$res2 = \"CG-CG-CG-CG\"\n\n\tcondition:\n\t\tall of ($string*) and any of ($res*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.706Z",
-    "status": "active"
-}

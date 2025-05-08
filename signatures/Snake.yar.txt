@@ -1,8 +1,0 @@
-{
-    "name": "Snake.yar",
-    "rule": "rule Snake {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Snake Keylogger\"\n        cape_type = \"Snake Payload\"\n    strings:\n        $id1 = \"SNAKE-KEYLOGGER\" fullword ascii\n        $id2 = \"----------------S--------N--------A--------K--------E----------------\" ascii\n        $s1 = \"_KPPlogS\" fullword ascii\n        $s2 = \"_Scrlogtimerrr\" fullword ascii\n        $s3 = \"_Clpreptimerr\" fullword ascii\n        $s4 = \"_clprEPs\" fullword ascii\n        $s5 = \"_kLLTIm\" fullword ascii\n        $s6 = \"_TPSSends\" fullword ascii\n        $s7 = \"_ProHfutimer\" fullword ascii\n        $s8 = \"GrabbedClp\" fullword ascii\n        $s9 = \"StartKeylogger\" fullword ascii\n        // Snake Keylogger Stub New\n        $x1 = \"$%SMTPDV$\" wide\n        $x2 = \"$#TheHashHere%&\" wide\n        $x3 = \"%FTPDV$\" wide\n        $x4 = \"$%TelegramDv$\" wide\n        $x5 = \"KeyLoggerEventArgs\" ascii\n        $m1 = \"| Snake Keylogger\" ascii wide\n        $m2 = /(Screenshot|Clipboard|keystroke) Logs ID/ ascii wide\n        $m3 = \"SnakePW\" ascii wide\n        $m4 = \"\\\\SnakeKeylogger\\\\\" ascii wide\n    condition:\n        (uint16(0) == 0x5a4d and (all of ($id*) or 6 of ($s*) or (1 of ($id*) and 3 of ($s*)) or 4 of ($x*))) or (2 of ($m*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.661Z",
-    "status": "active"
-}

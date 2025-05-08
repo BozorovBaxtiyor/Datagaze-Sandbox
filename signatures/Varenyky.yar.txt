@@ -1,8 +1,0 @@
-{
-    "name": "Varenyky.yar",
-    "rule": "rule Varenyky\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Varenyky Payload\"\n        cape_type = \"Varenyky Payload\"\n    strings:\n        $onion = \"jg4rli4xoagvvmw47fr2bnnfu7t2epj6owrgyoee7daoh4gxvbt3bhyd.onion\"\n    condition:\n        uint16(0) == 0x5A4D and ($onion)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.645Z",
-    "status": "active"
-}

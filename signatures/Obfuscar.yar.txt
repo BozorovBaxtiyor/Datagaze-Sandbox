@@ -1,8 +1,0 @@
-{
-    "name": "Obfuscar.yar",
-    "rule": "rule Obfuscar\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Obfuscar xor routime\"\n        // cape_type = \"AgentTesla Payload\"\n        // https://github.com/obfuscar/obfuscar/blob/65e9ced171e0f2a92d2c64c479c3a1ec3624802a/Obfuscar/Obfuscator.cs#L1693\n    strings:\n        $decode = {06 91 06 61 20 [4] 61 D2 9C 06 17 58 0A 06 7E [4] 8E 69 FE 04 2D ?? 2A}\n    condition:\n        uint16(0) == 0x5A4D and any of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.720Z",
-    "status": "active"
-}

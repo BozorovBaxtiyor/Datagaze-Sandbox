@@ -1,8 +1,0 @@
-{
-    "name": "BlackHunt.yar",
-    "rule": "rule BlackHunt {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects BlackHunt ransomware\"\n        cape_type = \"BlackHunt Payload\"\n    strings:\n        $s1 = /#BlackHunt_(Logs|BG|Icon|Public|Private|ID|ReadMe|Update)\\.(txt|jpg|ico|key|hta)/ ascii wide\n        $s2 = /-(biggame|noencrypt|netinfo|nospread)/ fullword wide\n        $s3 = \"/v \\\"*BlackHunt\\\" /t REG_SZ /d\" wide\n        $s4 = \"/sc onstart /TN \\\"Windows Critical Update\\\" /TR \\\"'%s' %s\\\" /F\" wide\n        $s5 = \"/v \\\"DisableChangePassword\\\" /t REG_DWORD /d\" wide\n        $s6 = \"<span> %s </span>this ID (<span> %s </span>)\" wide\n        $s7 = \"}div.header h1 span#hunter\" wide\n        $s8 = \"BLACK_HUNT_MUTEX\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 4 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.663Z",
-    "status": "active"
-}

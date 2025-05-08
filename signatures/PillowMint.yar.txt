@@ -1,8 +1,0 @@
-{
-    "name": "PillowMint.yar",
-    "rule": "rule PillowMint {\n    meta:\n        author = \"ditekshen\"\n        description = \"PillowMint POS payload\"\n        cape_type = \"PillowMint payload\"\n    strings:\n        $s1 = \"system32\\\\sysvols\\\\\" ascii nocase\n        $s2 = \"Sysnative\\\\sysvols\\\\\" ascii nocase\n        $s3 = \"critical.log\" fullword ascii\n        $s4 = \"log.log\" fullword ascii\n        $s5 = \"commands.txt\" fullword ascii\n        $s6 = \"_EV0LuTi0N_\" ascii\n        $s7 = /(file|reg)\\scmd:/ fullword ascii\n        $s8 = \"dumper_nologs_\" ascii\n        $s9 = \"ReflectiveLoader\" ascii\n    condition:\n       uint16(0) == 0x5a4d and 6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.637Z",
-    "status": "active"
-}

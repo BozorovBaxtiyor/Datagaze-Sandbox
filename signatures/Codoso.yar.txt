@@ -1,8 +1,0 @@
-{
-    "name": "Codoso.yar",
-    "rule": "rule Codoso\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"Codoso Payload\"\n        cape_type = \"Codoso Payload\"\n    strings:\n        $a1 = \"WHO_A_R_E_YOU?\"\n        $a2 = \"DUDE_AM_I_SHARP-3.14159265358979\"\n        $a3 = \"USERMODECMD\"\n    condition:\n        uint16(0) == 0x5A4D and (all of ($a*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.722Z",
-    "status": "active"
-}

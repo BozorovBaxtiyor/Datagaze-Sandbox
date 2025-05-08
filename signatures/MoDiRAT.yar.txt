@@ -1,8 +1,0 @@
-{
-    "name": "MoDiRAT.yar",
-    "rule": "rule MoDiRAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"MoDiRAT payload\"\n        cape_type = \"MoDiRAT payload\"\n    strings:\n        $s1 = \"add_Connected\" fullword ascii\n        $s2 = \"Statconnected\" fullword ascii\n        $s3 = \"StartConnect\" fullword ascii\n        $s4 = \"TelegramTitleDetect\" fullword ascii\n        $s5 = \"StartTitleTelegram\" fullword ascii\n        $s6 = \"Check_titles\" fullword ascii\n        $s7 = \"\\\\MoDi RAT V\" ascii\n        $s8 = \"IsBuzy\" fullword ascii\n        $s9 = \"Recording_Time\" fullword wide\n    condition:\n        (uint16(0) == 0x5a4d and 7 of them) or all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.643Z",
-    "status": "active"
-}

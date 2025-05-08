@@ -1,8 +1,0 @@
-{
-    "name": "BlackByteGo.yar",
-    "rule": "rule BlackByteGo {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects BlackByte ransomware Go variants\"\n        cape_type = \"BlackByteGo Payload\"\n    strings:\n        $x1 = \"BlackByteGO/_cgo_gotypes.go\" fullword ascii\n        //$x2 = \"_cgo_dummy_export\" fullword ascii\n        $x3 = \"BlackByteGO/\" ascii nocase\n        $s1 = \".Disconnect\" ascii\n        $s2 = \".OpenService\" ascii\n        $s3 = \".ListServices\" ascii\n        $s4 = \".Start\" ascii\n        $s5 = \".Encrypt\" ascii\n        $s6 = \".Decrypt\" ascii\n        $s7 = \".MustFindProc\" ascii\n        $s8 = \".QuoRem\" ascii\n        $s9 = \"C:\\\\Windows\\\\regedit.exe\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (1 of ($x*) or all of ($s*))\n        //uint16(0) == 0x5a4d and (1 of ($x*) or all of ($s*) or (1 of ($x*) and 5 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.729Z",
-    "status": "active"
-}

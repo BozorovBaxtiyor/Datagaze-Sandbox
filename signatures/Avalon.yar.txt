@@ -1,8 +1,0 @@
-{
-    "name": "Avalon.yar",
-    "rule": "rule Avalon {\n    meta:\n      author = \"ditekshen\"\n      description = \"Avalon infostealer payload\"\n      cape_type = \"Avalon payload\"\n    strings:\n      $s1 = \"Parsecards\" fullword ascii\n      $s2 = \"Please_Gofuckyouself\" fullword ascii\n      $s3 = \"GetDomainDetect\" fullword ascii\n      $s4 = \"GetTotalCommander\" fullword ascii\n      $s5 = \"KnownFolder\" fullword ascii\n      $s6 = \"set_hidden\" fullword ascii\n      $s7 = \"set_system\" fullword ascii\n\n      $l1 = \"\\\\DomainDetect.txt\" wide\n      $l2 = \"\\\\Grabber_Log.txt\" wide\n      $l3 = \"\\\\Programs.txt\" wide\n      $l4 = \"\\\\Passwords_Edge.txt\" wide\n      $l5 = \"\\\\KL.txt\" wide\n\n      $w1 = \"dont touch\" fullword wide\n      $w2 = \"Grabber\" fullword wide\n      $w3 = \"Keylogger\" fullword wide\n      $w4 = \"password-check\" fullword wide\n      $w5 = \"H4sIAAAAAAAEA\" wide\n\n      $p1 = \"^(?!:\\\\/\\\\/)([a-zA-Z0-9-_]+\\\\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\\\\.[a-zA-Z]{2,11}?$\" wide\n      $p2 = \"^([a-zA-Z0-9_\\\\-\\\\.]+)@([a-zA-Z0-9_\\\\-\\\\.]+)\\\\.([a-zA-Z]{2,5})$\" wide\n   condition:\n      uint16(0) == 0x5a4d and 8 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.701Z",
-    "status": "active"
-}

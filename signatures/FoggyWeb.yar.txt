@@ -1,8 +1,0 @@
-{
-    "name": "FoggyWeb.yar",
-    "rule": "rule FoggyWeb {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects / Hunts for FoggyWeb\"\n        cape_type = \"FoggyWeb Payload\"\n    strings:\n        $u1 = \"/adfs/portal/images/theme/light01/\" ascii wide\n        $u2 = \"/adfs/services/trust/2005/samlmixed/upload\" ascii wide\n        $s1 = \"ProcessGetRequest\" ascii wide\n        $s2 = \"ProcessPostRequest\" ascii wide\n        $s3 = \"UrlGetFileNames\" ascii wide\n        $s4 = \"GetWebpImage\" ascii wide\n        $s5 = \"GetWebpHeader\" ascii wide\n        $s6 = \"ExecuteAssemblyRoutine\" ascii wide\n        $s7 = \"ExecuteBinary\" ascii wide\n    condition:\n        uint16(0) == 0x5a4d and 6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.700Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "RustyBuer.yar",
-    "rule": "rule RustyBuer\n{\n    meta:\n        author = \"Rony (@r0ny_123)\"\n        description = \"Detects unpacked buer written in rust\"\n        cape_type = \"RustyBuer Payload\"\n    strings:\n        $code = { f6 c2 ?? 75 ?? 8d 1c 01 6a ?? 50 51 6a ?? e8 [4] 89 c7 31 c0 b2 ?? 89 d9 81 ff [4] 72 ?? 81 f7 }\n        $s = \"NtQueryDefaultLocale\"\n    condition:\n        (uint16(0) == 0x5A4D and uint32(uint32(0x3C)) == 0x00004550) and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.622Z",
-    "status": "active"
-}

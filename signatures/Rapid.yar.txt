@@ -1,8 +1,0 @@
-{
-    "name": "Rapid.yar",
-    "rule": "rule Rapid {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Rapid ransomware\"\n        cape_type = \"Rapid Payload\"\n    strings:\n        $s1 = \"encblklen\" fullword ascii\n        $s2 = \".rapid\" fullword ascii\n        $s3 = \"BgIAAACkAABSU0E\" ascii\n        $s4 = \"IFdlIHNlbmQ\" ascii\n        $s5 = \"Software\\\\EncryptKeys\" fullword ascii\n        $s6 = \"local_enc_private_key\" fullword ascii\n        $s7 = \"local_public_key\" fullword ascii\n        $s8 = \"How Recovery Files.txt\" ascii\n        $s9 = \"recovery.txt\" ascii\n        $s10 = \"thr %i run %s\" fullword ascii\n        $s11 = \" /TN Encrypter\" ascii\n        $s12 = /Encrypter_\\d+/ fullword ascii\n        $m1 = \"tell us your unique ID - ID-\" ascii\n        $m2 = \"really want to restore your files?\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (6 of ($s*) or (1 of ($m*) and 4 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.637Z",
-    "status": "active"
-}

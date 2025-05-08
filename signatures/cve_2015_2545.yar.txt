@@ -1,8 +1,0 @@
-{
-    "name": "cve_2015_2545.yar",
-    "rule": "/* Copyright (C) 2016 Will Metcalf william.metcalf@gmail.com\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nrule CVE_2015_2545\n{\n    strings:\n        $anchor2 = \"%%BoundingBox\" nocase\n\n        $s2 = /4d5a90000.{0,1000}546869732070726f6772616d/ nocase\n        $s3 = \"28000e1358000e13bebafeca414141414141414141414141414141410300000041414141414141414141414124000e1300000000ffffff7\" nocase\n        $s4 = \"6064a1000000008b4004250000ffff6681384d5a751781783c00020000730e8b503c03d066813a50457502eb072d00000100ebdb8b7a1c8b722c03f003fe83ed04\" nocase\n\n    condition:\n        $anchor2 and (($s2 in (@anchor2[1]..filesize)) or ($s3 in (@anchor2[1]..filesize)) or ($s4 in (@anchor2[1]..filesize)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.597Z",
-    "status": "active"
-}

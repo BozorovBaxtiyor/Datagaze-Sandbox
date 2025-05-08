@@ -1,8 +1,0 @@
-{
-    "name": "BlueBanana.yar",
-    "rule": "rule BlueBanana\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/BlueBanana\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"Java\"\n        cape_type = \"BlueBanana Payload\"\n\n\tstrings:\n\t\t$meta = \"META-INF\"\n\t\t$conf = \"config.txt\"\n\t\t$a = \"a/a/a/a/f.class\"\n\t\t$b = \"a/a/a/a/l.class\"\n\t\t$c = \"a/a/a/b/q.class\"\n\t\t$d = \"a/a/a/b/v.class\"\n\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.699Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "darkcomet.yar",
-    "rule": "// Copyright (C) 2015 KillerInstinct\n// The contents of this file are Yara rules processed by procmemory.py processing\n// module. Add your signatures here.\nrule DarkCometConfig\n{\n    meta:\n        author = \"KillerInstinct\"\n        description = \"Configuration for DarkComet\"\n\t\tmalfamily = \"darkcomet\"\n\n    strings:\n        $buf = /#BEGIN\\sDARKCOMET[A-Za-z0-9\\r\\n\\s\\-\\=\\_\\{\\}\\.:\\\\\\/]*\\#EOF\\sDARKCOMET\\sDATA\\s--/s\n\n    condition:\n        $buf\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.598Z",
-    "status": "active"
-}

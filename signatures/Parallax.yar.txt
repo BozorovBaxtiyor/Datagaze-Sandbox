@@ -1,8 +1,0 @@
-{
-    "name": "Parallax.yar",
-    "rule": "rule Parallax {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Parallax RAT\"\n        cape_type = \"Parallax RAT Payload\"\n    strings:\n       $s1 = \"[Clipboard End]\" fullword wide\n       $s2 = \"[Ctrl +\" fullword wide\n       $s3 = \"[Alt +\" fullword wide\n       $s4 = \"Clipboard Start\" wide\n       $s5 = \"(Wscript.ScriptFullName)\" wide\n       $s6 = \"CSDVersion\" fullword ascii\n       $s7 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.689Z",
-    "status": "active"
-}

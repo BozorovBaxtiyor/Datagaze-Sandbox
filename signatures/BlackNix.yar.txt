@@ -1,8 +1,0 @@
-{
-    "name": "BlackNix.yar",
-    "rule": "rule BlackNix\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/BlackNix\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"BlackNix Payload\"\n\n    strings:\n\t\t$a1 = \"SETTINGS\" wide\n\t\t$a2 = \"Mark Adler\"\n\t\t$a3 = \"Random-Number-Here\"\n\t\t$a4 = \"RemoteShell\"\n\t\t$a5 = \"SystemInfo\"\n\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.711Z",
-    "status": "active"
-}

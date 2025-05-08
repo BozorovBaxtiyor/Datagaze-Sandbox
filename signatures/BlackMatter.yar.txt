@@ -1,8 +1,0 @@
-{
-    "name": "BlackMatter.yar",
-    "rule": "rule BlackMatter {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects BlackMatter ransomware\"\n        cape_type = \"BlackMatter Payload\"\n    strings:\n        $s1 = \"C:\\\\Windows\\\\System32\\\\*.drv\" fullword wide\n        $s2 = \"NYbr-Vk@\" fullword ascii\n        $s3 = \":7:=:H:Q:W:\\\\:b:&;O;^;v;\" fullword ascii\n        $o1 = { b0 34 aa fe c0 e2 fb b9 03 }\n        $o2 = { fe 00 ff 75 08 ff 75 0c ff b5 d8 fe ff ff ff b5 }\n        $o3 = { 6a 00 ff 75 0c ff b5 d8 fe ff ff ff b5 dc fe ff }\n        $o4 = { ff 75 08 ff 75 0c ff b5 d8 fe ff ff ff b5 dc fe }\n        $o5 = { 53 56 57 8d 85 70 ff ff ff 83 c0 0f 83 e0 f0 89 }\n        $o6 = { c7 85 68 ff ff ff 00 04 00 00 8b 85 6c ff ff ff }\n        //SOFTWARE\\Microsoft\\Crypt\n        //Volume{\n        //*recycle*\n    condition:\n        uint16(0) == 0x5a4d and (all of ($s*) and all of ($o*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.715Z",
-    "status": "active"
-}

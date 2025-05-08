@@ -1,8 +1,0 @@
-{
-    "name": "eitest.yar",
-    "rule": "/* Copyright (C) 2016 Will Metcalf william.metcalf@gmail.com\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nrule EITest_Compromised_Site_Injection\n{\n   meta:\n       malfamily = \"EITest\"\n   strings:\n       $eitest0 = \"<div style = \\\"position: absolute;z-index:-1; left:\" ascii wide\n       $eitest1 = \"px; opacity:0;filter:alpha(opacity=0); -moz-opacity:0;\\\">\" ascii wide\n       $eitest2 = \"clsid:d27cdb6e-ae6d-11cf-96b8-444553540000\" ascii wide\n       $eitest3 = \"bgcolor=\\\"#ffffff\\\"\" ascii wide\n       $eitest4 = \"wmode=\\\"opaque\\\"/></object>\" ascii wide\n   condition:\n       $eitest0 and $eitest1 in (@eitest0[1]..filesize) and $eitest2 in (@eitest1[1]..filesize) and $eitest3 in (@eitest2[1]..filesize)  and $eitest4 in (@eitest3[1]..filesize)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.600Z",
-    "status": "active"
-}

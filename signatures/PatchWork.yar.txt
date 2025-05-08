@@ -1,8 +1,0 @@
-{
-    "name": "PatchWork.yar",
-    "rule": "rule PatchWork\n{\n    meta:\n        description = \"PatchWork\"\n        author = \"@avman1995\"\n        reference = \"https://app.any.run/tasks/7ef05c98-a4d4-47ff-86e5-8386f8787224\"\n        date = \"2019/01\"\n        maltype = \"APT\"\n        cape_type = \"PatchWork Payload\"\n\n    strings:\n        $string1 = \"AppId\"\n        $string2 = \"AXE: #\"\n        $string3 = \"Bld: %s.%s.%s\"\n        $string4 = \"%s@%s %s\"\n        $string5 = \"c:\\\\intel\\\\\"\n\n    condition:\n        all of ($string*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.718Z",
-    "status": "active"
-}

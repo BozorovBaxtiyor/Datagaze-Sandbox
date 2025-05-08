@@ -1,8 +1,0 @@
-{
-    "name": "Arcom.yar",
-    "rule": "rule Arcom\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Arcom\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Arcom Payload\"\n\n    strings:\n        $a1 = \"CVu3388fnek3W(3ij3fkp0930di\"\n        $a2 = \"ZINGAWI2\"\n        $a3 = \"clWebLightGoldenrodYellow\"\n        $a4 = \"Ancestor for '%s' not found\" wide\n        $a5 = \"Control-C hit\" wide\n        $a6 = {A3 24 25 21}\n\n    condition:\n        all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.734Z",
-    "status": "active"
-}

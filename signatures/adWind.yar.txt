@@ -1,8 +1,0 @@
-{
-    "name": "adWind.yar",
-    "rule": "rule adWind\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/AAR\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"adWind Payload\"\n\n\tstrings:\n\t\t$meta = \"META-INF\"\n\t\t$conf = \"config.xml\"\n\t\t$a = \"Adwind.class\"\n\t\t$b = \"Principal.adwind\"\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.739Z",
-    "status": "active"
-}

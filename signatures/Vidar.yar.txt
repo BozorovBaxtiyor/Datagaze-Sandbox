@@ -1,8 +1,0 @@
-{
-    "name": "Vidar.yar",
-    "rule": "rule Vidar\n{\n    meta:\n        author = \"kevoreilly,rony\"\n        description = \"Vidar Payload\"\n        cape_type = \"Vidar Payload\"\n        packed = \"0cff8404e73906f3a4932e145bf57fae7a0e66a7d7952416161a5d9bb9752fd8\"\n    strings:\n        $decode = {FF 75 0C 8D 34 1F FF 15 ?? ?? ?? ?? 8B C8 33 D2 8B C7 F7 F1 8B 45 0C 8B 4D 08 8A 04 02 32 04 31 47 88 06 3B 7D 10 72 D8}\n        $xor_dec = {0F B6 [0-5] C1 E? ?? 33 ?? 81 E? [0-5] 89 ?? 7C AF 06}\n        $wallet = \"*wallet*.dat\" fullword ascii wide\n        $s1 = \"\\\"os_crypt\\\":{\\\"encrypted_key\\\":\\\"\" fullword ascii wide\n        $s2 = \"screenshot.jpg\" fullword ascii wide\n        $s3 = \"\\\\Local State\" fullword ascii wide\n        $s4 = \"Content-Disposition: form-data; name=\\\"\" fullword ascii wide\n        $s5 = \"CC\\\\%s_%s.txt\" fullword ascii wide\n        $s6 = \"History\\\\%s_%s.txt\" fullword ascii wide\n        $s7 = \"Autofill\\\\%s_%s.txt\" fullword ascii wide\n        $s8 = \"Downloads\\\\%s_%s.txt\" fullword ascii wide\n    condition:\n        uint16be(0) == 0x4d5a and 6 of them \n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.702Z",
-    "status": "active"
-}

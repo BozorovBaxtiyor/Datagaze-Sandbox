@@ -1,8 +1,0 @@
-{
-    "name": "Bozok.yar",
-    "rule": "rule Bozok\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Bozok\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Bozok Payload\"\n\n\tstrings:\n\t\t$a = \"getVer\" nocase\n\t\t$b = \"StartVNC\" nocase\n\t\t$c = \"SendCamList\" nocase\n\t\t$d = \"untPlugin\" nocase\n\t\t$e = \"gethostbyname\" nocase\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.729Z",
-    "status": "active"
-}

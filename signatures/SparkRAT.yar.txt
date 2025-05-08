@@ -1,8 +1,0 @@
-{
-    "name": "SparkRAT.yar",
-    "rule": "rule SparkRAT\n{\n    meta:\n        author = \"t-mtsmt\"\n        description = \"SparkRAT Payload\"\n        cape_type = \"SparkRAT Payload\"\n\n    strings:\n        $path_00 = \"/client/common\"\n        $path_01 = \"/client/config\"\n        $path_02 = \"/client/core\"\n        $path_03 = \"/client/service/basic\"\n        $path_04 = \"/client/service/desktop\"\n        $path_05 = \"/client/service/file\"\n        $path_06 = \"/client/service/process\"\n        $path_07 = \"/client/service/terminal\"\n        $path_08 = \"/modules\"\n        $path_09 = \"/utils\"\n\n        $cmd_00 = \"PING\"\n        $cmd_01 = \"OFFLINE\"\n        $cmd_02 = \"LOCK\"\n        $cmd_03 = \"LOGOFF\"\n        $cmd_04 = \"HIBERNATE\"\n        $cmd_05 = \"SUSPEND\"\n        $cmd_06 = \"RESTART\"\n        $cmd_07 = \"SHUTDOWN\"\n        $cmd_08 = \"SCREENSHOT\"\n        $cmd_09 = \"TERMINAL_INIT\"\n        $cmd_10 = \"TERMINAL_INPUT\"\n        $cmd_11 = \"TERMINAL_RESIZE\"\n        $cmd_12 = \"TERMINAL_PING\"\n        $cmd_13 = \"TERMINAL_KILL\"\n        $cmd_14 = \"FILES_LIST\"\n        $cmd_15 = \"FILES_FETCH\"\n        $cmd_16 = \"FILES_REMOVE\"\n        $cmd_17 = \"FILES_UPLOAD\"\n        $cmd_18 = \"FILE_UPLOAD_TEXT\"\n        $cmd_19 = \"PROCESSES_LIST\"\n        $cmd_20 = \"PROCESS_KILL\"\n        $cmd_21 = \"DESKTOP_INIT\"\n        $cmd_22 = \"DESKTOP_PING\"\n        $cmd_23 = \"DESKTOP_KILL\"\n        $cmd_24 = \"DESKTOP_SHOT\"\n        $cmd_25 = \"COMMAND_EXEC\"\n\n    condition:\n        3 of ($path_*) and 3 of ($cmd_*)\n}",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.657Z",
-    "status": "active"
-}

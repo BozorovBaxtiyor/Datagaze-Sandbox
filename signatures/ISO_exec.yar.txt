@@ -1,8 +1,0 @@
-{
-    "name": "ISO_exec.yar",
-    "rule": "rule ISO_exec\n{\n    meta:\n        id = \"2QhuTkbDSP1KGwZGeesrla\"\n        fingerprint = \"27b4636deff9f19acfbbdc00cf198904d3eb630896514fb168a3dc5256abd7b4\"\n        version = \"1.0\"\n        first_imported = \"2022-07-29\"\n        last_modified = \"2022-07-29\"\n        status = \"RELEASED\"\n        sharing = \"TLP:WHITE\"\n        source = \"BARTBLAZE\"\n        author = \"@bartblaze\"\n        description = \"Identifies execution artefacts in ISO files, seen in malware such as Bumblebee.\"\n        category = \"MALWARE\"\n\nstrings:\n       $ = \"\\\\System32\\\\cmd.exe\" ascii wide nocase\n       $ = \"\\\\System32\\\\rundll32.exe\" ascii wide nocase\n       $ = \"OSTA Compressed Unicode\" ascii wide\n       $ = \"UDF Image Creator\" ascii wide\n\ncondition:\n       uint16(0) != 0x5a4d and 3 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.602Z",
-    "status": "active"
-}

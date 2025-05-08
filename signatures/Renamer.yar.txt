@@ -1,8 +1,0 @@
-{
-    "name": "Renamer.yar",
-    "rule": "import \"pe\"\n\n// requires Yara v4.0.2+\nrule Renamer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Renamer/Tainp variants\"\n        cape_type = \"Renamer Payload\"\n    strings:\n        $s1 = \"shell\\\\open\\\\command=\" fullword wide\n        $s2 = \"icon=%SystemRoot%\\\\system32\\\\SHELL32.dll,4\" fullword wide\n        $s3 = \"DropTarget\" ascii\n        $s4 = \"C:\\\\Windows\\\\Paint\" fullword wide\n        $s5 = \"hold.inf\" fullword wide\n        $s6 = \"Dropped\" ascii\n    condition:\n        uint16(0) == 0x5a4d and all of ($s*) or\n        (\n            4 of ($s*) and\n            for any directory in pe.data_directories :\n            (\n                directory.virtual_address != 0 and\n                directory.size == 0\n            )\n        )\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.651Z",
-    "status": "active"
-}

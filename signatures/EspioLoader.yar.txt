@@ -1,8 +1,0 @@
-{
-    "name": "EspioLoader.yar",
-    "rule": "rule EspioLoader {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Espio shellcode loader and obfuscator\"\n        cape_type = \"EspioLoader Payload\"\n    strings:\n        $pdb = /\\\\loader\\\\x64\\\\(Release|Debug)\\\\Espio\\.pdb/ ascii\n        $s1 = \"obfuscatedPayload\" fullword wide\n        $s2 = \"OBFUSCATEDPAYLOAD\" fullword wide\n        $s3 = \"\\\\??\\\\C:\\\\Windows\\\\System32\\\\werfault.exe\" fullword wide\n        $s4 = \"C:\\\\windows\\\\system32\\\\ntdll.dll\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and ($pdb or 3 of ($s*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.685Z",
-    "status": "active"
-}

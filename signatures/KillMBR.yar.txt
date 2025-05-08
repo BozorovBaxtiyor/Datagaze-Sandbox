@@ -1,8 +1,0 @@
-{
-    "name": "KillMBR.yar",
-    "rule": "rule KillMBR {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects KillMBR\"\n        cape_type = \"KillMBR Payload\"\n    strings:\n        $s1 = \"\\\\\\\\.\\\\PhysicalDrive\" ascii\n        $s2 = \"/logger.php\" ascii\n        $s3 = \"Ooops! Your MBR was been rewritten\" ascii\n        $s4 = \"No, this ransomware dont encrypt your files, erases it\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (2 of them and #s1 > 10)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.729Z",
-    "status": "active"
-}

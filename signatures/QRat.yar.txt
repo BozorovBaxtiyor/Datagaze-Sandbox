@@ -1,8 +1,0 @@
-{
-    "name": "QRat.yar",
-    "rule": "rule QRat\n{\n    meta:\n        author = \"Kevin Breen @KevTheHermit\"\n        ref = \"http://malwareconfig.com\"\n        maltype = \"Remote Access Trojan\"\n        filetype = \"jar\"\n        cape_type = \"QRat Payload\"\n\n    strings:\n        $a0 = \"e-data\"\n        $a1 = \"quaverse/crypter\"\n        $a2 = \"Qrypt.class\"\n        $a3 = \"Jarizer.class\"\n        $a4 = \"URLConnection.class\"\n\n\n    condition:\n        4 of them\n\n\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.650Z",
-    "status": "active"
-}

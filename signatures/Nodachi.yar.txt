@@ -1,8 +1,0 @@
-{
-    "name": "Nodachi.yar",
-    "rule": "rule Nodachi {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Nodachi infostealer\"\n        cape_type = \"Nodachi Payload\"\n    strings:\n        $x1 = \"//AppData//Roaming//kavachdb//kavach.db\" ascii\n        $s1 = \"/upload/drive/v3/files/{fileId}\" ascii\n        $s2 = \"main.getTokenFromWeb\" ascii\n        $s3 = \"main.tokenFromFile\" ascii\n        $s4 = \"/goLazagne/\" ascii\n        $s5 = \"/extractor/withoutdrive/main.go\" ascii\n        $s6 = \"struct { Hostname string \\\"json:\\\\\\\"hostname\\\\\\\"\\\"; EncryptedUsername string \\\"json:\\\\\\\"encryptedUsername\\\\\\\"\\\"; EncryptedPassword string \\\"json:\\\\\\\"encryptedPassword\\\\\\\"\\\" }\" ascii\n        $s7 = \"C://Users//public//cred.json\" ascii\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($x*) and 3 of ($s*)) or (4 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.704Z",
-    "status": "active"
-}

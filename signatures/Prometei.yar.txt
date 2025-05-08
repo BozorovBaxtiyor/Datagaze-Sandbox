@@ -1,8 +1,0 @@
-{
-    "name": "Prometei.yar",
-    "rule": "rule Prometei\n{\n    meta:\n        id = \"1tLZbijQrm8kKt1oDLFgVx\"\n        fingerprint = \"59c25b325938e0ade0f4437005d25e48444f5a79a91f7836490e826e588c2e66\"\n        version = \"1.0\"\n        first_imported = \"2023-03-24\"\n        last_modified = \"2023-03-24\"\n        status = \"RELEASED\"\n        sharing = \"TLP:WHITE\"\n        source = \"BARTBLAZE\"\n        author = \"@bartblaze\"\n        description = \"Identifies Prometei botnet main modules.\"\n        category = \"MALWARE\"\n        malware = \"PROMETEI\"\n        malware_type = \"BOT\"\n        reference = \"https://malpedia.caad.fkie.fraunhofer.de/details/win.prometei\"\n        cape_type = \"Prometei payload\"\n\n  strings:\n    $ = \"prometeicmd\" ascii wide fullword\n    $ = \"/cgi-bin/prometei.cgi\" ascii wide\n    \ncondition:\n    any of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.727Z",
-    "status": "active"
-}

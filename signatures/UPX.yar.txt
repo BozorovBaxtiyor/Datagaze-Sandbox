@@ -1,8 +1,0 @@
-{
-    "name": "UPX.yar",
-    "rule": "rule UPX\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\n\tstrings:\n\t\t$a = \"UPX0\"\n\t\t$b = \"UPX1\"\n\t\t$c = \"UPX!\"\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.742Z",
-    "status": "active"
-}

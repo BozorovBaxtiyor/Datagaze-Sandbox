@@ -1,8 +1,0 @@
-{
-    "name": "LokiLocker.yar",
-    "rule": "rule LokiLocker {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects LokiLocker ransomware\"\n        cape_type = \"LokiLocker Payload\"\n    strings:\n        $x1 = \"SOFTWARE\\\\Loki\" fullword wide\n        $x2 = \"Cpriv.Loki\" fullword wide\n        $x3 = \"Loki/\" wide\n        $x4 = /loki(\\s)?locker/ fullword wide nocase\n        $s1 = \"Restore-My-Files.txt\" wide\n        $s2 = \"loading encryption keys\" wide\n        $s3 = \"Kill switch -> enabled\" wide\n        $s4 = \"ScanSMBShares\" fullword ascii\n        $s5 = \"RewriteMBR\" fullword ascii\n        $s6 = /Encrypt(Drives|File|WinVolume|OsDrive)/ fullword ascii\n        $n1 = \"unique-id=\" ascii wide\n        $n2 = \"&disk-size=\" ascii wide\n        $n3 = \"&user=Darwin&cpu-name=\" ascii wide\n        $n4 = \"&ram-size=\" ascii wide\n        $n5 = \"&os-name=\" ascii wide\n        $n6 = \"&chat-id=\" ascii wide\n        $n7 = \"&msg-id=\" ascii wide\n        $n8 = \"&elapsed-time=\" ascii wide\n    condition:\n        uint16(0) == 0x5a4d and (2 of ($x*) or 4 of ($s*) or 6 of ($n*) or (3 of ($s*) and 3 of ($n*)) or (1 of ($x*) and (2 of ($s*) or 2 of ($n*))))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.635Z",
-    "status": "active"
-}

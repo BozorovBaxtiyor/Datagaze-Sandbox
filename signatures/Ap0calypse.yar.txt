@@ -1,8 +1,0 @@
-{
-    "name": "Ap0calypse.yar",
-    "rule": "rule Ap0calypse\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Ap0calypse\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Ap0calypse Payload\"\n\n\tstrings:\n\t\t$a = \"Ap0calypse\"\n\t\t$b = \"Sifre\"\n\t\t$c = \"MsgGoster\"\n\t\t$d = \"Baslik\"\n\t\t$e = \"Dosyalars\"\n\t\t$f = \"Injecsiyon\"\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.702Z",
-    "status": "active"
-}

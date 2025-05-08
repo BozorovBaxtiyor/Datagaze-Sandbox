@@ -1,8 +1,0 @@
-{
-    "name": "DiscoNightClub.yar",
-    "rule": "rule DiscoNightClub {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Hunts for Disco NightClub\"\n        cape_type = \"DiscoNightClub Payload\"\n    strings:\n        $s1 = \"\\\\OfficeBroker\\\\OfficeBroker.exe\" ascii wide nocase\n        $s2 = \"\\\\EDGEUPDATE\\\\EDGEAOUT\" ascii wide nocase\n        $s3 = \"\\\\EDGEUPDATE\\\\update\" ascii wide nocase\n        $s4 = \"windows.system.update.com\" ascii wide nocase\n        $s5 = \"edgeupdate-security-windows.com\" ascii wide nocase\n        $s6 = \"nightclub::\" ascii wide nocase\n        $s7 = \"EncryptedPasswordFlt\" ascii wide nocase\n        $s8 = \"Microsoft\\\\def\\\\Gfr45.cfg\" ascii wide nocase\n        $s9 = \"::keylog::\" ascii wide nocase\n        $pdb1 = \"\\\\AbcdMainProject\\\\Rootsrc\\\\Projects\\\\MainS\\\\Ink\\\\\" ascii wide nocase\n        $pdb2 = \"\\\\Autogen\\\\Kh\\\\AutogenAlg\\\\\" ascii wide nocase\n    condition: \n        uint16(0) == 0x5a4d and ((1 of ($pdb*) and 2 of ($s*)) or (4 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.679Z",
-    "status": "active"
-}

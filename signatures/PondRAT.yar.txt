@@ -1,8 +1,0 @@
-{
-    "name": "PondRAT.yar",
-    "rule": "rule PondRAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects PondRAT\"\n        cape_type = \"PondRAT Payload\"\n    strings:\n        $s1 = \"MsgDown\" ascii\n        $s2 = \"MsgUp\" ascii\n        $s3 = \"MsgRun\" ascii\n        $s4 = \"MsgCmd\" ascii\n        $s5 = \"CryptPayload\" ascii\n        $s6 = \"RecvPayload\" ascii\n        $s7 = \"csleepi\" ascii\n        $s8 = \"FConnectProxy\" ascii\n    condition: \n        (uint16(0) == 0x457f or uint16(0) == 0xfacf or uint16(0) == 0xfeca) and 7 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.706Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "Tefosteal.yar",
-    "rule": "rule Tefosteal {\n    meta:\n        author = \"ditekshen\"\n        description = \"Tefosteal payload\"\n        cape_type = \"Tefosteal payload\"\n    strings:\n        $s1 = \"netsh wlan show networks mode=bssid\" nocase fullword wide\n        $s2 = \"LoginCredentialService.GetLoginCredentials$\" ascii\n        $s3 = \"DefaultLoginCredentials.LoginEventUsrPw$\" ascii\n        $s4 = \"SEC_E_NO_KERB_KEY\" wide\n        $s5 = \"TList<System.Zip.TZipHeader>.\" ascii\n        $s6 = \"_Password.txt\" fullword wide nocase\n        $s7 = \"_Cookies.txt\" fullword wide nocase\n        $f1 = \"\\\\InfoPC\\\\BSSID.txt\" wide\n        $f2 = \"\\\\Files\\\\Telegram\\\\\" wide\n        $f3 = \"\\\\InfoPC\\\\Screenshot.png\" wide\n        $f4 = \"\\\\InfoPC\\\\Systeminfo.txt\" wide\n        $f5 = \"\\\\Steam\\\\config\" wide\n        $f6 = \"\\\\delete.vbs\" wide\n    condition:\n        uint16(0) == 0x5a4d and 4 of ($s*) and 2 of ($f*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.633Z",
-    "status": "active"
-}

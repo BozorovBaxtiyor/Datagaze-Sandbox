@@ -1,8 +1,0 @@
-{
-    "name": "Imminent.yar",
-    "rule": "rule Imminent\n{\n    meta:\n        author = \"kevoreilly & ditekSHen\"\n        description = \"Imminent Payload\"\n        cape_type = \"Imminent Payload\"\n    strings:\n        $string1 = \"Imminent-Monitor\"\n        $string2 = \"abuse@imminentmethods.net\"\n        $string3 = \"SevenZipHelper\"\n        $string4 = \"get_EntryPoint\"\n        $string5 = \"WrapNonExceptionThrows\"\n        $d1 = \"_ENABLE_PROFILING\" wide\n        $d2 = \"Anti-Virus: {0}\" wide\n        $d3 = \"File downloaded & executed\" wide\n        $d4 = \"Chat - You are speaking with\" wide\n        $d5 = \"\\\\Imminent\\\\Plugins\" wide\n        $d6 = \"\\\\Imminent\\\\Path.dat\" wide\n        $d7 = \"\\\\Imminent\\\\Geo.dat\" wide\n        $d8 = \"DisableTaskManager = {0}\" wide\n        $d9 = \"This client is already mining\" wide\n        $d10 = \"Couldn't get AV!\" wide\n        $d11 = \"Couldn't get FW!\" wide\n    condition:\n        uint16(0) == 0x5A4D and (all of ($string*) or 6 of ($d*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.646Z",
-    "status": "active"
-}

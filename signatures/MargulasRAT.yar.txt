@@ -1,8 +1,0 @@
-{
-    "name": "MargulasRAT.yar",
-    "rule": "rule MargulasRAT {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects MargulasRAT\"\n        cape_type = \"MargulasRAT Payload\"\n    strings:\n        $pdb1 = \"G:\\\\VP-S-Fin\\\\memory\\\\\" ascii\n        $pdb2 = \"G:\\\\VP-S-Fin\\\\Margulas\\\\\" ascii\n        $pdb3 = \"G:\\\\VP-S-Fin\\\\remote\" ascii\n        $pdb4 = \"G:\\\\VP-S-Fin\\\\\" ascii\n        $s1 = \"/C choice /C Y /N /D Y /T 1 & Del \" fullword wide\n        $s2 = \"strToHash\" fullword ascii\n        $s3 = \"\\\\socking\" fullword wide\n        $s4 = \"\\\\wininets\" fullword wide\n        $s5 = \"ClientSocket\" fullword ascii\n        $s6 = \"new Stream()\" fullword wide\n        $s7 = \"CipherText\" fullword ascii\n        $s8 = \"WriteAllBytes\" fullword ascii\n        $s9 = { 00 50 72 6f 63 65 73 73 00 45 78 69 73 74 73 00}\n        $s10 = \"pxR/THCwdLuruMmw8wB8xAUvbno1yPGBTOV9IoOkAp/n7+paQm74pkzlfSKDpAKfTOV9IoOkAp9M5X0ig6QCn0zlfSKDpAKfTOV9IoOkAp\" wide\n        $c1 = \"149.248.52.61\" wide\n        $c2 = \"://vpn.nic.in\" wide\n        $c3 = \"://www.mod.gov.in/dod/sites/default/files/\" wide\n    condition:\n        uint16(0) == 0x5a4d and ((1 of ($pdb*) and (1 of ($c*) or 3 of ($s*))) or (1 of ($c*) and 3 of ($s*)) or (6 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.656Z",
-    "status": "active"
-}

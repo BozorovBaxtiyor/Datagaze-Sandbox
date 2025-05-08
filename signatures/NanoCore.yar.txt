@@ -1,8 +1,0 @@
-{
-    "name": "NanoCore.yar",
-    "rule": "rule NanoCore\n{\n    meta:\n        author = \" Kevin Breen <kevin@techanarchy.net>\"\n        ref = \"http://malwareconfig.com/stats/NanoCore\"\n        maltype = \"Remote Access Trojan\"\n        filetype = \"exe\"\n        cape_type = \"NanoCore Payload\"\n\n    strings:\n        $a = \"NanoCore\"\n        $b = \"ClientPlugin\"\n        $c = \"ProjectData\"\n        $d = \"DESCrypto\"\n        $e = \"KeepAlive\"\n        $f = \"IPNETROW\"\n        $g = \"LogClientMessage\"\n\t\t$h = \"|ClientHost\"\n\t\t$i = \"get_Connected\"\n\t\t$j = \"#=q\"\n        $key = {43 6f 24 cb 95 30 38 39}\n\n\n    condition:\n        6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.739Z",
-    "status": "active"
-}

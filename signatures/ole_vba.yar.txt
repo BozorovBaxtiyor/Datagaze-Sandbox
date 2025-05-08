@@ -1,8 +1,0 @@
-{
-    "name": "ole_vba.yar",
-    "rule": "rule OLE_VBAPurged_1\n{\n    meta:\n        author = \"Fireeye Alyssa Rahman (@ramen0x3f)\"\n        description = \"This file has a _VBA_PROJECT stream that has been cleared. This is evidence of VBA purging, a technique where the p-code (PerformanceCache data) is removed from Office files that have an embedded macro.\"\n    strings:\n        $vba_proj = { 5F 00 56 00 42 00 41 00 5F 00 50 00 52 00 4F 00 4A 00 45 00 43 00 54 00 00 00 00 00 00 00 00 00 }\n    condition:\n        uint32(0) == 0xe011cfd0 and ( uint32(@vba_proj[1] + 0x78) == 0x07 )\n}\n\nrule OLE_VBAPurged_2\n{\n    meta:\n        author = \"Fireeye Michael Bailey (@mykill), Jonell Baltazar, Alyssa Rahman (@ramen0x3f), Joseph Reyes\"\n        description = \"This file has a suspicious _VBA_PROJECT header and a small _VBA_PROJECT stream. This may be evidence of the VBA purging tool OfficePurge or a tool-generated document.\"\n    strings:\n        $vba_proj = { 5F 00 56 00 42 00 41 00 5F 00 50 00 52 00 4F 00 4A 00 45 00 43 00 54 00 00 00 00 00 00 00 00 00 }\n        $cc61 = {CC 61 FF FF 00 00 00}\n    condition:\n        uint32(0) == 0xe011cfd0 and ( uint32(@vba_proj[1] + 0x78) >= 0x07 ) and ( uint32(@vba_proj[1] + 0x78) < 0xff ) and $cc61\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.604Z",
-    "status": "active"
-}

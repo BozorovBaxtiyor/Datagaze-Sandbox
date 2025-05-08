@@ -3,10 +3,13 @@ import { Controller, Get, Post, Body, Query, UseGuards, Req } from '@nestjs/comm
 import { CustomRequest } from 'src/common/types/types';
 import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiConsumes, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { ApiAuth } from 'src/common/swagger/common-swagger';
+import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
+import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
 import { SignatureService } from './service/signature.service';
 import { UploadSignatureDto } from './dto/upload.signature.dto';
 import { GetSignaturesQueryDto } from './dto/get.signatures.query.dto';
 
+@UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
 @ApiAuth()
 @Controller({ path: 'signature', version: '1' })
 export class SignatureController {

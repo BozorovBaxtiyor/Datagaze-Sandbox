@@ -1,8 +1,0 @@
-{
-    "name": "VirLock.yar",
-    "rule": "rule VirLock {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects VirLock ransomware\"\n        cape_type = \"VirLock Payload\"\n    strings:\n        $x1 = \"BThere are two ways to pay a fine:\" fullword wide\n        $x2 = \"^Es gibt zwei M\" fullword wide\n        $x3 = \"glichkeiten, eine Strafe zahlen.\" fullword wide\n        $x4 = /usertile\\d+\\.bmp/ fullword wide\n        $s1 = \"WinSock 2.0\" fullword ascii\n        $s2 = \"Running\" fullword ascii\n        $s3 = \"echo WScript.Sleep(50)>%TEMP%/file.vbs\" fullword ascii\n        $s4 = \"cscript %TEMP%/file.vbs\" fullword ascii\n        $s5 = \"del /F /Q file.js\" fullword ascii\n        $s6 = \"del /F /Q %1\" fullword ascii\n        $s7 = \"del /F /Q %0\" fullword ascii\n    condition:\n        (uint16(0) == 0x5a4d and ((2 of ($x*) and 2 of ($s*)) or (5 of ($s*) and 1 of ($x*)))) or (8 of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.691Z",
-    "status": "active"
-}

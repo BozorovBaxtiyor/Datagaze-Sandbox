@@ -1,8 +1,0 @@
-{
-    "name": "Qulab.yar",
-    "rule": "rule Qulab {\n    meta:\n        author = \"ditekshen\"\n        description = \"Qulab information stealer payload or artifacts\"\n        cape_type = \"Qulab Payload\"\n    strings:\n        $x1 = \"QULAB CLIPPER + STEALER\" ascii wide\n        $x2 = \"MASAD CLIPPER + STEALER\" ascii wide\n        $x3 = \"http://teleg.run/Qulab\" ascii wide\n        $x4 = \"http://teleg.run/jew_seller\" ascii wide\n        $x5 = \"BUY CLIPPER + STEALER\" ascii wide\n        $s1 = \"\\\\Screen.jpg\" ascii wide\n        $s2 = \"attrib +s +h \\\"\" ascii wide\n        $s3 = \"\\\\x86_microsoft-windows-\" ascii wide\n        $s4 = \"\\\\amd64_microsoft-windows-\" ascii wide\n        $s5 = \"Desktop TXT File\" ascii wide\n        $s6 = \"\\\\AutoFills.txt\" ascii wide\n        $s7 = \"\\\\CreditCards.txt\" ascii wide\n        $s8 = \"a -y -mx9 -ssw\" ascii wide\n        $s9 = \"\\\\Passwords.txt\" ascii wide\n        $s10 = \"\\\\Information.txt\" ascii wide\n        $s11 = \"\\\\getMe\" ascii wide\n    condition:\n        9 of them or ((1 of ($x*) and 4 of ($s*)) or 1 of ($x*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.729Z",
-    "status": "active"
-}

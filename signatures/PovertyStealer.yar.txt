@@ -1,8 +1,0 @@
-{
-    "name": "PovertyStealer.yar",
-    "rule": "rule PovertyStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects PovertyStealer\"\n        cape_type = \"PovertyStealer Payload\"\n    strings:\n        $x1 = \"Poverty is the parent of crime.\" ascii\n        $s2 = \"OperationSystem: %d:%d:%d\" ascii\n        $s3 = \"ScreenSize: {lWidth=%d, lHeight=%d}\" ascii\n        $s4 = \"VideoAdapter #%d: %s\" ascii\n        $s5 = \"$d.log\" fullword wide\n    condition:\n        ((uint16(0) == 0x5a4d and (1 of ($x*) or all of ($s*))) or all of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.732Z",
-    "status": "active"
-}

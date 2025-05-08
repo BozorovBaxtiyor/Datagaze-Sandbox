@@ -1,8 +1,0 @@
-{
-    "name": "Locked.yar",
-    "rule": "rule Locked {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Locked ransomware\"\n        cape_type = \"Locked Payload\"\n    strings:\n        $x1 = \"http://xxxx.onion/xxxx-xxxx-xxxx-xxxx\" ascii\n        $x2 = \"http://pigetrzlperjreyr3fbytm27bljaq4eungv3gdq2tohnoyfrqu4bx5qd.onion\" ascii\n        $x3 = \"dHA6Ly94eHh4Lm9uaW9uL3h4eHgteHh4eC14eHh4LXh4eHg\" ascii\n        $s1 = \"choice /t 1 /d y /n >nul\" ascii\n        $s2 = \".locked\" fullword ascii\n        $s3 = \"c:\\\\system volume information\" fullword ascii\n        $s4 = \"__$$RECOVERY_README$$__.html\" fullword ascii\n        $s5 = \"Trunc...\" fullword ascii\n        $s6 = /C:\\\\windows\\\\temp\\\\[a-z0-9A-Z]{6}\\.tmp/ fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (all of ($x*) or all of ($s*) or (1 of ($x*) and 4 of ($s*)) or (#s6 > 1 and 4 of them))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.736Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "FPSpy.yar",
-    "rule": "import \"pe\"\n\nrule FPSpy {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects FPSpy\"\n        cape_type = \"FPSpy Payload\"\n    strings:\n        $f1 = \"[Analys_Spy]\" wide\n        $f2 = \"[DeletePoorDll]\" wide\n        $f3 = \"[DownloadProc]\" wide\n        $f4 = \"[DragWarp]\" wide\n        $f5 = \"[GetCoolDir]\" wide\n        $f6 = \"[JackSleep]\" wide\n        $f7 = \"[KillCmdExe]\" wide\n        $f8 = \"[PsDownProc]\" wide\n        $f9 = \"[PsUpProc]\" wide\n        $f10 = \"[ReadFileFromPacket]\" wide\n        $f11 = \"[RemoteDropExec]\" wide\n        $f12 = \"[RemoteExec]\" wide\n        $f13 = \"[RemoteInject]\" wide\n        $f14 = \"[SendHttpForUpload]\" wide\n        $s1 = \"MazeFunc\" fullword ascii\n        $s2 = /(Exit|Update|Drop)_EVT/ fullword ascii\n        $s3 = \"Key.dat\" fullword ascii\n        $s4 = \"%sSysInfo_%02d_%02d_%02d.txt\" fullword ascii\n        $s5 = \"cmd /c systeminfo >> %s\" fullword ascii\n        $s6 = \"Content-Disposition: form-data; name=\\\"MAX_FILE_SIZE\\\"\" fullword ascii\n        $s7 = \"FPSpy\" fullword wide\n    condition: \n        uint16(0) == 0x5a4d and ((pe.exports(\"MazeFunc\") and 2 of ($f*) and 1 of ($s*)) or (6 of ($f*) and 1 of ($s*)) or (5 of ($s*) and 1 of ($f*)) or (8 of ($f*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.713Z",
-    "status": "active"
-}

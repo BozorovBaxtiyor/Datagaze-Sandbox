@@ -1,8 +1,0 @@
-{
-    "name": "Maze.yar",
-    "rule": "rule Maze\n{\nmeta:\n    description = \"Identifies Maze ransomware in memory or unpacked.\"\n    author = \"@bartblaze\"\n    date = \"2019-11\"\n    tlp = \"White\"\n    cape_type = \"Maze Payload\"\n\nstrings:\n    $ = \"Enc: %s\" ascii wide\n    $ = \"Encrypting whole system\" ascii wide\n    $ = \"Encrypting specified folder in --path parameter...\" ascii wide\n    $ = \"!Finished in %d ms!\" ascii wide\n    $ = \"--logging\" ascii wide\n    $ = \"--nomutex\" ascii wide\n    $ = \"--noshares\" ascii wide\n    $ = \"--path\" ascii wide\n    $ = \"Logging enabled | Maze\" ascii wide\n    $ = \"NO SHARES | \" ascii wide\n    $ = \"NO MUTEX | \" ascii wide\n    $ = \"Encrypting:\" ascii wide\n    $ = \"You need to buy decryptor in order to restore the files.\" ascii wide\n    $ = \"Dear %s, your files have been encrypted by RSA-2048 and ChaCha algorithms\" ascii wide\n    $ = \"%s! Alert! %s! Alert! Dear %s Your files have been encrypted by %s! Attention! %s\" ascii wide\n    $ = \"DECRYPT-FILES.txt\" ascii wide fullword\n\ncondition:\n    5 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.735Z",
-    "status": "active"
-}

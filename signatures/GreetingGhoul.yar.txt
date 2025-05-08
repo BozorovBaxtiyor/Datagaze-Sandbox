@@ -1,8 +1,0 @@
-{
-    "name": "GreetingGhoul.yar",
-    "rule": "rule GreetingGhoul {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects GreetingGhoul Cryptocurrency Infostealer\"\n        cape_type = \"GreetingGhoul Payload\"\n    strings:\n        $s1 = \"peer_list\" fullword ascii\n        $s2 = \"seed_hash\" fullword ascii\n        $s3 = \"pool_id\" fullword ascii\n        $s4 = \"%smutex=%s:%lu\" ascii\n        $s5 = \"miner.cfg\" fullword ascii\n        $s6 = \"{\\\"method\\\": \\\"%s\\\"%s}\" ascii\n        $s7 = \"/app/manager/%s\" ascii\n        $s8 = \"X-VNC-STATUS\" fullword ascii\n        $s9 = \"%s\\\\%lu.zip\" fullword ascii\n        $s10 = \"\\\\??\\\\%programdata%\\\\\" wide\n    condition:\n        uint16(0) == 0x5a4d and 6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.725Z",
-    "status": "active"
-}

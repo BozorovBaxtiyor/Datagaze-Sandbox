@@ -1,8 +1,0 @@
-{
-    "name": "RustyStealer.yar",
-    "rule": "rule RustyStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detect Rusty / Luca stealer\"\n        cape_type = \"RustyStealer Payload\"\n    strings:\n        $s1 = \"EdgeMicrosoftedgechromiumChromium7star7StaramigoAmigobraveBrave\" ascii\n        $s2 = \"BrowserchromeChromekometaKometaorbitumOrbitumsputnikSputniktorchTorchucozmediaUranuCozMediavivaldiVivaldiatom\" ascii\n        $s3 = \".kdbx.pdf.doc.docx.xls.xlsx.ppt.pptx.odt.odp\\\\logscx\\\\sensfiles.zip\" ascii\n        $s4 = \"dumper.rs\" ascii\n        $s5 = \"decryption_core.rs\" ascii\n        $s6 = \"anti_emulation.rs\" ascii\n        $s7 = \"discord.rs\" ascii\n        $s8 = /\\\\logscx\\\\(passwords_|cookies_|creditcards_)/ ascii\n        $s9 = \"VirtualBoxVBoxVMWareVMCountry\" ascii\n        $s10 = \"New Log From ( /  )\" ascii\n        $s11 = \"BrowserChromeKometaOrbitumSputnikTorchUranuCozMediaVivaldiAtomMail\" ascii\n        $s12 = \"BrowserBraveSoftwareCentBrowserChedotChrome\" ascii\n        $s13 = \"ChromeKometaOrbitumSputnikTorchUranuCozMediaVivaldi\" ascii\n        $s14 = \"hostnameencryptedUsernameencryptedPasswordstruct\" ascii\n        $s15 = \"encryptedPassword\" fullword ascii\n        $s16 = \"AutoFill@~\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.722Z",
-    "status": "active"
-}

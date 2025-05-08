@@ -1,8 +1,0 @@
-{
-    "name": "CryptoStealerGo.yar",
-    "rule": "rule CryptoStealerGo {\n    meta:\n        author = \"ditekshen\"\n        description = \"CryptoStealerGo payload\"\n        cape_type = \"CryptoStealerGo payload\"\n    strings:\n        $go = \"Go build ID: \\\"\" ascii\n        $s1 = \"file_upload.go\" ascii\n        $s2 = \"grequests.FileUpload\" ascii\n        $s3 = \"runtime.newproc\" ascii\n        $s4 = \"credit_cards\" ascii\n        $s5 = \"zip.(*fileWriter).Write\" ascii\n        $s6 = \"autofill_\" ascii\n        $s7 = \"XFxVc2VyIERhdGFcXA==\" ascii\n        $s8 = \"XFxBcHBEYXRhXFxMb2NhbFxc\" ascii\n    condition:\n        uint16(0) == 0x5a4d and $go and 7 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.674Z",
-    "status": "active"
-}

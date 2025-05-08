@@ -1,8 +1,0 @@
-{
-    "name": "Koxic.yar",
-    "rule": "rule Koxic {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Koxic ransomware\"\n        cape_type = \"Koxic Payload\"\n    strings:\n        $c1 = \" INFO: >> %TEMP%\\\\\" ascii wide\n        $c2 = \"cmd /c \\\"wmic\" ascii wide\n        $c3 = \"cmd /c \\\"echo\" ascii wide\n        $c4 = \"cmd.exe /C ping 1.1.1.1 -n 1 -w 3000 > Nul & Del /f /q \\\"%s\\\"\" fullword wide\n        $c5 = /sc config.{1,30}start=disabled/ fullword ascii wide\n        $s1 = \"Container: %s\" fullword wide\n        $s2 = \"Shotcut dir : %s\" fullword wide\n        $s3 = \"\\\\Microsoft\\\\Windows\\\\Network Shortcuts\\\\\" fullword wide\n        $s4 = \"Thread %d started.\" fullword ascii\n        $s5 = \"ADD our TOXID:\" wide\n        $s6 = \"[Recommended] Using an email\" wide\n    condition:\n        uint16(0) == 0x5a4d and ((4 of ($s*) and 1 of ($c*)) or (2 of ($s*) and (#c1 > 5 or #c2 > 5 or #c3 > 5 or #c5 > 5)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.693Z",
-    "status": "active"
-}

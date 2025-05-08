@@ -1,8 +1,0 @@
-{
-    "name": "PoolRAT.yar",
-    "rule": "rule POOLRAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects POOLRAT\"\n        cape_type = \"POOLRAT Payload\"\n    strings:\n        $s1 = \"MSG_CmdP\" ascii\n        $s2 = \"MSG_WriteConfigP\" ascii\n        $s3 = \"MSG_SecureDelP\" ascii\n        $s4 = \"ConnectToProxyP\" ascii\n        $s5 = \"MSG_KeepConP\" ascii\n        $s6 = \"MSG_SleepP\" ascii\n        $s7 = \"MSG_TestP\" ascii\n        $s8 = \"MSG_SetPathP\" ascii\n    condition: \n        (uint16(0) == 0x457f or uint16(0) == 0xfacf or uint16(0) == 0xfeca) and 7 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.737Z",
-    "status": "active"
-}

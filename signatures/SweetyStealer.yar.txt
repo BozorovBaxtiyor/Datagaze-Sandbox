@@ -1,8 +1,0 @@
-{
-    "name": "SweetyStealer.yar",
-    "rule": "rule SweetyStealer {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects SweetyStealer\"\n        cape_type = \"SweetyStealer Payload\"\n    strings:\n        $s1 = \"SWEETY STEALER\" wide\n        $s2 = \"\\\\SWEETYLOG.zip\" fullword wide\n        $s3 = \"\\\\SWEETY STEALER\\\\SWEETY\\\\\" ascii\n        $s4 = \"\\\\Sweety\" fullword wide\n        $s5 = \"SWEETYSTEALER.\" ascii\n        $s6 = \"in Virtual Environment, so we prevented stealing\" wide\n        $s7 = \":purple_square:\" wide\n        $f1 = \"<GetDomainDetect>b__\" ascii\n        $f2 = \"<GetAllProfiles>b__\" ascii\n        $f3 = \"<ProcessExtraFieldZip64>b__\" ascii\n        $f4 = \"<PostExtractCommandLine>k__\" ascii\n    condition:\n        uint16(0) == 0x5a4d and 3 of ($s*) or (3 of ($f*) and 1 of ($s*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.673Z",
-    "status": "active"
-}

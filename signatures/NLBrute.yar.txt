@@ -1,8 +1,0 @@
-{
-    "name": "NLBrute.yar",
-    "rule": "rule NLBrute\n{\nmeta:\n\tdescription = \"Identifies NLBrute, an RDP brute-forcing tool.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-08\"\n\ttlp = \"White\"\n\tcape_type = \"NLBrute Payload\"\n\nstrings:\n\t$ = \"SERVER:PORT@DOMAIN\\\\USER;PASSWORD\" ascii wide\n\ncondition:\n\tany of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.665Z",
-    "status": "active"
-}

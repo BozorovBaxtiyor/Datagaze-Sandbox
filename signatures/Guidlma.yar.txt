@@ -1,8 +1,0 @@
-{
-    "name": "Guidlma.yar",
-    "rule": "rule Guidlma {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Guildma\"\n        cape_type = \"Guildma Payload\"\n    strings:\n        $v1_1 = \"marxvxinhhm98.dll\" fullword wide\n        $v1_2 = \"marxvxinhhmxa.gif\" fullword wide\n        $v1_3 = \"marxvxinhhmxb.gif\" fullword wide\n        $v1_4 = \"c:\\\\programdata\" fullword wide\n        $v1_5 = \"\\\\tempa\\\\\" fullword wide\n        $v2_1 = \"C:\\\\Windows\\\\System32\\\\dllhost.exe\" fullword ascii\n        $v2_2 = \"C:\\\\Windows\\\\SysWOW64\\\\dllhost.exe\" fullword ascii\n        $v2_3 = \"C:\\\\Users\\\\Public\\\\go\" fullword ascii\n        $v2_4 = \":%:*:/:>:C:H:W:\\\\:a:p:u:z:\" fullword ascii\n        $v2_5 = \": :%:*:9:>:C:R:W:\\\\:k:p:u:\" fullword ascii\n        $v2_6 = \":*:/:4:C:H:M:\\\\:a:f:u:z:\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 3 of ($v1*) or 5 of ($v2*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.673Z",
-    "status": "active"
-}

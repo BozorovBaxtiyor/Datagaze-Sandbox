@@ -1,8 +1,0 @@
-{
-    "name": "TManager.yar",
-    "rule": "rule TManager {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects TManager RAT. Associated with TA428\"\n        cape_type = \"TManager RAT Payload\"\n    strings:\n        $s1 = \"WSAStartup Error!\" fullword wide\n        $s2 = \"KB3112342.LOG\" fullword wide\n        $s3 = \"\\\\cmd.exe -c\" fullword wide\n        $s4 = \"sock_hmutex\" fullword wide\n        $s5 = \"cmd_hmutex\" fullword wide\n        $s6 = \"powershell\" fullword wide\n        $s7 = \"%s_%d.bmp\" fullword wide\n        $s8 = \"!Error!\" fullword wide\n        $s9 = \"[Execute]\" fullword ascii\n        $s10 = \"[Snapshot]\" fullword ascii\n        $s11 = \"GetLanIP error!\" fullword ascii\n        $s12 = \"chcp & exit\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and 6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.676Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "Rasftuby.yar",
-    "rule": "rule Rasftuby {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Rasftuby/DarkCrystal infostealer\"\n        cape_type = \"Rasftuby Payload\"\n    strings:\n        $s1 = \"/DCRS/main.php?data=active\" fullword ascii wide\n        $s2 = \"/socket.php?type=__ds_\" ascii wide\n        $s3 = \"/uploader.php\" fullword ascii wide\n        $s4 = \"del \\\\\\\"%USERPROFILE%\\\\\\\\AppData\\\\\\\\Roaming\\\\\\\\Microsoft\\\\\\\\Windows\\\\\\\\Start Menu\\\\\\\\Programs\\\\\\\\Startup\\\\\\\\System.lnk\\\\\\\"\" fullword ascii wide\n        $s5 = \"Host:{0},Port:{1},User:{2},Pass:{3}<STR>\" fullword ascii wide\n        $s6 = \"keyloggerstart_status\" fullword ascii wide\n        $s7 = \"keyloggerstop_status\" fullword ascii wide\n        $s8 = \"[PRINT SCREEN]\" fullword ascii wide\n        $s9 = \"DCS.Internal\" ascii\n    condition:\n        uint16(0) == 0x5a4d and 5 of ($s*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.643Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "Mangzamel.yar",
-    "rule": "rule Mangzamel\n{\n\tmeta:\n\t\tcape_type = \"Mangzamel Payload\"\n\t\tdescription = \"This rule will flag on the 4 byte xor loop in later copies of mangzamel with embedded tagging\"\n\t\treference = \"Mangzamel Samples\"\n\t\tauthor = \"David Cannings\"\n\t\tdate = \"2014-09\"\n\t\tfiletype = \"pe\"\n\n\tstrings:\n\t\t$xor1 = {8B 1E 83 C0 04 33 D9 83 C6 04 89 58 FC 4A 75 F0}\n\t\t$xor2 = {8B 08 83 C0 04 33 4D 14 89 0A 83 C2 04 4F 75 F0}\n\t\t$xor3 = {53 8B 18 83 C1 04 33 DA 83 C0 04 89 59 FC 4E 75 F0 5B}\n\n\tcondition:\n\t\tany of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.722Z",
-    "status": "active"
-}

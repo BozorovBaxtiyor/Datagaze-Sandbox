@@ -1,8 +1,0 @@
-{
-    "name": "ClientMesh.yar",
-    "rule": "rule ClientMesh\n{\n    meta:\n        author = \"Kevin Breen <kevin@techanarchy.net>\"\n        ref = \"http://malwareconfig.com/stats/ClientMesh\"\n        family = \"torct\"\n        cape_type = \"ClientMesh Payload\"\n\n    strings:\n        $string1 = \"machinedetails\"\n        $string2 = \"MySettings\"\n        $string3 = \"sendftppasswords\"\n        $string4 = \"sendbrowserpasswords\"\n        $string5 = \"arma2keyMass\"\n        $string6 = \"keylogger\"\n        $conf = {00 00 00 00 00 00 00 00 00 7E}\n\n    condition:\n        all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.714Z",
-    "status": "active"
-}

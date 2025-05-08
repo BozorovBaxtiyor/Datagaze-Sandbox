@@ -1,8 +1,0 @@
-{
-    "name": "BlackNET.yar",
-    "rule": "rule BlackNET {\n    meta:\n        author = \"ditekSHen\"\n        description = \"BlackNET RAT payload\"\n        cape_type = \"BlackNET Payload\"\n    strings:\n        $s1 = \"SbieCtrl\" fullword wide\n        $s2 = \"SpyTheSpy\" fullword wide\n        $s3 = \"\\\\BlackNET.dat\" fullword wide\n        $s4 = \"StartDDOS\" fullword wide\n        $s5 = \"UDPAttack\" fullword wide\n        $s6 = \"ARMEAttack\" fullword wide\n        $s7 = \"TCPAttack\" fullword wide\n        $s8 = \"HTTPGetAttack\" fullword wide\n        $s9 = \"RetriveLogs\" fullword wide\n        $s10 = \"StealPassword\" fullword wide\n        $s11 = \"/create /f /sc ONSTART /RL HIGHEST /tn \\\"'\" fullword wide\n        $b1 = \"DeleteScript|BN|\" fullword wide\n        $b2 = \"|BN|Online\" fullword wide\n        $b3 = \"NewLog|BN|\" fullword wide\n        $cnc1 = \"/getCommand.php?id=\" fullword wide\n        $cnc2 = \"/upload.php?id=\" fullword wide\n        $cnc3 = \"connection.php?data=\" fullword wide\n        $cnc4 = \"/receive.php?command=\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (9 of ($s*) or all of ($cnc*) or all of ($b*) or 12 of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.690Z",
-    "status": "active"
-}

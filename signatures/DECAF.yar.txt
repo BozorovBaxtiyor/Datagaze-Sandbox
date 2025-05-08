@@ -1,8 +1,0 @@
-{
-    "name": "DECAF.yar",
-    "rule": "rule Decaf {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Decaf ransomware\"\n        cape_type = \"Decaf Payload\"\n    strings:\n        $s1 = \"main.EncWorker\" fullword ascii\n        $s2 = \"Paths2Encrypt\" fullword ascii\n        $s3 = \"/cmd/encryptor/main.go\" ascii\n        $s4 = \"*win.FileUtils; .autotmp_41 *lib.Encryptor; .autotmp_\" ascii\n        $s5 = \"\\\"Microsoft Window\" fullword wide\n        $s6 = \"Legal_Policy_Statement\" fullword wide\n        $s7 = \").Encrypt.\" ascii\n        $s8 = \"*struct { F uintptr; pw *os.File; c *\" ascii\n        $s9 = \".ListFilesToEnc.\" ascii\n        $m1 = \"WINNER WINNER CHICKEN DINNER\" ascii\n        $m2 = \"All your servers and computers are encrypted\" ascii\n        $m3 = \"We guarantee to decrypt one image file for free.\" ascii\n        $m4 = \"We WILL NOT be able to RESTORE them.\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (4 of ($s*) or 3 of ($m*) or (1 of ($m*) and 2 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.721Z",
-    "status": "active"
-}

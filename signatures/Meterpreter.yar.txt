@@ -1,8 +1,0 @@
-{
-    "name": "Meterpreter.yar",
-    "rule": "rule Meterpreter {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Meterpreter payload\"\n        cape_type = \"Meterpreter Payload\"\n    strings:\n        $s1 = \"PACKET TRANSMIT\" fullword ascii\n        $s2 = \"PACKET RECEIVE\" fullword ascii\n        $s3 = \"\\\\\\\\%s\\\\pipe\\\\%s\" fullword ascii wide\n        $s4 = \"%04x-%04x:%s\" fullword wide\n        $s5 = \"server.dll\" fullword ascii\n    condition:\n        (uint16(0) == 0x5a4d and all of them) or (filesize < 300KB and all of them)\n}\n\nrule MeterpreterStager {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Meterpreter stager payload\"\n        cape_type = \"MeterpreterStager Payload\"\n    strings:\n        $s1 = \"PAYLOAD:\" fullword ascii\n        $s2 = \"AQAPRQVH1\" fullword ascii\n        $s3 = \"ws2_32\" fullword ascii\n        $s4 = \"KERNEL32.dll\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them and filesize < 100KB\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.696Z",
-    "status": "active"
-}

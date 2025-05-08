@@ -1,8 +1,0 @@
-{
-    "name": "MatanbuchusLoader.yar",
-    "rule": "rule MatanbuchusLoader\n{\n    meta:\n        description = \"Detects Matanbuchus loader (BelialDropper) used to download Matanbuchus payload\"\n        author = \"Rony (@r0ny_123)\"\n        cape_type = \"Matanbuchus loader\"\n        cretaion_date = \"2021-12-09\"\n        revision = \"0\"\n        reference = \"https://www.capesandbox.com/analysis/212747\"\n    strings:\n        /*\n        8B 55 FC          mov     edx, [ebp+var_4]\n        8B CA             mov     ecx, edx\n        C1 E1 04          shl     ecx, 4\n        03 C1             add     eax, ecx\n        8B 4D F8          mov     ecx, [ebp+var_8]\n        33 F0             xor     esi, eax\n        8B 45 10          mov     eax, [ebp+arg_8]\n        03 C1             add     eax, ecx\n        33 F0             xor     esi, eax\n        03 75 F0          add     esi, [ebp+var_10]\n        */\n        $ = { 8B 55 ?? 8B CA C1 E1 ?? 03 C1 8B 4D ?? 33 F0 8B 45 ?? 03 C1 33 F0 03 75 }\n    condition:\n        uint16be(0) == 0x4d5a and uint32be(uint32(0x3c)) == 0x50450000 and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.707Z",
-    "status": "active"
-}

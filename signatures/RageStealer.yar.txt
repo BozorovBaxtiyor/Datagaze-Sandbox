@@ -1,8 +1,0 @@
-{
-    "name": "RageStealer.yar",
-    "rule": "rule RageStealer {\n    meta:\n        author = \"ditekShen\"\n        description = \"Detect Rage / Priv8 infostealer\"\n        cape_type = \"Rage Payload\"\n    strings:\n        $x1 = \"\\\\RageStealer\\\\obj\\\\\" ascii\n        $x2 = \"Priv8 Stealer\" wide\n        $s1 = \"\\\\Screen.png\" wide\n        $s2 = \"Content-Disposition: form-data; name=\\\"document\\\"; filename=\\\"{1}\\\"\" wide\n        $s3 = \"NEW LOG FROM\" wide\n        $s4 = \"GRABBED SOFTWARE\" wide\n        $s5 = \"DOMAINS DETECTED\" wide\n        $s6 = \"snder\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (1 of ($x*) and 4 of ($s*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.662Z",
-    "status": "active"
-}

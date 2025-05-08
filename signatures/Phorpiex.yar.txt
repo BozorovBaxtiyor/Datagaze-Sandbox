@@ -1,8 +1,0 @@
-{
-    "name": "Phorpiex.yar",
-    "rule": "rule Phorpiex {\n    meta:\n      author = \"ditekSHen\"\n      description = \"Detects Phorpiex variants\"\n      cape_type = \"Phorpiex Payload\"\n    strings:\n       $s1 = \"ShEllExECutE=__\\\\DriveMgr.exe\" fullword wide nocase\n       $s2 = \"/c start __ & __\\\\DriveMgr.exe & exit\" fullword wide nocase\n       $s3 = \"%s\\\\autorun.inf\" fullword wide\n       $s4 = \"svchost.\" wide\n       $s5 = \"%ls\\\\%d%d\" wide\n       $s6 = \"bitcoincash:\" ascii\n       $s7 = \"%ls:*:Enabled:%ls\" fullword wide\n       $s8 = \"%s\\\\%s\\\\DriveMgr.exe\" fullword wide\n       $s9 = \"api.wipmania.com\" ascii\n       $v1_1 = \"%appdata%\" fullword wide\n       $v1_2 = \"(iPhone;\" ascii\n       $v1_3 = \"/tst.php\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (5 of ($s*) or all of ($v1*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.655Z",
-    "status": "active"
-}

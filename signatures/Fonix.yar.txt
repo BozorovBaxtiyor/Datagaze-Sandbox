@@ -1,8 +1,0 @@
-{
-    "name": "Fonix.yar",
-    "rule": "rule Fonix {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Fonix ransomware\"\n        cape_type = \"Fonix Payload\"\n    strings:\n        $s1 = \"dontcryptanyway\" fullword wide\n        $s2 = \"Cpriv.key\" ascii wide\n        $s3 = \"Cpub.key\" ascii wide\n        $s4 = \"NetShareEnum() failed!Error: % ld\" fullword wide\n        $s5 = \"<div class='title'> Attention!</div><ul><li><u><b>DO NOT</b> pay\" wide\n        $s6 = \"Encryption Completed !!!\" fullword wide\n        $s7 = \"kill process\" fullword ascii\n        $s8 = \"Copy SystemID C:\\\\ProgramData\\\\SystemID\" ascii\n        $id1 = \"].FONIX\" fullword wide\n        $id2 = \"xinofconfig.txt\" fullword ascii wide\n        $id3 = \"XINOF4MUTEX\" wide\n        $id4 = \":\\\\Fonix\\\\cryptoPP\\\\\" ascii\n        $id5 = \"schtasks /CREATE /SC ONLOGON /TN fonix\" ascii\n        $id6 = \"Ransomware\\\\Fonix\" ascii\n    condition:\n        uint16(0) == 0x5a4d and (6 of ($s*) or 3 of ($id*) or (1 of ($id*) and 3 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.672Z",
-    "status": "active"
-}

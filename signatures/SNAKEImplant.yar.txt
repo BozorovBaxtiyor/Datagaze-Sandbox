@@ -1,8 +1,0 @@
-{
-    "name": "SNAKEImplant.yar",
-    "rule": "rule SNAKE {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects SNAKE implant\"\n        cape_type = \"SNAKE Payload\"\n    strings:\n        $c1 = { 25 73 23 31 }\n        $c2 = { 25 73 23 32 }\n        $c3 = { 25 73 23 33 }\n        $c4 = { 25 73 23 34 }\n        $c5 = { 2e 74 6d 70 }\n        $c6 = { 2e 73 61 76 }\n        $c7 = { 2e 75 70 64 }\n        $s1 = \"tapisetschema.dll\" fullword wide\n        $s2 = \"\\\\\\\\.\\\\%s\\\\\\\\\" fullword ascii wide\n        $s3 = \"\\\\BaseNamedObjects\\\\%S\" fullword wide\n        $s4 = \"{CACE3174-CF88-4906-921A-A16A7DC8CF4B}.{B6066E99-37D7-4668-9B06-301CE2C1D367}.crmlog\" ascii\n        $s5 = \"-crash-\" fullword ascii\n        $s6 = \"rcv_buf=%d%c\" fullword ascii\n        $s7 = \"write_peer_nfo=%s:%d%cfrag_no_scrambling=Y%c\" fullword ascii\n    condition:\n        (uint16(0) == 0x5a4d and (all of ($s*) or (all of ($c*) and 1 of ($s*)))) or (all of ($c*) and 1 of ($s*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.735Z",
-    "status": "active"
-}

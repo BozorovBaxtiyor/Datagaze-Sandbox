@@ -1,8 +1,0 @@
-{
-    "name": "BlackByte.yar",
-    "rule": "rule BlackByte {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detect / Hunt BlackByte ransomware\"\n        cape_type = \"BlackByte Payload\"\n    strings:\n        $s1 = \"WalkDirAndEncrypt\" ascii wide nocase\n        $s2 = \"FileEncrypt\" ascii wide nocase\n        $s3 = \"BlackByte.\" ascii wide nocase\n        $s4 = \"EnumerateDirAndEncrypt\" ascii wide nocase\n        $s5 = \"Dismount-DiskImage\" ascii wide nocase\n        $s6 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Image File Execution Options\" ascii wide nocase\n    condition:\n        uint16(0) == 0x5a4d and 4 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.727Z",
-    "status": "active"
-}

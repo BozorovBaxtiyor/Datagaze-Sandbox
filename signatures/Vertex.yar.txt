@@ -1,8 +1,0 @@
-{
-    "name": "Vertex.yar",
-    "rule": "rule Vertex\n{\n\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Vertex\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Vertex Payload\"\n\n\tstrings:\n\t\t$string1 = \"DEFPATH\"\n\t\t$string2 = \"HKNAME\"\n\t\t$string3 = \"HPORT\"\n\t\t$string4 = \"INSTALL\"\n\t\t$string5 = \"IPATH\"\n\t\t$string6 = \"MUTEX\"\n\t\t$res1 = \"PANELPATH\"\n\t\t$res2 = \"ROOTURL\"\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.699Z",
-    "status": "active"
-}

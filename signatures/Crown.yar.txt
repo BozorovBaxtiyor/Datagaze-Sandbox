@@ -1,8 +1,0 @@
-{
-    "name": "Crown.yar",
-    "rule": "rule Crown {\n     meta:\n        author = \"ditekSHen\"\n        description = \"Detects Crown Tech Support Scam\"\n        cape_type = \"Crown Tech Support Scam Payload\"\n    strings:\n        $d1 = \"//prodownload.live\" ascii\n        $c1 = \"&uid=\" ascii\n        $c2 = \"&ver=\" ascii\n        $c3 = \"&mcid=\" ascii\n        $c4 = \".php?uid=\" ascii\n        $c5 = \".php?ip=\" ascii\n        $s1 = \"Operating System Support ID:\" ascii\n        $s2 = \"taskkill /IM explorer.exe -f\" ascii nocase\n        $s3 = \"/C taskkill /IM Taskmgr.exe -f\" ascii nocase\n        $s4 = \"FastSuport\" fullword ascii\n        $s5 = \"Support Override!\" fullword wide\n        $s6 = \"Support Assistance Override Activated!\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (all of ($c*) or 4 of ($s*) or (1 of ($d*) and (3 of ($c*) or 2 of ($s*))))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.685Z",
-    "status": "active"
-}

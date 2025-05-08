@@ -6,7 +6,7 @@ import { TaskListQueryDto } from './dto/tasks.list.query.dto';
 import { CreateFileDto } from './dto/create.file.dto';
 import { GetSignaturesQueryDto } from '../signature/dto/get.signatures.query.dto';
 import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
-import { HttpRoleGuard } from '../../../common/guards/role/http-role.guard';
+import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
 import { CustomRequest } from 'src/common/types/types';
 import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiConsumes, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { ApiAuth } from 'src/common/swagger/common-swagger';

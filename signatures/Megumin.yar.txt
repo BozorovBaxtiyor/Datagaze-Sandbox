@@ -1,8 +1,0 @@
-{
-    "name": "Megumin.yar",
-    "rule": "rule Megumin {\n    meta:\n        author = \"ditekshen\"\n        description = \"Megumin payload\"\n        cape_type = \"Megumin payload\"\n    strings:\n        $s1 = \"loadpe|\" fullword ascii\n        $s2 = \"Megumin/2.0\" fullword ascii\n        $s3 = \"/c start /I \\\"\\\" \\\"\" fullword ascii\n        $s4 = \"jsbypass|\" fullword ascii\n\n        $cnc1 = \"Mozilla/5.0 (Windows NT 6.1) Megumin/2.0\" fullword ascii\n        $cnc2 = \"/cdn-cgi/l/chk_jschl?s=\" fullword ascii\n        $cnc3 = \"/newclip?hwid=\" fullword ascii\n        $cnc4 = \"/isClipper\" fullword ascii\n        $cnc5 = \"/task?hwid=\" fullword ascii\n        $cnc6 = \"/completed?hwid=\" fullword ascii\n        $cnc7 = \"/gate?hwid=\" fullword ascii\n        $cnc8 = \"/addbot?hwid=\" fullword ascii\n\n        $pdb = \"\\\\MeguminV2\\\\Release\\\\MeguminV2.pdb\" ascii\n    condition:\n        (uint16(0) == 0x5a4d and (all of ($s*) or 5 of ($cnc*) or $pdb)) or 11 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.635Z",
-    "status": "active"
-}

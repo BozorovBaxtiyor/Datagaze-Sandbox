@@ -1,8 +1,0 @@
-{
-    "name": "Sub7Nation.yar",
-    "rule": "rule Sub7Nation\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Sub7Nation\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Sub7Nation Payload\"\n\n\tstrings:\n\t\t$a = \"EnableLUA /t REG_DWORD /d 0 /f\"\n\t\t$b = \"*A01*\"\n\t\t$c = \"*A02*\"\n\t\t$d = \"*A03*\"\n\t\t$e = \"*A04*\"\n\t\t$f = \"*A05*\"\n\t\t$g = \"*A06*\"\n\t\t$h = \"#@#@#\"\n\t\t$i = \"HostSettings\"\n\t\t$verSpecific1 = \"sevane.tmp\"\n\t\t$verSpecific2 = \"cmd_.bat\"\n\t\t$verSpecific3 = \"a2b7c3d7e4\"\n\t\t$verSpecific4 = \"cmd.dll\"\n\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.699Z",
-    "status": "active"
-}

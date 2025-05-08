@@ -1,8 +1,0 @@
-{
-    "name": "Webshell_in_image.yar",
-    "rule": "rule Webshell_in_image\n{\nmeta:\n\tdescription = \"Identifies a webshell or backdoor in image files.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-01\"\n\ttlp = \"White\"\n\nstrings:\n\t$gif = {47 49 46 38 3? 61}\n\t$png = {89 50 4E 47 0D 0A 1A 0A}\n\t$jpeg = {FF D8 FF E0}\n\t$bmp = {42 4D}\n\n\t$s1 = \"<%@ Page Language=\" ascii wide\n        $s2 = /<\\?php[ -~]{30,}/ ascii wide nocase\n        $s3 = /eval\\([ -~]{30,}/ ascii wide nocase\n        $s4 = /<eval[ -~]{30,}/ ascii wide nocase\n        $s5 = /<%eval[ -~]{30,}/ ascii wide nocase\n\ncondition:\n\t( $gif at 0 and any of ($s*) ) or\n\t( $png at 0 and any of ($s*) ) or\n\t( $jpeg at 0 and any of ($s*) ) or\n\t( $bmp at 0 and any of ($s*) )\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.603Z",
-    "status": "active"
-}

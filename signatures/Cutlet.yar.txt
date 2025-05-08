@@ -1,8 +1,0 @@
-{
-    "name": "Cutlet.yar",
-    "rule": "rule Cutlet {\n        meta:\n                description = \"Detects Cutlet ATM malware\"\n                author = \"@VK_Intel\"\n                reference = \"Detects the Cutlet ATM malware\"\n                date = \"2017-12-26\"\n                // hash = \"fac356509a156a8f11ce69f149198108\"\n                cape_type = \"Cutlet Payload\"\n        strings:\n                // DIEBOLD NIXDORF DLL ATM LIBRARY\n                $dll = \"CSCWCNG.dll\" wide ascii\n\n                // DLL PROCEDURES ASSOCIATED WITH CUTLET ATM\n                $dll_proc1 = \"CscCngClose\" wide ascii\n                $dll_proc2 = \"CscCngTransport\" wide ascii\n                $dll_proc3 = \"CscCngReset\" wide ascii\n                $dll_proc4 = \"CscCngDispense\" wide ascii\n                $dll_proc5 = \"CscCngOpen\" wide ascii\n\n                // CUTLET MALWARE STRINGS\n                $str0 = \"CSCCNG\" wide ascii\n                $str1 = \"Code:\" wide ascii\n                $str2 = \"Delphi\" wide ascii\n\n        condition:\n                $dll and 4 of ($dll_proc*) and all of ($str*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.719Z",
-    "status": "active"
-}

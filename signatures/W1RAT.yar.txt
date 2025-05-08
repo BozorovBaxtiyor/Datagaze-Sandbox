@@ -1,8 +1,0 @@
-{
-    "name": "W1RAT.yar",
-    "rule": "rule W1RAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"W1 RAT payload\"\n        cape_type = \"W1 RAT payload\"\n    strings:\n        $s1 = \"/c /Ox /Fa\\\"%s/%s.asm\\\" /Fo\\\"%s/%s.obj\\\" \\\"%s/%s.%s\\\"\" ascii\n        $s2 = \"this->piProcInfo.hProcess\" fullword ascii\n        $s3 = \"index >= 0 && index < this->reg_tab->GetLen()\" fullword ascii\n        $s4 = \"strcpy(log_font.lfFaceName,\\\"%s\\\");\" fullword ascii\n        $s5 = \"WorkShop -- [%s]\" fullword ascii\n        $s6 = \"HeaderFile.cpp\" fullword ascii\n        $s7 = \"WndLog.cpp\" fullword ascii\n        $s8 = \"assertion fail \\\"%s\\\" at file=%s line=%d\" fullword ascii\n        $s9 = \"Stdin   pipe   creation   failed\" fullword ascii\n    condition:\n        (uint16(0) == 0x5a4d and 6 of ($s*)) or (all of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.733Z",
-    "status": "active"
-}

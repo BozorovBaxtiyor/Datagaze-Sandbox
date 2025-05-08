@@ -1,8 +1,0 @@
-{
-    "name": "Karkoff.yar",
-    "rule": "rule Karkoff {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Karkoff\"\n        cape_type = \"Karkoff Payload\"\n    strings:\n        $x1 = \"C:\\\\Windows\\\\Temp\\\\MSEx_log.txt\" fullword wide\n        $x2 = \"CMD.exe\" fullword wide\n        $x3 = \"Karkoff.ProjectInstaller.resources\" fullword ascii\n        $s1 = /try\\shttp(s)?\\s(ip|domain)/ fullword wide\n        $s2 = \"Reg cleaned!\" fullword wide nocase\n        $s3 = \"Content-Disposition: form-data; name=\\\"{1}\\\"\" fullword wide\n        $s4 = \"^[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}$\" fullword wide\n        $s5 = \"new backdoor\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (all of ($x*) or 4 of ($s*) or (2 of ($x*) and 2 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.720Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "cve_2013_2551.yar",
-    "rule": "/* Copyright (C) 2016 Will Metcalf william.metcalf@gmail.com\n * This program is free software: you can redistribute it and/or modify\n * it under the terms of the GNU General Public License as published by\n * the Free Software Foundation, either version 3 of the License, or\n * (at your option) any later version.\n *\n * This program is distributed in the hope that it will be useful,\n * but WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n * GNU General Public License for more details.\n *\n * You should have received a copy of the GNU General Public License\n * along with this program.  If not, see <http://www.gnu.org/licenses/>.\n */\n\nrule CVE_2013_2551\n{\n   strings:\n       $s0 = \"dashstyle.array.length\" ascii nocase wide\n       $s1 = \"#default#VML\" ascii nocase wide\n       $s2 = /dashstyle\\.array\\.length[\\r\\n\\s]*=[\\r\\n\\s]*[^\\x3b]*-/ ascii nocase wide\n   condition:\n       all of ($s*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.601Z",
-    "status": "active"
-}

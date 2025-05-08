@@ -9,6 +9,9 @@ import { JwtAuthModule } from './jwt-auth.module';
     imports: [JwtAuthModule],
     providers: [AuthService, AuthRepository],
     controllers: [AuthController],
-    exports: [AuthRepository],
+    exports: [
+        JwtAuthModule,
+        AuthRepository
+    ],
 })
 export class AuthModule {}

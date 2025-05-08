@@ -1,8 +1,0 @@
-{
-    "name": "Grum.yar",
-    "rule": "rule Grum {\n    meta:\n      author = \"ditekSHen\"\n      description = \"Detect Grum spam bot\"\n      cape_type = \"Grum Payload\"\n    strings:\n        $s1 = \"loader_id\" fullword ascii\n        $s2 = \"start_srv\" fullword ascii\n        $s3 = \"lid_file_upd\" fullword ascii\n        $s4 = \"----=_NextPart_%03d_%04X_%08.8lX.%08.8lX\" fullword ascii\n        $s5 = \"rcpt to:<%s>\" fullword ascii\n        $s6 = \"ehlo %s\" fullword ascii\n        $s7 = \"%OUTLOOK_BND_\" fullword ascii\n    condition:\n        (uint16(0) == 0x5a4d and 5 of them) or (all of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.742Z",
-    "status": "active"
-}

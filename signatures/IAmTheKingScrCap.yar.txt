@@ -1,8 +1,0 @@
-{
-    "name": "IAmTheKingScrCap.yar",
-    "rule": "rule IAmTheKingScrCap {\n    meta:\n        author = \"ditekshen\"\n        description = \"IAmTheKing screen capture payload\"\n        cape_type = \"IAmTheKingScrCap Payload\"\n    strings:\n        $s1 = \"@MyScreen.jpg\" fullword wide\n        $s2 = \"DISPLAY\" fullword wide\n        $s3 = \".?AVCImage@ATL@@\" fullword ascii\n        $s4 = \".?AVGdiplusBase@Gdiplus@@\" fullword ascii\n        $s5 = \".?AVImage@Gdiplus@@\" fullword ascii\n        $s6 = \".?AVBitmap@Gdiplus@@\" fullword ascii\n        $s7 = \".?AVCAtlException@ATL@@\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.663Z",
-    "status": "active"
-}

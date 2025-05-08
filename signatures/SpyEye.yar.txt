@@ -1,8 +1,0 @@
-{
-    "name": "SpyEye.yar",
-    "rule": "rule SpyEye {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects SpyEye\"\n        cape_type = \"SpyEye Payload\"\n    strings:\n        $x1 = \"_CLEANSWEEP_\" ascii wide\n        $x2 = \"config.datUT\" fullword ascii\n        $x3 = \"webinjects.txtUT\" fullword ascii\n        $s1 = \"confirm:processCommand\" fullword ascii\n        $s2 = \"Smth wrong with navigate to REF-PAGE (err code: %d). 0_o\" fullword ascii\n        $s3 = \"(UTC%s%2.2f) %s\" fullword wide\n        $s4 = \"M\\\\F;u`r\" fullword ascii\n        $s5 = \"]YH0%Yn\" fullword ascii\n    condition:\n        uint16(0) == 0x5a4d and (2 of ($x*) or (1 of ($x*) and 1 of ($s*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.675Z",
-    "status": "active"
-}

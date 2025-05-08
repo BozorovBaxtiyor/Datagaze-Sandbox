@@ -1,8 +1,0 @@
-{
-    "name": "DoomedLoader.yar",
-    "rule": "rule DoomedLoader\n{\n    meta:\n        author = \"kevoreilly\"\n        cape_type = \"DoomedLoader Payload\"\n        packed = \"914b1b3180e7ec1980d0bafe6fa36daade752bb26aec572399d2f59436eaa635\"\n    strings:\n        $anti = {48 8B 4C 24 ?? E8 [4] 84 C0 B8 [4] 41 0F 45 C6 EB}\n        $syscall = {49 89 CA 8B 44 24 08 FF 64 24 10}\n    condition:\n        uint16(0) == 0x5A4D and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.660Z",
-    "status": "active"
-}

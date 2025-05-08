@@ -1,8 +1,0 @@
-{
-    "name": "Alkhal.yar",
-    "rule": "rule Alkhal {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects Alkhal ransomware\"\n        cape_type = \"Alkhal Payload\"\n    strings:\n        $s1 = \"ReadMe.txt\" fullword wide\n        $s2 = \"Recovery.bmp\" fullword wide\n        $d1 = \"\\\\$RECYCLE.BIN\\\\\" fullword wide\n        $d2 = \"\\\\BOOT\\\\\" fullword wide\n        $d3 = \"\\\\RECOVERY\\\\\" fullword wide\n        $d4 = \"\\\\MICROS~1\\\\\" fullword wide\n        $d5 = \"\\\\CODECA~1\\\\js\\\\\" fullword wide\n        $a1 = \"takeown.exe\" fullword wide\n        $a2 = \"AppLaunch.exe\" fullword wide\n        $a3 = \"MpCmdRun.exe\" fullword wide\n        $a4 = \"wordpad.exe\" fullword wide\n        $a5 = \"winload.exe\" fullword wide\n        $a6 = \"prevhost.exe\" fullword wide\n        $a7 = \"credwiz.exe\" fullword wide\n    condition:\n        uint16(0) == 0x5a4d and (all of ($s*) and 4 of ($d*) and 3 of ($a*))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.644Z",
-    "status": "active"
-}

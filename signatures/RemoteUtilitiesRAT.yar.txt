@@ -1,8 +1,0 @@
-{
-    "name": "RemoteUtilitiesRAT.yar",
-    "rule": "rule RemoteUtilitiesRAT {\n    meta:\n      author = \"ditekshen\"\n      description = \"RemoteUtilitiesRAT RAT payload\"\n      cape_type = \"RemoteUtilitiesRAT payload\"\n    strings:\n      $s1 = \"rman_message\" wide\n      $s2 = \"rms_invitation\" wide\n      $s3 = \"rms_host_\" wide\n      $s4 = \"rman_av_capture_settings\" wide\n      $s5 = \"rman_registry_key\" wide\n      $s6 = \"rms_system_information\" wide\n      $s7 = \"_rms_log.txt\" wide\n      $s8 = \"rms_internet_id_settings\" wide\n    condition:\n      uint16(0) == 0x5a4d and 4 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.708Z",
-    "status": "active"
-}

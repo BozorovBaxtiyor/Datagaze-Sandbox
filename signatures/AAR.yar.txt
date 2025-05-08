@@ -1,8 +1,0 @@
-{
-    "name": "AAR.yar",
-    "rule": "rule AAR\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/AAR\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"AAR Payload\"\n\n\tstrings:\n\t\t$a = \"Hashtable\"\n\t\t$b = \"get_IsDisposed\"\n\t\t$c = \"TripleDES\"\n\t\t$d = \"testmemory.FRMMain.resources\"\n\t\t$e = \"$this.Icon\" wide\n\t\t$f = \"{11111-22222-20001-00001}\" wide\n\t\t$g = \"@@@@@\"\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.678Z",
-    "status": "active"
-}

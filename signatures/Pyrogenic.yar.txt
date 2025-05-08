@@ -1,8 +1,0 @@
-{
-    "name": "Pyrogenic.yar",
-    "rule": "rule Pyrogenic {\n    meta:\n      author = \"ditekshen\"\n      description = \"Pyrogenic/Qealler infostealer payload\"\n      cape_type = \"Pyrogenic payload\"\n    strings:\n      $s1 = \"bbb6fec5ebef0d93\" ascii wide\n      $s2 = \"2a898bc98aaf6c96f2054bb1eadc9848eb77633039e9e9ffd833184ce553fe9b\" ascii wide\n      $s3 = \"addShutdownHook\" ascii wide\n      $s4 = \"obfuscated/META-INF/QeallerV\" ascii wide\n      $s5 = \"globalIpAddress\" ascii wide\n    condition:\n      all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.720Z",
-    "status": "active"
-}

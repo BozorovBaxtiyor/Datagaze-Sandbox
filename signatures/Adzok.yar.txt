@@ -1,8 +1,0 @@
-{
-    "name": "Adzok.yar",
-    "rule": "rule Adzok\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tDescription = \"Adzok Rat\"\n\t\tVersions = \"Free 1.0.0.3,\"\n\t\tref = \"http://malwareconfig.com/stats/Adzok\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"jar\"\n        cape_type = \"Adzok Payload\"\n\n\tstrings:\n\t\t$a1 = \"config.xmlPK\"\n\t\t$a2 = \"key.classPK\"\n\t\t$a3 = \"svd$1.classPK\"\n\t\t$a4 = \"svd$2.classPK\"\n   \t\t$a5 = \"Mensaje.classPK\"\n\t\t$a6 = \"inic$ShutdownHook.class\"\n\t\t$a7 = \"Uninstall.jarPK\"\n\t\t$a8 = \"resources/icono.pngPK\"\n\n\tcondition:\n    \t\t7 of ($a*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.622Z",
-    "status": "active"
-}

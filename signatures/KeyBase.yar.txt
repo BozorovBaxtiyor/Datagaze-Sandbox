@@ -1,8 +1,0 @@
-{
-    "name": "KeyBase.yar",
-    "rule": "rule KeyBase\n{\nmeta:\n\tdescription = \"Identifies KeyBase aka Kibex.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2019-02\"\n\thash = \"cafe2d12fb9252925fbd1acb9b7648d6\"\n\ttlp = \"White\"\n  \tcape_type = \"KeyBase Payload\"\n\nstrings:\n\t$s1 = \" End:]\" ascii wide\n\t$s2 = \"Keystrokes typed:\" ascii wide\n\t$s3 = \"Machine Time:\" ascii wide\n\t$s4 = \"Text:\" ascii wide\n\t$s5 = \"Time:\" ascii wide\n\t$s6 = \"Window title:\" ascii wide\n\n\t$x1 = \"&application=\" ascii wide\n\t$x2 = \"&clipboardtext=\" ascii wide\n\t$x3 = \"&keystrokestyped=\" ascii wide\n\t$x4 = \"&link=\" ascii wide\n\t$x5 = \"&username=\" ascii wide\n\t$x6 = \"&windowtitle=\" ascii wide\n\t$x7 = \"=drowssap&\" ascii wide\n\t$x8 = \"=emitenihcam&\" ascii wide\n\ncondition:\n\tuint16(0) == 0x5a4d and (\n\t\t5 of ($s*) or 6 of ($x*) or\n\t\t( 3 of ($s*) and 3 of ($x*) )\n\t)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.705Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "TSCookie.yar",
-    "rule": "rule TSCookie\n{\n    meta:\n        author = \"kevoreilly\"\n        description = \"TSCookie Payload\"\n        cape_type = \"TSCookie Payload\"\n    strings:\n        $string1 = \"http://%s:%d\" wide\n        $string2 = \"/Default.aspx\" wide\n        $string3 = \"\\\\wship6\"\n    condition:\n        uint16(0) == 0x5A4D and all of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.737Z",
-    "status": "active"
-}

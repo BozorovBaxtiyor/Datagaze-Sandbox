@@ -1,8 +1,0 @@
-{
-    "name": "TreasureHunter.yar",
-    "rule": "rule TreasureHunter {\n\tmeta:\n\t\tdescription = \"Detects generic unpacked TreasureHunter POS\"\n\t\tauthor = \"@VK_Intel\"\n\t\treference = \"TreasureHunter POS\"\n\t\tdate = \"2018-07-08\"\n\t\thash = \"f4ba09a65d5e0a72677580646c670d739c323c3bca9f4ff29aa88f58057557ba\"\n        cape_type = \"TreasureHunter Payload\"\n\tstrings:\n\n\t\t$magic = { 4d 5a }\n\n\t\t$s0 = \"Error - Treasure Hunter is already running on this computer! To re-install, close the jucheck.exe process and try again\" fullword wide\n\t\t$s1 = \"C:\\\\Users\\\\user\\\\Desktop\\\\trhutt34C\\\\cSources\\\\treasureHunter\\\\Release\\\\treasureHunter.pdb\" fullword ascii\n\t\t$s2 = \"Couldn't get a snapshot of the memory processes!\" fullword wide\n\t\t$s3 = \"TreasureHunter version 0.1 Alpha, created by Jolly Roger (jollyroger@prv.name) for BearsInc. Greets to Xylitol and co.\" fullword wide\n\t\t$s4 = \"Couldn't get debug privileges\" fullword wide\n\t\t$s5 = \"Failed to execute the file\" fullword wide\n\t\t$s6 = \"ssuccessfully sent the dumps!\" fullword wide\n\t\t$s7 = \"Mozilla/5.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; InfoPath.2; SLCC1; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; .\" ascii\n\t\t$s8 = \"Successfully executed the file\" fullword wide\n\t\t$s9 = \"Cannot find %AppData%!\" fullword wide\n\t\t$s10 = \"\\\\Windows\\\\explorer.exe\" fullword ascii\n\t\t$s11 = \"\\\\jucheck.exe\" fullword ascii\n\n\tcondition:\n\t\t$magic at 0 and filesize < 235KB and 9 of ($s*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.711Z",
-    "status": "active"
-}

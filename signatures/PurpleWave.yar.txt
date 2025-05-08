@@ -1,8 +1,0 @@
-{
-    "name": "PurpleWave.yar",
-    "rule": "rule PurpleWave {\n     meta:\n      author = \"ditekshen\"\n      description = \"PurpleWave infostealer payload\"\n      cape_type = \"PurpleWave payload\"\n    strings:\n      $s1 = \"/loader/\" fullword ascii\n      $s2 = \"\\\\load_\" fullword wide\n      $s3 = \"boundaryaswell\" fullword ascii\n      $s4 = \"[passwords]\" ascii\n      $s5 = \"[is_encrypted]\" ascii\n      $s6 = \"[cookies]\" ascii\n      $s7 = \".?AVMozillaBrowser@@\" fullword ascii\n      $s8 = \".?AVChromeBrowser@@\" fullword ascii\n      $s9 = \".?AV?$money\" ascii\n      $s10 = \"at t.me/LuckyStoreSupport\" ascii\n   condition:\n      uint16(0) == 0x5a4d and 7 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.653Z",
-    "status": "active"
-}

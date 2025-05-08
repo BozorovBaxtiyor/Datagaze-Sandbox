@@ -1,8 +1,0 @@
-{
-    "name": "Pandora.yar",
-    "rule": "rule Pandora\n{\n\tmeta:\n\t\tauthor = \" Kevin Breen <kevin@techanarchy.net>\"\n\t\tref = \"http://malwareconfig.com/stats/Pandora\"\n\t\tmaltype = \"Remote Access Trojan\"\n\t\tfiletype = \"exe\"\n        cape_type = \"Pandora Payload\"\n\n\tstrings:\n\t\t$a = \"Can't get the Windows version\"\n\t\t$b = \"=M=Q=U=Y=]=a=e=i=m=q=u=y=}=\"\n\t\t$c = \"JPEG error #%d\" wide\n\t\t$d = \"Cannot assign a %s to a %s\" wide\n\t\t$g = \"%s, ProgID:\"\n\t\t$h = \"clave\"\n\t\t$i = \"Shell_TrayWnd\"\n\t\t$j = \"melt.bat\"\n\t\t$k = \"\\\\StubPath\"\n\t\t$l = \"\\\\logs.dat\"\n\t\t$m = \"1027|Operation has been canceled!\"\n\t\t$n = \"466|You need to plug-in! Double click to install... |\"\n\t\t$0 = \"33|[Keylogger Not Activated!]\"\n\n\tcondition:\n\t\tall of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.674Z",
-    "status": "active"
-}

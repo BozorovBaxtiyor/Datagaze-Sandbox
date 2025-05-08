@@ -1,8 +1,0 @@
-{
-    "name": "G0Crypt.yar",
-    "rule": "rule G0Crypt {\n    meta:\n        author = \"ditekSHen\"\n        description = \"Detects G0Crypt / BRG0SNet / NovaGP ransomware\"\n        cape_type = \"G0Crypt Payload\"\n    strings:\n        $x1 = \"G0Crypt/go/\" ascii\n        $x2 = \"BRG0SNet\" ascii\n        $x3 = \"/NovaGroup\" ascii\n        $x4 = \"novagroup@onionmail.org\" ascii nocase\n        $x5 = \"# Nova Group\" ascii\n        $f1 = \"main.HaveRun\" ascii\n        $f2 = \"main.FindFile\" ascii\n        $f3 = \"main.deriveKey\" ascii\n        $f4 = \"main.Pwd\" fullword ascii\n        $f5 = \"/ClearBashFile\" ascii\n        $f6 = \"/ClearUserTempFiles\" ascii\n        $f7 = \"/KillProccess\" ascii\n        $f8 = \"/Encryptor\" ascii\n        $f9 = \"/NoDirEncrypt\" ascii\n        $f10 = \"/RunCmdEexecutable\" ascii\n        $f11 = \"/StopImportantServices\" ascii\n        $f12 = \"/GetPwd\" ascii\n        $s1 = \"\\\\$Recycle.Bin\"\n        $s2 = \".README.txt\"\n        $s3 = \"\\\\BRSPATH.exe\"\n        $s4 = \"taskkill /F /IM sql*\"\n        $s5 = \"C:\\\\inetpub\\\\logs\\\\\"\n        $s6 = \"shutdown /r\"\n        $s7 = \":\\\\Program Files\\\\VMware\\\\\"\n        $s8 = \"reg add HKCU\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run /v Message /t REG_SZ /d\"\n        $s9 = \"reg add HKCU\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run /v DelLogSoft /t REG_SZ /d\"\n    condition:\n        uint16(0) == 0x5a4d and (2 of ($x*) or 7 of ($f*) or (1 of ($x*) and (5 of ($f*) or 5 of ($s*))) or (6 of ($f*) and 4 of ($s*)) or 12 of them)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.649Z",
-    "status": "active"
-}

@@ -24,8 +24,8 @@ export class CreateYaraRepository {
 
         // await this.knex('signatureUploads').insert(realSignature);
 
-        // const json = JSON.stringify(realSignature, null, 4);
-        // await fs.promises.appendFile(this.outputFile, json + '\n\n', 'utf8');
+        const json = JSON.stringify(realSignature, null, 4);
+        await fs.promises.appendFile(this.outputFile, json + '\n', 'utf8');
 
         this.logger.debug(`Signature appended: ${signature.name}`);
     }

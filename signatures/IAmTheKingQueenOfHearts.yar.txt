@@ -1,8 +1,0 @@
-{
-    "name": "IAmTheKingQueenOfHearts.yar",
-    "rule": "rule IAmTheKingQueenOfHearts {\n    meta:\n        author = \"ditekSHen\"\n        description = \"IAmTheKing Queen Of Hearts payload\"\n        cape_type = \"IAmTheKingQueenOfHearts Payload\"\n    strings:\n        $s1 = \"{'session':[{'name':'\" ascii\n        $s2 = \"begin mainthread ok\" wide\n        $s3 = \"getcommand error\" wide\n        $s4 = \"querycode error\" wide\n        $s5 = \"Code = %d\" wide\n        $s6 = \"cookie size :%d\" wide\n        $s7 = \"send request error:%d\" wide\n        $s8 = \"PmMytex%d\" wide\n        $s9 = \"%s_%c%c%c%c_%d\" wide\n        $s10 = \"?what@exception@std@@UBEPBDXZ\" ascii\n    condition:\n        uint16(0) == 0x5a4d and 6 of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.672Z",
-    "status": "active"
-}

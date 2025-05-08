@@ -1,8 +1,0 @@
-{
-    "name": "Responder.yar",
-    "rule": "rule Responder\n{\nmeta:\n\tdescription = \"Identifies Responder, an LLMNR, NBT-NS and MDNS poisoner.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-08\"\n\treference = \"https://github.com/lgandx/Responder\"\n\ttlp = \"White\"\n\tcape_type = \"Responder Payload\"\n\nstrings:\n\t//Only when ran on the host itself\n\t$ = \"[*] [LLMNR]\" ascii wide\n\t$ = \"[*] [NBT-NS]\" ascii wide\n\t$ = \"[*] [MDNS]\" ascii wide\n\t$ = \"[FINGER] OS Version\" ascii wide\n\t$ = \"[FINGER] Client Version\" ascii wide\n\t$ = \"serve_thread_udp_broadcast\" ascii wide\n\t$ = \"serve_thread_tcp_auth\" ascii wide\n\t$ = \"serve_NBTNS_poisoner\" ascii wide\n\t$ = \"serve_MDNS_poisoner\" ascii wide\n\t$ = \"serve_LLMNR_poisoner\" ascii wide\n\t$ = \"poisoners.LLMNR \" ascii wide\n\t$ = \"poisoners.NBTNS\" ascii wide\n\t$ = \"poisoners.MDNS\" ascii wide\n\ncondition:\n\tany of them\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.706Z",
-    "status": "active"
-}

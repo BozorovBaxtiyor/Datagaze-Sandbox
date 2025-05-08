@@ -1,8 +1,0 @@
-{
-    "name": "WarzoneRAT.yar",
-    "rule": "rule WarzoneRAT {\n    meta:\n        author = \"ditekshen\"\n        description = \"WarzoneRAT payload\"\n        cape_type = \"WarzoneRAT Payload\"\n    strings:\n        $s1_1 = \"PK11_CheckUserPassword\" fullword ascii\n        $s1_2 = \"PK11_Authenticate\" fullword ascii\n        $s1_3 = \"PK11SDR_Decrypt\" fullword ascii\n        $s1_4 = \"SOFTWARE\\\\Microsoft\\\\Windows NT\\\\CurrentVersion\\\\Winlogon\\\\SpecialAccounts\\\\UserList\" fullword ascii\n        $s1_5 = \"AVE_MARIA\" ascii wide\n        $s1_6 = \"127.0.0.\" ascii\n\n        $s2_1 = \"RDPClip\" fullword wide\n        $s2_2 = \"Grabber\" fullword wide\n        $s2_3 = \"Ave_Maria Stealer OpenSource\" wide\n        $s2_4 = \"\\\\MidgetPorn\\\\workspace\\\\MsgBox.exe\" wide\n        $s2_5 = \"@\\\\cmd.exe\" wide\n        $s2_6 = \"/n:%temp%\\\\ellocnak.xml\" wide\n        $s2_7 = \"Hey I'm Admin\" wide\n\n        $d1 = \"softokn3.dll\" fullword wide\n        $d2 = \"nss3.dll\" fullword wide\n        $d3 = \"logins.json\" wide\n        $d4 = \"Asend.db\" fullword wide\n    condition:\n        (uint16(0) == 0x5a4d and (4 of ($s2*) and 2 of ($d*)) or (all of ($s1*))) or ((4 of ($s1*) and 2 of ($d*)) or (all of ($s1*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.711Z",
-    "status": "active"
-}

@@ -1,8 +1,0 @@
-{
-    "name": "Phobos.yar",
-    "rule": "rule Phobos {\n    meta:\n        author = \"ditekshen\"\n        description = \"Detects Phobos ransomware\"\n        cape_type = \"Phobos Payload\"\n    strings:\n        $x1 = \"\\\\\\\\?\\\\UNC\\\\\\\\\\\\e-\" fullword wide\n        $x2 = \"\\\\\\\\?\\\\ :\" fullword wide\n        $x3 = \"POST\" fullword wide\n        $s1 = \"ELVL\" fullword wide\n        $s2 = /SUP\\d{3}/ fullword wide\n        $s3 = { 41 31 47 ?? 41 2b }\n    condition:\n        uint16(0) == 0x5a4d and all of ($x*) and 1 of ($s*)\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.722Z",
-    "status": "active"
-}

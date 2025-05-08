@@ -1,8 +1,0 @@
-{
-    "name": "HiddenVNC.yar",
-    "rule": "import \"pe\"\nrule HiddenVNC\n{\nmeta:\n\tdescription = \"Identifies HiddenVNC, which can start remote sessions.\"\n\tauthor = \"@bartblaze\"\n\tdate = \"2020-01\"\n\ttlp = \"White\"\n\tcape_type = \"HiddenVNC Payload\"\n\nstrings:\n\t$ = \"#hvnc\" ascii wide\n\t$ = \"VNC is starting your browser...\" ascii wide\n\t$ = \"HvncAction\" ascii wide\n\t$ = \"HvncCommunication\" ascii wide\n\t$ = \"hvncDesktop\" ascii wide\n\ncondition:\n\t2 of them or\n\t(pe.exports(\"VncStartServer\") and\n\tpe.exports(\"VncStopServer\"))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.716Z",
-    "status": "active"
-}

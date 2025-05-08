@@ -1,8 +1,0 @@
-{
-    "name": "JoeGo.yar",
-    "rule": "rule JoeGo {\n    meta:\n        author = \"ditekshen\"\n        description = \"JoeGo ransomware payload\"\n        cape_type = \"JoeGo payload\"\n    strings:\n        $go = \"Go build ID:\" ascii\n        $s1 = \"%SystemRoot%\\\\system32\\\\%v.\" ascii\n        $s2 = \"REG ADD HKCU\\\\SOFTWARE\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run /V\" ascii\n        $s3 = \"/t REG_SZ /F /D %userprofile%\\\\\" ascii\n        $s4 = \"(sensitive) [recovered]\" ascii\n        $s5 = \"/dev/stderr/dev/stdout/index.html\" ascii\n        $s6 = \"%userprofile%\\\\SystemApps\" ascii\n        $s7 = \"p=<br>ACDTACSTAEDTAESTAKDTAKSTAWSTA\" ascii\n        $cnc1 = \"/detail.php\" ascii\n        $cnc2 = \"/checkin.php\" ascii\n        $cnc3 = \"/platebni_brana.php\" ascii\n        $cnc4 = \"://nebezpecnyweb.eu/\" ascii\n    condition:\n        uint16(0) == 0x5a4d and $go and (all of ($s*) or (3 of ($s*) and 1 of ($cnc*)))\n}\n",
-    "uploadedBy": "f0b33c9c-0019-4046-984b-f6f3d95dea61",
-    "category": "yar",
-    "uploadedAt": "2025-05-07T09:54:43.736Z",
-    "status": "active"
-}

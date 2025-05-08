@@ -17,10 +17,14 @@ interface YaraSignature {
 const db = knex({
     client: 'postgresql',
     connection: {
-        host: process.env.DB_HOST || 'localhost',
-        database: process.env.DB_NAME,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
+        host: 'db-postgresql-fra1-20011-do-user-16958659-0.c.db.ondigitalocean.com',
+        port: 25060,
+        database: 'datagaze_sandbox',
+        user: 'doadmin',
+        password: 'AVNS_Fq4FdQEYfifqZ9Xh-n3',
+        ssl: {
+            rejectUnauthorized: false,
+        }
     },
     pool: {
         min: 2,
@@ -39,25 +43,26 @@ async function importSignatures(filePath: string): Promise<void> {
         const content = await fs.promises.readFile(filePath, 'utf8');
         
         console.log('Parsing signatures...');
-        const signatures = content
-            .split('}\n\n{')
-            .map(block => {
-                // Fix the JSON blocks that were split
-                const fixedBlock = block
-                    .replace(/^\n+|\n+$/g, '')
-                    .replace(/^(?!{)/, '{')
-                    .replace(/(?!})$/, '}');
-                
-                try {
-                    return JSON.parse(fixedBlock);
-                } catch (e) {
-                    console.error('Failed to parse block:', fixedBlock);
-                    return null;
-                }
-            })
-            .filter(Boolean);
+        // Handle the case where the JSON objects are simply concatenated
+        const jsonPattern = /(\{[\s\S]*?\})\s*(?=\{|$)/g;
+        let match;
+        const signatures = [];
+        
+        while ((match = jsonPattern.exec(content)) !== null) {
+            try {
+                const jsonObj = JSON.parse(match[1]);
+                signatures.push(jsonObj);
+            } catch (e) {
+                console.error('Failed to parse JSON block:', match[1].substring(0, 100) + '...');
+            }
+        }
 
         console.log(`Found ${signatures.length} signatures to import`);
+
+        if (signatures.length === 0) {
+            console.error('No valid signatures found in the file. Please check the format.');
+            return;
+        }
 
         // Test database connection before transaction
         await db.raw('SELECT 1');

@@ -52,7 +52,7 @@ export class SignatureService {
         await this.createYaraRepository.createSignature({
             name,
             rule: content,
-            uploadedBy: userId,
+            uploadedBy: "aa00510b-02ab-4c8b-a25d-e9bf4947e3d8",
             category: 'yar',
         });
     }

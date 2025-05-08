@@ -46,7 +46,7 @@ async function importSignatures(filePath: string): Promise<void> {
         // Handle the case where the JSON objects are simply concatenated
         const jsonPattern = /(\{[\s\S]*?\})\s*(?=\{|$)/g;
         let match;
-        const signatures = [];
+        const signatures: YaraSignature[] = [];
         
         while ((match = jsonPattern.exec(content)) !== null) {
             try {

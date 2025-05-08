@@ -22,9 +22,9 @@ export class SignatureController {
 
     @ApiOperation({ summary: 'Get signatures', description: 'Retrieves signatures based on query parameters' })
     @ApiResponse({ status: 200, description: 'Signatures retrieved successfully' })
-    @Get('tasks/signatures')
+    @Get('all')
     async getSignatures(@Query() query: GetSignaturesQueryDto, @Req() req: CustomRequest): Promise<any> {
-        return this.signatureService.getSignatures(query, req.user.userId);
+        return this.signatureService.getSignatures(query);
     }
 
     @ApiOperation({ summary: 'Upload signature', description: 'Upload a new signature to the system' })

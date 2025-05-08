@@ -61,8 +61,8 @@ export class SignatureService {
         return this.uploadSignatureHelper(signature, userId);
     }
 
-    async getSignatures(query: GetSignaturesQueryDto, userId: string): Promise<any> {
-        const signatures = await this.fetchSignaturesFromDatabase(query, userId);
+    async getSignatures(query: GetSignaturesQueryDto): Promise<any> {
+        const signatures = await this.fetchSignaturesFromDatabase(query);
         return this.enrichSignaturesWithUsernames(signatures);
     }
 
@@ -81,8 +81,8 @@ export class SignatureService {
         }
     }
 
-    private async fetchSignaturesFromDatabase(query: GetSignaturesQueryDto, userId: string): Promise<any[]> {
-        const { data } = await this.getSignaturesRepository.getSignaturesByUserId(query, userId);
+    private async fetchSignaturesFromDatabase(query: GetSignaturesQueryDto): Promise<any[]> {
+        const { data } = await this.getSignaturesRepository.getSignaturesByUserId(query);
         return data;
     }
 

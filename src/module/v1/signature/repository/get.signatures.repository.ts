@@ -1,10 +1,10 @@
-// cape.get.signatures.repository.ts
+// get.signatures.repository.ts
 import { Injectable } from '@nestjs/common';
 import { InjectKnex, Knex } from 'nestjs-knex';
 import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
 
 @Injectable()
-export class CapeGetSignaturesRepository {
+export class GetSignaturesRepository {
     constructor(@InjectKnex() private readonly knex: Knex) {}
 
     async getSignaturesByUserId(query: GetSignaturesQueryDto, userId: string): Promise<any> {

@@ -12,21 +12,18 @@ import { CapeGetTotalIncidentsSizeRepository } from '../repository/cape.get.tota
 import { CapeGetTotalTasksByLastSevenDaysRepository } from '../repository/cape.get.total.tasks.by.last.seven.days';
 import { CapeGetTotalPendingTasksSizeRepository } from '../repository/cape.get.total.pending.tasks.size.repository';
 import { CapeGetIncidentDistributionRepository } from '../repository/cape.incident.distribution.repository';
-import { CapeCreateYaraRepository } from '../repository/cape.create.yara.repository';
 import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
-import { CapeSignatureService } from './cape.signature.service';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
-import { UploadSignatureDto } from '../dto/upload.signature.dto';
-import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
+import { GetSignaturesQueryDto } from '../../signature/dto/get.signatures.query.dto';
 import { SimplifiedCapeTask } from '../type/cape.type';
+import { isUrl, extractFilename } from 'src/common/utils/file.util';
 @Injectable()
 export class CapeService {
     constructor(
         private readonly capeApiService: CapeApiService,
         private readonly capeFileService: CapeFileService,
-        private readonly capeSignatureService: CapeSignatureService,
         private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
@@ -36,7 +33,6 @@ export class CapeService {
         private readonly capeGetTotalTasksByLastSevenDaysRepository: CapeGetTotalTasksByLastSevenDaysRepository,
         private readonly capeGetTotalPendingTasksSizeRepository: CapeGetTotalPendingTasksSizeRepository,
         private readonly capeGetIncidentDistributionRepository: CapeGetIncidentDistributionRepository,
-        private readonly capeCreateYaraRepository: CapeCreateYaraRepository,
     ) {}
 
     async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<any> {
@@ -62,14 +58,6 @@ export class CapeService {
         const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
 
         return data.map(r => this.formatResponse(r));
-    }
-    
-    async getSignatures(query: GetSignaturesQueryDto, userId: string): Promise<any> {
-        return this.capeSignatureService.getSignatures(query, userId);
-    }
-    
-    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<any> {
-        return this.capeSignatureService.uploadSignature(signature, userId);
     }
 
     async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
@@ -189,7 +177,7 @@ export class CapeService {
         const data = taskData.data || taskData; 
         return {
             taskId: taskId || data.id,
-            target: this.extractFilename(data.target) || '',
+            target: extractFilename(data.target) || '',
             category: data.category || 'file',
             sha256: data.sample?.sha256 || null,
             md5: data.sample?.md5 || null,
@@ -211,7 +199,7 @@ export class CapeService {
     private formatResponse(data: any): SimplifiedCapeTask {
         return {
             id: data.id,
-            filename: this.extractFilename(data.target),
+            filename: extractFilename(data.target),
             category: data.category,
             sha256: data.sha256,
             fileSizeMB: String(this.formatFileSize(data.fileSize)) + ' MB',
@@ -220,20 +208,6 @@ export class CapeService {
             status: data.status,
             incidentType: data.incidentType
         };
-    }
-
-    private extractFilename(path: string): string {
-        if (!path) return '';
-        return this.isUrl(path) ? path : path.split('/').pop() || '';
-    }
-
-    private isUrl(str: string): boolean {
-        try {
-            new URL(str);
-            return true;
-        } catch {
-            return false;
-        }
     }
 
     private formatFileSize(bytes: number): number {
@@ -342,40 +316,5 @@ export class CapeService {
         return this.capeApiService.getReportBySha256(sha256).then(res => res.data);
     }
 
-    async getSignaturesFromCape(): Promise<void> {
-        const signatureFiles = await this.fetchSignatureFilesFromCape();
-        if (!signatureFiles || signatureFiles.length === 0) return;
-        
-        await this.processAndStoreSignatureFiles(signatureFiles);
-    }
     
-    private async fetchSignatureFilesFromCape(): Promise<any[]> {
-        const response = await this.capeApiService.getAllSignatures();
-        if (!response.data || !response.data.files) {
-            return [];
-        }
-        
-        return response.data.files;
-    }
-
-    private async processAndStoreSignatureFiles(files: any[]): Promise<void> {
-        for (const file of files) {
-            await this.processAndStoreSignatureFile(file);
-        }
-    }
-
-    private async processAndStoreSignatureFile(file: any): Promise<void> {
-        const { name, content } = file;
-        const baseName = this.extractFilename(name);
-        await this.storeSignatureInDatabase(baseName, content);
-    }
-    
-    private async storeSignatureInDatabase(name: string, content: string): Promise<void> {
-        await this.capeCreateYaraRepository.createSignature({
-            name,
-            rule: content,
-            uploadedBy: 'f0b33c9c-0019-4046-984b-f6f3d95dea61',
-            category: 'yar',
-        });
-    }
 }

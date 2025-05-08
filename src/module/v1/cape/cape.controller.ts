@@ -4,14 +4,15 @@ import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { CapeService } from './service/cape.service';
 import { TaskListQueryDto } from './dto/tasks.list.query.dto';
 import { CreateFileDto } from './dto/create.file.dto';
-import { UploadSignatureDto } from './dto/upload.signature.dto';
-import { GetSignaturesQueryDto } from './dto/get.signatures.query.dto';
+import { GetSignaturesQueryDto } from '../signature/dto/get.signatures.query.dto';
 import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
+import { HttpRoleGuard } from '../../../common/guards/role/http-role.guard';
 import { CustomRequest } from 'src/common/types/types';
 import { ApiTags, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiConsumes, ApiBody, ApiBearerAuth } from '@nestjs/swagger';
 import { ApiAuth } from 'src/common/swagger/common-swagger';
 
-@UseGuards(JwtHttpAuthGuard)
+
+@UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
 @ApiTags('Cape Sandbox')
 @ApiAuth()
 @Controller({ path: 'cape', version: '1' })
@@ -45,12 +46,7 @@ export class CapeController {
         return this.capeService.getTask(taskId);
     }
 
-    @ApiOperation({ summary: 'Get signatures', description: 'Retrieves signatures based on query parameters' })
-    @ApiResponse({ status: 200, description: 'Signatures retrieved successfully' })
-    @Get('tasks/signatures')
-    async getSignatures(@Query() query: GetSignaturesQueryDto, @Req() req: CustomRequest): Promise<any> {
-        return this.capeService.getSignatures(query, req.user.userId);
-    }
+
 
     @ApiOperation({ summary: 'Get task screenshot', description: 'Retrieves screenshot for a specific task' })
     @ApiParam({ name: 'taskId', description: 'ID of the task to get screenshot for', example: '1234567890' })
@@ -85,26 +81,7 @@ export class CapeController {
         return this.capeService.createFile(createFileDto, req.user.userId);
     }
 
-    @ApiOperation({ summary: 'Upload signature', description: 'Upload a new signature to the system' })
-     @ApiBody({ 
-            type: UploadSignatureDto, 
-            description: 'User credentials',
-            examples: {
-                loginExample: {
-                    value: {
-                        name: 'filename.yar',
-                        type: 'YAR',
-                        rule: 'rule',
-                    },
-                }
-            } 
-        })
-    @ApiResponse({ status: 201, description: 'Signature uploaded successfully' })
-    @ApiResponse({ status: 400, description: 'Bad request' })
-    @Post('tasks/upload/signature')
-    async uploadSignature(@Body() signature: UploadSignatureDto, @Req() req: CustomRequest): Promise<any> {
-        return this.capeService.uploadSignature(signature, req.user.userId);
-    }
+    
 
     @Get('tasks/dashboard')
     async getDashboard(): Promise<any> {
@@ -116,10 +93,6 @@ export class CapeController {
         return this.capeService.getFileBySha256(sha256);
     }
 
-    @Get('tasks/view/all/signatures')
-    async getSignature(): Promise<any> {
-        return this.capeService.getSignaturesFromCape();
-    }
     
     // @Post('tasks/create/url')
     // async createUrl() {

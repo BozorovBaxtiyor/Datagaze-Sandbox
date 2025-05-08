@@ -1,6 +1,18 @@
 // auth.controller.ts
 import { Controller, Post, Get, Body, Query, Put, UseGuards, Delete, Req } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
+import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
+import { Role } from 'src/common/decorators/role.decorator';
+import { CustomRequest, User } from 'src/common/types/types';
+import { UserRole } from 'src/common/enums/roles.enum';
+import { 
+    ApiAuth, 
+    ApiOkResponse, 
+    ApiForbiddenResponse, 
+    ApiConflictResponse, 
+    ApiInternalServerErrorResponse 
+} from 'src/common/swagger/common-swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.input';
 import { RegisterDto } from './dto/register.input';
@@ -9,18 +21,6 @@ import { PaginationQueryUsersDto } from './dto/get-all.users.input';
 import { LoginEntity } from './entity/login.output';
 import { RegisterEntity } from './entity/register.output';
 import { UpdateProfileEntity } from './entity/update.output';
-import { JwtHttpAuthGuard } from '../../../common/guards/auth/http-auth.guard';
-import { HttpRoleGuard } from '../../../common/guards/role/http-role.guard';
-import { Role } from '../../../common/decorators/role.decorator';
-import { CustomRequest, User } from '../../../common/types/types';
-import { UserRole } from '../../../common/enums/roles.enum';
-import { 
-    ApiAuth, 
-    ApiOkResponse, 
-    ApiForbiddenResponse, 
-    ApiConflictResponse, 
-    ApiInternalServerErrorResponse 
-} from '../../../common/swagger/common-swagger';
 
 @ApiTags('Auth')
 @Controller('auth')

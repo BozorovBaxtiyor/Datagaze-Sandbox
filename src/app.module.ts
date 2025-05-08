@@ -6,6 +6,7 @@ import { join } from 'path';
 import { DatabaseModule } from './module/v1/database/database.module';
 import { AuthModule } from './module/v1/auth/auth.module';
 import { CapeModule } from './module/v1/cape/cape.module';
+import { SignatureModule } from './module/v1/signature/signature.module';
 
 @Module({
     imports: [
@@ -20,6 +21,7 @@ import { CapeModule } from './module/v1/cape/cape.module';
         DatabaseModule,
 		AuthModule,
 		CapeModule,
+        SignatureModule,
 	],
     controllers: [],
     providers: [],

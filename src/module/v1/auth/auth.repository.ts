@@ -35,6 +35,10 @@ export class AuthRepository {
         await this.knex('users').where('id', id).update({ status: 'inactive' });
     }
     
+    async getUsernameById(userId: string): Promise<string | null> {
+        return this.knex('users').select('username').where('id', userId).first();
+    }
+    
     async createUser(registerDto: RegisterDto, hashedPassword: string): Promise<void> {
         await this.knex<User>('users').insert({
             username: registerDto.username,

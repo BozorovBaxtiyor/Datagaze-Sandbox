@@ -77,7 +77,7 @@ async function importSignatures(filePath: string): Promise<void> {
                         uploadedBy: sig.uploadedBy,
                         category: sig.category,
                         uploadedAt: sig.uploadedAt,
-                        status: sig.status,
+                        status: 'active',
                         lastModifiedAt: new Date().toISOString()
                     })
                     .timeout(5000); // 5 second timeout per insert

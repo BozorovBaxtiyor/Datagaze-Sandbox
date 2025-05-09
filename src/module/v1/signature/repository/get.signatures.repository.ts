@@ -12,8 +12,9 @@ export class GetSignaturesRepository {
         const limit = Number(query.limit) || 10;
         const skip = (page - 1) * limit;
 
-        let qb = this.knex('signatureUploads');
+        const data = await this.knex('signatureUploads').select('id', 'name', 'status', 'category', 'uploadedBy', 'lastModifiedAt', 'uploadedAt').limit(limit).offset(skip);
 
-        return { data: await qb.orderBy('uploadedAt', 'desc').limit(limit).offset(skip) };
+        return { data };
     }
+
 }

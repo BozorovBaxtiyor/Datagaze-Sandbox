@@ -1,11 +1,14 @@
 // signature.service.ts
-import { Injectable, Logger, BadRequestException } from '@nestjs/common';
+import { Injectable, Logger, BadRequestException, NotFoundException } from '@nestjs/common';
 import FormData from 'form-data';
 import { extractFilename } from 'src/common/utils/file.util';
 import { AuthRepository } from '../../auth/auth.repository';
 import { CapeApiService } from '../../cape/service/cape.api.service';
 import { CreateYaraRepository } from '../repository/create.yara.repository';
+import { GetSignatureRepository } from '../repository/get.signature.repository';
 import { GetSignaturesRepository } from '../repository/get.signatures.repository';
+import { ActivateSignatureRepository } from '../repository/activate.signature.repository';
+import { DeactivateSignatureRepository } from '../repository/deactivate.signature.repository';
 import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
 import { UploadSignatureDto } from '../dto/upload.signature.dto';
 
@@ -17,7 +20,10 @@ export class SignatureService {
         private readonly authRepository: AuthRepository,
         private readonly capeApiService: CapeApiService,
         private readonly createYaraRepository: CreateYaraRepository, 
+        private readonly getSignatureRepository: GetSignatureRepository,
         private readonly getSignaturesRepository: GetSignaturesRepository,
+        private readonly activateSignatureRepository: ActivateSignatureRepository,
+        private readonly deactivateSignatureRepository: DeactivateSignatureRepository,
     ) {}
 
     async getSignaturesFromCape(userId: string): Promise<void> {
@@ -57,8 +63,19 @@ export class SignatureService {
         });
     }
 
-    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<any> {
+    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<void> {
         return this.uploadSignatureHelper(signature, userId);
+    }
+
+    private async uploadSignatureHelper(signature: UploadSignatureDto, userId: string): Promise<void> {
+        try {
+            await this.storeSignatureRecord(signature, userId);
+        } catch (error: any) {
+            if (error instanceof BadRequestException) {
+                throw error;
+            }
+            throw new Error('Signature upload failed');
+        }
     }
 
     async getSignatures(query: GetSignaturesQueryDto): Promise<any> {
@@ -66,19 +83,20 @@ export class SignatureService {
         return this.enrichSignaturesWithUsernames(signatures);
     }
 
-    private async uploadSignatureHelper(signature: UploadSignatureDto, userId: string): Promise<any> {
-        try {
-            const form = this.createSignatureForm(signature);
-            const response = await this.capeApiService.sendSignatureToCape(form);
-            await this.storeSignatureRecord(signature, userId);
-            
-            return response.data;
-        } catch (error: any) {
-            if (error instanceof BadRequestException) {
-                throw error;
-            }
-            throw new Error('Signature upload failed');
-        }
+    private createSignatureForm(signature: UploadSignatureDto): FormData {
+        const form = new FormData();
+        form.append('name', signature.name);
+        form.append('rule', signature.rule);
+        return form;
+    }
+
+    private async storeSignatureRecord(signature: UploadSignatureDto, userId: string): Promise<void> {
+        await this.createYaraRepository.createSignature({
+            name: signature.name,
+            rule: signature.rule,
+            uploadedBy: userId,
+            category: signature.type,
+        });
     }
 
     private async fetchSignaturesFromDatabase(query: GetSignaturesQueryDto): Promise<any[]> {
@@ -106,19 +124,31 @@ export class SignatureService {
         };
     }
 
-    private createSignatureForm(signature: UploadSignatureDto): FormData {
-        const form = new FormData();
-        form.append('name', signature.name);
-        form.append('rule', signature.rule);
-        return form;
+    async getSignatureById(id: string): Promise<any> {
+        return this.getSignatureRepository.getSignatureById(id);
     }
 
-    private async storeSignatureRecord(signature: UploadSignatureDto, userId: string): Promise<void> {
-        await this.createYaraRepository.createSignature({
-            name: signature.name,
-            rule: signature.rule,
-            uploadedBy: userId,
-            category: signature.type,
-        });
+    async activateSignature(id: string): Promise<any> {
+        try {
+            const signature = await this.getSignatureRepository.getSignatureById(id);
+            if (!signature) {
+                throw new NotFoundException(`Signature with ID ${id} not found`);
+            }
+
+            const form = this.createSignatureForm(signature);
+            await this.capeApiService.sendSignatureToCape(form);
+            
+            return this.activateSignatureRepository.activateSignature(id);
+        } catch (error: any) {
+            this.logger.error(`Failed to activate signature: ${error.message}`, error.stack);
+            if (error instanceof BadRequestException || error instanceof NotFoundException) {
+                throw error;
+            }
+            throw new Error(`Failed to activate signature: ${error.message}`);
+        }
+    }
+
+    async deactivateSignature(id: string): Promise<any> {
+        return this.deactivateSignatureRepository.deactivateSignature(id);
     }
 }

@@ -5,7 +5,10 @@ import { CapeModule } from '../cape/cape.module';
 import { SignatureController } from './signature.controller';
 import { SignatureService } from './service/signature.service';
 import { CreateYaraRepository } from './repository/create.yara.repository';
+import { GetSignatureRepository } from './repository/get.signature.repository';
 import { GetSignaturesRepository } from './repository/get.signatures.repository';
+import { ActivateSignatureRepository } from './repository/activate.signature.repository';
+import { DeactivateSignatureRepository } from './repository/deactivate.signature.repository';
 
 @Module({
     imports: [
@@ -16,7 +19,10 @@ import { GetSignaturesRepository } from './repository/get.signatures.repository'
     providers: [
         SignatureService,
         CreateYaraRepository,
-        GetSignaturesRepository
+        GetSignatureRepository,
+        GetSignaturesRepository,
+        ActivateSignatureRepository,
+        DeactivateSignatureRepository,
     ],
     exports: []
 })

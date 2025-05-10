@@ -54,7 +54,6 @@ export class AuthController {
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
     @ApiAuth()
-    @ApiOperation({ summary: 'Get all users' })
     @ApiResponse({ 
         status: 200,
         description: 'List of users',
@@ -71,8 +70,6 @@ export class AuthController {
             },
         },
     })
-    @ApiForbiddenResponse()
-    @ApiInternalServerErrorResponse('Failed to fetch users')
     async getUsers(@Query() query: PaginationQueryUsersDto): Promise<Partial<User>[]> {
         return this.authService.getUsers(query);
     }
@@ -81,7 +78,6 @@ export class AuthController {
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
     @ApiAuth()
-    @ApiOperation({ summary: 'Get user by ID' })
     @ApiResponse({
         status: 200,
         description: 'User found',
@@ -106,7 +102,6 @@ export class AuthController {
             },
         },
     })
-    @ApiInternalServerErrorResponse('Failed to fetch user')
     async getUser(@Query('id') id: string): Promise<User> {
         return this.authService.getUser(id);
     }
@@ -121,7 +116,6 @@ export class AuthController {
         examples: { 'application/json': { value: { username: 'new_admin', fullName: 'Joe Doe', email: 'newadmin@example.com', password: 'StrongPassword@456' } } },
     })
     @ApiOkResponse('Successful registration', RegisterEntity)
-    @ApiConflictResponse('Username or email already taken')
     async register(@Body() registerDto: RegisterDto): Promise<RegisterEntity> {
         return this.authService.register(registerDto);
     }
@@ -130,13 +124,11 @@ export class AuthController {
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
     @ApiAuth()
-    @ApiOperation({ summary: 'Update user profile' })
     @ApiBody({
         type: UpdateProfileDto,
         examples: { 'application/json': { value: { userId: 'a38ac0e5-c5cf-4d25-b696-df12c9a4a66c', username: 'admin', fullName: 'New Admin Name', email: 'newemail@example.com' } } },
     })
     @ApiOkResponse('Profile updated successfully', UpdateProfileEntity)
-    @ApiConflictResponse('Username or email has been already taken')
     async updateProfile(@Body() updateProfileDto: UpdateProfileDto): Promise<UpdateProfileEntity> {
         return this.authService.updateProfile(updateProfileDto);
     }
@@ -145,10 +137,6 @@ export class AuthController {
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
     @ApiAuth()
-    @ApiOperation({ summary: 'Delete user' })
-    @ApiResponse({ status: 200, description: 'User deleted successfully' })
-    @ApiResponse({ status: 404, description: 'User not found' })
-    @ApiInternalServerErrorResponse('Failed to delete user')
     async deleteUser(@Query('id') id: string, @Req() req: CustomRequest): Promise<any> {
         return this.authService.deleteUser(id, req.user.userId);
     }
@@ -157,10 +145,6 @@ export class AuthController {
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
     @ApiAuth()
-    @ApiOperation({ summary: 'Activate user' })
-    @ApiResponse({ status: 200, description: 'User activated successfully' })
-    @ApiResponse({ status: 404, description: 'User not found' })
-    @ApiInternalServerErrorResponse('Failed to activate user')
     async activateUser(@Query('id') id: string): Promise<any> {
         return this.authService.activateUser(id);
     }
@@ -169,10 +153,6 @@ export class AuthController {
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
     @ApiAuth()
-    @ApiOperation({ summary: 'Deactivate user' })
-    @ApiResponse({ status: 200, description: 'User deactivated successfully' })
-    @ApiResponse({ status: 404, description: 'User not found' })
-    @ApiInternalServerErrorResponse('Failed to deactivate user')
     async deactivateUser(@Query('id') id: string): Promise<any> {
         return this.authService.deactivateUser(id);
     }
@@ -181,7 +161,6 @@ export class AuthController {
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
     @ApiAuth()
-    @ApiOperation({ summary: 'Reset user password (Superadmin only)' })
     @ApiBody({ type: ResetPasswordDto })
     @ApiResponse({ 
         status: 200,
@@ -194,8 +173,6 @@ export class AuthController {
             }
         }
     })
-    @ApiResponse({ status: 403, description: 'Forbidden' })
-    @ApiResponse({ status: 404, description: 'User not found' })
     async resetPassword(
         @Body() resetPasswordDto: ResetPasswordDto,
         @Req() req: CustomRequest

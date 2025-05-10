@@ -92,8 +92,13 @@ export const ApiInternalServerErrorResponse = (message: string) =>
 export const ApiAuth = () =>
     applyDecorators(
         ApiBearerAuth('JWT'),
+        ApiOkResponse('Success'),
+        ApiCreatedResponse('Created'),
         ApiUnauthorizedResponse(),
         ApiForbiddenResponse(),
+        ApiNotFoundResponse('Not Found'),
+        ApiConflictResponse('Conflict'),
+        ApiInternalServerErrorResponse('Internal Server Error'),
     );
 
 // Common CRUD operation decorators

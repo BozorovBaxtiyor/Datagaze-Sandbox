@@ -4,6 +4,7 @@ import type { Knex } from 'knex';
 export async function up(knex: Knex): Promise<void> {
     return knex.schema.createTable('users', (table) => {
         table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
+        table.string('profilePicture').nullable();
         table.string('fullName').nullable();
         table.string('email').nullable().unique();
         table.string('username').notNullable().unique();

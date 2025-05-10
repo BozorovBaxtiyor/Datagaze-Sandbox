@@ -1,7 +1,8 @@
 // signature.service.ts
-import { Injectable, Logger, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import FormData from 'form-data';
 import { extractFilename } from 'src/common/utils/file.util';
+import { CommonEntity } from 'src/common/libs/common.entity';
 import { AuthRepository } from '../../auth/auth.repository';
 import { CapeApiService } from '../../cape/service/cape.api.service';
 import { CreateYaraRepository } from '../repository/create.yara.repository';
@@ -14,8 +15,6 @@ import { UploadSignatureDto } from '../dto/upload.signature.dto';
 
 @Injectable()
 export class SignatureService {
-    private readonly logger = new Logger(SignatureService.name);
-
     constructor(
         private readonly authRepository: AuthRepository,
         private readonly capeApiService: CapeApiService,
@@ -63,13 +62,14 @@ export class SignatureService {
         });
     }
 
-    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<void> {
+    async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<CommonEntity> {
         return this.uploadSignatureHelper(signature, userId);
     }
 
-    private async uploadSignatureHelper(signature: UploadSignatureDto, userId: string): Promise<void> {
+    private async uploadSignatureHelper(signature: UploadSignatureDto, userId: string): Promise<CommonEntity> {
         try {
             await this.storeSignatureRecord(signature, userId);
+            return { status: 'success', message: 'Signature uploaded successfully' };
         } catch (error: any) {
             if (error instanceof BadRequestException) {
                 throw error;
@@ -128,27 +128,21 @@ export class SignatureService {
         return this.getSignatureRepository.getSignatureById(id);
     }
 
-    async activateSignature(id: string): Promise<any> {
-        try {
-            const signature = await this.getSignatureRepository.getSignatureById(id);
-            if (!signature) {
-                throw new NotFoundException(`Signature with ID ${id} not found`);
-            }
-
-            const form = this.createSignatureForm(signature);
-            await this.capeApiService.sendSignatureToCape(form);
-            
-            return this.activateSignatureRepository.activateSignature(id);
-        } catch (error: any) {
-            this.logger.error(`Failed to activate signature: ${error.message}`, error.stack);
-            if (error instanceof BadRequestException || error instanceof NotFoundException) {
-                throw error;
-            }
-            throw new Error(`Failed to activate signature: ${error.message}`);
+    async activateSignature(id: string): Promise<CommonEntity> {
+        const signature = await this.getSignatureRepository.getSignatureById(id);
+        if (!signature) {
+            throw new NotFoundException(`Signature with ID ${id} not found`);
         }
+
+        const form = this.createSignatureForm(signature);
+        await this.capeApiService.sendSignatureToCape(form);
+        
+        await this.activateSignatureRepository.activateSignature(id);
+        return { status: 'success', message: 'Signature activated successfully' };
     }
 
-    async deactivateSignature(id: string): Promise<any> {
-        return this.deactivateSignatureRepository.deactivateSignature(id);
+    async deactivateSignature(id: string): Promise<CommonEntity> {
+        await this.deactivateSignatureRepository.deactivateSignature(id);
+        return { status: 'success', message: 'Signature deactivated successfully' };
     }
 }

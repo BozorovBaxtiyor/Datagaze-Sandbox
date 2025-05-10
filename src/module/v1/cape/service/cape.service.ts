@@ -16,9 +16,8 @@ import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
-import { GetSignaturesQueryDto } from '../../signature/dto/get.signatures.query.dto';
-import { SimplifiedCapeTask } from '../type/cape.type';
-import { isUrl, extractFilename } from 'src/common/utils/file.util';
+import { GetTasksEntity } from '../entity/get.tasks.entity';
+import { extractFilename } from 'src/common/utils/file.util';
 
 @Injectable()
 export class CapeService {
@@ -36,7 +35,7 @@ export class CapeService {
         private readonly capeGetIncidentDistributionRepository: CapeGetIncidentDistributionRepository,
     ) {}
 
-    async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<any> {
+    async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<GetTasksEntity[]> {
         await this.syncTasksFromCape(userId);
         return this.getFormattedTasks(query, path);
     }
@@ -55,7 +54,7 @@ export class CapeService {
         await this.capeUpsertTaskRepository.upsertTask(taskData);
     }
     
-    private async getFormattedTasks(query: TaskListQueryDto, path: string): Promise<any> {
+    private async getFormattedTasks(query: TaskListQueryDto, path: string): Promise<GetTasksEntity[]> {
         const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
 
         return data.map(r => this.formatResponse(r));
@@ -197,7 +196,7 @@ export class CapeService {
         };
     }
 
-    private formatResponse(data: any): SimplifiedCapeTask {
+    private formatResponse(data: any): GetTasksEntity {
         return {
             id: data.id,
             filename: extractFilename(data.target),

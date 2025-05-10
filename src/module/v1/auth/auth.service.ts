@@ -3,9 +3,9 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 import { AuthRepository } from './auth.repository';
-import { LoginDto } from './dto/login.input';
-import { RegisterDto } from './dto/register.input';
-import { UpdateProfileDto } from './dto/update.input';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { UpdateProfileDto } from './dto/update.dto';
 import { PaginationQueryUsersDto } from './dto/get-all.users.input';
 import { LoginEntity } from './entity/login.output';
 import { RegisterEntity } from './entity/register.output';
@@ -173,4 +173,34 @@ export class AuthService {
             HttpStatus.UNAUTHORIZED,
         );
     }
+
+    async resetPassword(
+        userId: string,
+        currentPassword: string,
+        newPassword: string,
+        updatedById: string,
+    ): Promise<{ status: string; message: string }> {
+        // 1) Fetch user and ensure they exist
+        const user = await this.checkIfUserExists(userId);
+
+        // 2) Verify the supplied currentPassword
+        const matches = await bcrypt.compare(currentPassword, user.password);
+        if (!matches) {
+            throw new HttpException(
+                { status: 'error', message: 'Current password is incorrect' },
+                HttpStatus.BAD_REQUEST,
+            );
+        }
+
+        // 3) Perform update + history in a transaction
+        await this.authRepository.updatePasswordWithTransaction(
+            userId,
+            newPassword,
+            updatedById,
+            'Reset by superadmin',
+        );
+
+        return { status: 'success', message: 'Password reset successfully' };
+    }
+
 }

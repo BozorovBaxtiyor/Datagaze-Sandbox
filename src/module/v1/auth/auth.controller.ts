@@ -14,13 +14,14 @@ import {
     ApiInternalServerErrorResponse 
 } from 'src/common/swagger/common-swagger';
 import { AuthService } from './auth.service';
-import { LoginDto } from './dto/login.input';
-import { RegisterDto } from './dto/register.input';
-import { UpdateProfileDto } from './dto/update.input';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
+import { UpdateProfileDto } from './dto/update.dto';
 import { PaginationQueryUsersDto } from './dto/get-all.users.input';
 import { LoginEntity } from './entity/login.output';
 import { RegisterEntity } from './entity/register.output';
 import { UpdateProfileEntity } from './entity/update.output';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -132,7 +133,7 @@ export class AuthController {
     @ApiOperation({ summary: 'Update user profile' })
     @ApiBody({
         type: UpdateProfileDto,
-        examples: { 'application/json': { value: { userId: 'a38ac0e5-c5cf-4d25-b696-df12c9a4a66c', username: 'admin', fullName: 'New Admin Name', email: 'newemail@example.com', password: 'TemporaryPass$987' } } },
+        examples: { 'application/json': { value: { userId: 'a38ac0e5-c5cf-4d25-b696-df12c9a4a66c', username: 'admin', fullName: 'New Admin Name', email: 'newemail@example.com' } } },
     })
     @ApiOkResponse('Profile updated successfully', UpdateProfileEntity)
     @ApiConflictResponse('Username or email has been already taken')
@@ -174,5 +175,36 @@ export class AuthController {
     @ApiInternalServerErrorResponse('Failed to deactivate user')
     async deactivateUser(@Query('id') id: string): Promise<any> {
         return this.authService.deactivateUser(id);
+    }
+
+    @Put('reset-password')
+    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
+    @Role(UserRole.SUPERADMIN)
+    @ApiAuth()
+    @ApiOperation({ summary: 'Reset user password (Superadmin only)' })
+    @ApiBody({ type: ResetPasswordDto })
+    @ApiResponse({ 
+        status: 200,
+        description: 'Password reset successful',
+        schema: {
+            type: 'object',
+            properties: {
+                status: { type: 'string', example: 'success' },
+                message: { type: 'string', example: 'Password reset successfully' }
+            }
+        }
+    })
+    @ApiResponse({ status: 403, description: 'Forbidden' })
+    @ApiResponse({ status: 404, description: 'User not found' })
+    async resetPassword(
+        @Body() resetPasswordDto: ResetPasswordDto,
+        @Req() req: CustomRequest
+    ): Promise<any> {
+        return this.authService.resetPassword(
+            resetPasswordDto.userId,
+            resetPasswordDto.currentPassword,
+            resetPasswordDto.newPassword,
+            req.user.userId,
+        );
     }
 }

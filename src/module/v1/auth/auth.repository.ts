@@ -2,10 +2,10 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectKnex, Knex } from 'nestjs-knex';
 import bcrypt from 'bcrypt';
-import { User } from '../../../common/types/types';
-import { RegisterDto } from './dto/register.input';
+import { User } from 'src/common/types/types';
+import { RegisterDto } from './dto/register.dto';
 import { PaginationQueryUsersDto } from './dto/get-all.users.input';
-import { UpdateProfileDto } from './dto/update.input';
+import { UpdateProfileDto } from './dto/update.dto';
 
 @Injectable()
 export class AuthRepository {
@@ -37,6 +37,10 @@ export class AuthRepository {
     
     async getUsernameById(userId: string): Promise<string | null> {
         return this.knex('users').select('username').where('id', userId).first();
+    }
+    
+    async deleteUser(id: string): Promise<void> {
+        await this.knex('users').where('id', id).del();
     }
     
     async createUser(registerDto: RegisterDto, hashedPassword: string): Promise<void> {
@@ -81,11 +85,6 @@ export class AuthRepository {
             email: updateProfileDto.email,
             updated_at: new Date(),
         };
-    
-        if (updateProfileDto.password) {
-            const hashedPassword = await bcrypt.hash(updateProfileDto.password, 10);
-            updateObject['password'] = hashedPassword;
-        }
        
         await this.knex<User>('users').where('id', updateProfileDto.userId).update(updateObject);
     }
@@ -126,7 +125,5 @@ export class AuthRepository {
         return this.knex<any>('users').select('id', 'fullName', 'email', 'username', 'role', 'lastLogin', 'status').limit(limit).offset(skip);
     }
 
-    async deleteUser(id: string): Promise<void> {
-        await this.knex('users').where('id', id).del();
-    }
+    
 }

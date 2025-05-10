@@ -41,17 +41,4 @@ export class UpdateProfileDto {
     })
     @IsEmail()
     email: string;
-
-    @ApiProperty({
-        example: 'TemporaryPass$987',
-        description:
-            'New password (min 8 chars, must include uppercase, lowercase, number, special char)',
-    })
-    @IsString()
-    @MinLength(8)
-    @Matches(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/, {
-        message:
-            'Password must contain uppercase, lowercase, number and special character',
-    })
-    password: string;
 }

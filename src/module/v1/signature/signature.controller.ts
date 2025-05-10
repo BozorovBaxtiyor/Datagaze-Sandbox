@@ -65,4 +65,10 @@ export class SignatureController {
     async deactivateSignature(@Query('id') id: string): Promise<any> {
         return this.signatureService.deactivateSignature(id);
     }
+
+    @Put('update/:signatureId')
+    @Role(UserRole.ADMIN)
+    async updateSignature(@Param('signatureId') id: string, @Body() signature: UploadSignatureDto): Promise<any> {
+        return this.signatureService.updateSignature(id, signature);
+    }
 }

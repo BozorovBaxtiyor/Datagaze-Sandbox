@@ -1,5 +1,5 @@
 // auth.controller.ts
-import { Controller, Post, Get, Body, Query, Put, UseGuards, UseInterceptors, UploadedFile, Delete, Req } from '@nestjs/common';
+import { Controller, Post, Get, Body, Query, HttpException, HttpStatus, Put, UseGuards, UseInterceptors, UploadedFile, Delete, Req } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
@@ -50,7 +50,7 @@ export class AuthController {
 
     @Get('users')
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
-    @Role(UserRole.SUPERADMIN)
+    @Role(UserRole.ADMIN)
     @ApiAuth()
     @ApiResponse({ 
         status: 200,
@@ -74,7 +74,7 @@ export class AuthController {
 
     @Get('user')
     @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
-    @Role(UserRole.SUPERADMIN)
+    @Role(UserRole.ADMIN)
     @ApiAuth()
     @ApiResponse({
         status: 200,
@@ -100,8 +100,18 @@ export class AuthController {
             },
         },
     })
-    async getUser(@Query('id') id: string): Promise<User> {
-        return this.authService.getUser(id);
+    async getUser(@Query('id') id: string, @Req() req: CustomRequest): Promise<User> {
+        const userId = id || req.user.userId;
+        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        
+        if (!uuidRegex.test(userId)) {
+            throw new HttpException({
+                status: 'error',
+                message: 'Invalid UUID format'
+            }, HttpStatus.BAD_REQUEST);
+        }
+        
+        return this.authService.getUser(userId);
     }
 
     @Post('register')

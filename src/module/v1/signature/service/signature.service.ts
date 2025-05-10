@@ -8,6 +8,7 @@ import { CapeApiService } from '../../cape/service/cape.api.service';
 import { CreateYaraRepository } from '../repository/create.yara.repository';
 import { GetSignatureRepository } from '../repository/get.signature.repository';
 import { GetSignaturesRepository } from '../repository/get.signatures.repository';
+import { UpdateSignatureRepository } from '../repository/update.signature.repository';
 import { ActivateSignatureRepository } from '../repository/activate.signature.repository';
 import { DeactivateSignatureRepository } from '../repository/deactivate.signature.repository';
 import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
@@ -23,6 +24,7 @@ export class SignatureService {
         private readonly getSignaturesRepository: GetSignaturesRepository,
         private readonly activateSignatureRepository: ActivateSignatureRepository,
         private readonly deactivateSignatureRepository: DeactivateSignatureRepository,
+        private readonly updateSignatureRepository: UpdateSignatureRepository,
     ) {}
 
     async getSignaturesFromCape(userId: string): Promise<void> {
@@ -144,5 +146,15 @@ export class SignatureService {
     async deactivateSignature(id: string): Promise<CommonEntity> {
         await this.deactivateSignatureRepository.deactivateSignature(id);
         return { status: 'success', message: 'Signature deactivated successfully' };
+    }
+
+    async updateSignature(id: string, signature: UploadSignatureDto): Promise<CommonEntity> {
+        const existingSignature = await this.getSignatureRepository.getSignatureById(id);
+        if (!existingSignature) {
+            throw new NotFoundException(`Signature with ID ${id} not found`);
+        }
+
+        await this.updateSignatureRepository.updateSignature(id, signature);
+        return { status: 'success', message: 'Signature updated successfully' };
     }
 }

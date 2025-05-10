@@ -98,8 +98,6 @@ export class AuthRepository {
     async updatePasswordWithTransaction(
         userId: string,
         newPassword: string,
-        updatedById: string,
-        reason: string,
     ): Promise<void> {
         await this.knex.transaction(async (trx) => {
             const user = await trx<User>('users').where('id', userId).first();
@@ -113,14 +111,6 @@ export class AuthRepository {
             await trx<User>('users')
                 .where('id', userId)
                 .update({ password: hashedPassword, updated_at: new Date() });
-
-            await trx('passwordHistory').insert({
-                userId: userId,
-                updatedBy: updatedById,
-                reason,
-                created_at: new Date(),
-                updated_at: new Date(),
-            });
         });
     }
 
@@ -130,6 +120,4 @@ export class AuthRepository {
         const skip = (page - 1) * limit;
         return this.knex<any>('users').select('id', 'fullName', 'email', 'username', 'role', 'lastLogin', 'status').limit(limit).offset(skip);
     }
-
-    
 }

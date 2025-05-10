@@ -9,6 +9,7 @@ import { GetSignatureRepository } from './repository/get.signature.repository';
 import { GetSignaturesRepository } from './repository/get.signatures.repository';
 import { ActivateSignatureRepository } from './repository/activate.signature.repository';
 import { DeactivateSignatureRepository } from './repository/deactivate.signature.repository';
+import { UpdateSignatureRepository } from './repository/update.signature.repository';
 
 @Module({
     imports: [
@@ -23,6 +24,7 @@ import { DeactivateSignatureRepository } from './repository/deactivate.signature
         GetSignaturesRepository,
         ActivateSignatureRepository,
         DeactivateSignatureRepository,
+        UpdateSignatureRepository,
     ],
     exports: []
 })

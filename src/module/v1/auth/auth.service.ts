@@ -87,6 +87,7 @@ export class AuthService {
             fullName: user.fullName,
             email: user.email,
             username: user.username,
+            roleId: user.roleId,
         };
     }
 
@@ -183,10 +184,8 @@ export class AuthService {
         newPassword: string,
         updatedById: string,
     ): Promise<{ status: string; message: string }> {
-        // 1) Fetch user and ensure they exist
         const user = await this.checkIfUserExists(userId);
 
-        // 2) Verify the supplied currentPassword
         const matches = await bcrypt.compare(currentPassword, user.password);
         if (!matches) {
             throw new HttpException(
@@ -195,12 +194,9 @@ export class AuthService {
             );
         }
 
-        // 3) Perform update + history in a transaction
         await this.authRepository.updatePasswordWithTransaction(
             userId,
             newPassword,
-            updatedById,
-            'Reset by superadmin',
         );
 
         return { status: 'success', message: 'Password reset successfully' };

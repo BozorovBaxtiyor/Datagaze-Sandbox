@@ -1,6 +1,6 @@
 // auth.controller.ts
 import { Controller, Post, Get, Body, Query, Put, UseGuards, UseInterceptors, UploadedFile, Delete, Req } from '@nestjs/common';
-import { FileInterceptor, AnyFilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { extname } from 'path';
@@ -10,13 +10,7 @@ import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
 import { Role } from 'src/common/decorators/role.decorator';
 import { CustomRequest, User } from 'src/common/types/types';
 import { UserRole } from 'src/common/enums/roles.enum';
-import { 
-    ApiAuth, 
-    ApiOkResponse, 
-    ApiForbiddenResponse, 
-    ApiConflictResponse, 
-    ApiInternalServerErrorResponse 
-} from 'src/common/swagger/common-swagger';
+import { ApiAuth, ApiOkResponse } from 'src/common/swagger/common-swagger';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
@@ -125,9 +119,9 @@ export class AuthController {
     }
 
     @Put('update-profile')
-    // @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
-    // @Role(UserRole.ADMIN)
-    // @ApiAuth()
+    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
+    @Role(UserRole.ADMIN)
+    @ApiAuth()
     @ApiConsumes('multipart/form-data')
     @UseInterceptors(FileInterceptor('profilePhoto', {
         storage: diskStorage({

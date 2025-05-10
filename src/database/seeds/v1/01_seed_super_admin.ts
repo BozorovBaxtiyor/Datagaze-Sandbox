@@ -15,7 +15,7 @@ export async function seed(knex: Knex): Promise<void> {
 
     await knex('users').insert([
         {
-            id: 'ad131dc6-b8ab-484b-9cf8-35c0514dcad7',
+            id: "aa00510b-02ab-4c8b-a25d-e9bf4947e3d8",
             username: 'superadmin',
             password: hashedPassword,
             role: 'superadmin',

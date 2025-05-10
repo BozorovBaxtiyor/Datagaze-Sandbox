@@ -1,6 +1,10 @@
 // auth.controller.ts
-import { Controller, Post, Get, Body, Query, Put, UseGuards, Delete, Req } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiBody, ApiResponse } from '@nestjs/swagger';
+import { Controller, Post, Get, Body, Query, Put, UseGuards, UseInterceptors, UploadedFile, Delete, Req } from '@nestjs/common';
+import { FileInterceptor, AnyFilesInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { v4 as uuidv4 } from 'uuid';
+import { extname } from 'path';
+import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiConsumes } from '@nestjs/swagger';
 import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
 import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
 import { Role } from 'src/common/decorators/role.decorator';
@@ -121,16 +125,46 @@ export class AuthController {
     }
 
     @Put('update-profile')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
-    @Role(UserRole.SUPERADMIN)
-    @ApiAuth()
+    // @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
+    // @Role(UserRole.ADMIN)
+    // @ApiAuth()
+    @ApiConsumes('multipart/form-data')
+    @UseInterceptors(FileInterceptor('profilePhoto', {
+        storage: diskStorage({
+            destination: './src/module/v1/auth/uploads/profiles',
+            filename: (req, file, cb) => {
+                const uniqueSuffix = uuidv4();
+                const fileExtension = extname(file.originalname);
+                cb(null, `${uniqueSuffix}${fileExtension}`);
+            },
+        }),
+        fileFilter: (req, file, cb) => {
+            if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+                return cb(new Error('Only image files are allowed!'), false);
+            }
+            cb(null, true);
+        },
+    }))
     @ApiBody({
-        type: UpdateProfileDto,
-        examples: { 'application/json': { value: { userId: 'a38ac0e5-c5cf-4d25-b696-df12c9a4a66c', username: 'admin', fullName: 'New Admin Name', email: 'newemail@example.com' } } },
+        schema: {
+            type: 'object',
+            properties: {
+                userId: { type: 'string' },
+                username: { type: 'string' },
+                fullName: { type: 'string' },
+                email: { type: 'string' },
+                profilePhoto: {
+                    type: 'string',
+                    format: 'binary',
+                },
+            },
+        },
     })
-    @ApiOkResponse('Profile updated successfully', UpdateProfileEntity)
-    async updateProfile(@Body() updateProfileDto: UpdateProfileDto): Promise<UpdateProfileEntity> {
-        return this.authService.updateProfile(updateProfileDto);
+    async updateProfile(
+        @UploadedFile() profilePhoto: Express.Multer.File, 
+        @Body() updateProfileDto: UpdateProfileDto
+    ): Promise<UpdateProfileEntity> {
+        return this.authService.updateProfile(updateProfileDto, profilePhoto);
     }
 
     @Delete('delete-user/:id')

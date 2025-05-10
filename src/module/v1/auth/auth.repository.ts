@@ -78,15 +78,21 @@ export class AuthRepository {
         });
     }
 
-    async updateUserProfile(updateProfileDto: UpdateProfileDto): Promise<void> {
+    async updateUserProfile(updateProfileDto: UpdateProfileDto, imageFilename?: string): Promise<void> {
         const updateObject: Partial<User> = {
             username: updateProfileDto.username,
             fullName: updateProfileDto.fullName,
             email: updateProfileDto.email,
             updated_at: new Date(),
         };
-       
-        await this.knex<User>('users').where('id', updateProfileDto.userId).update(updateObject);
+
+        if (imageFilename) {
+            updateObject.profilePicture = `profiles/${imageFilename}`; 
+        }
+
+        await this.knex<User>('users')
+            .where('id', updateProfileDto.userId)
+            .update(updateObject);
     }
 
     async updatePasswordWithTransaction(

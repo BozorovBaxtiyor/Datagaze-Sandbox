@@ -26,6 +26,7 @@ export interface CustomRequest extends Request {
 
 export interface User {
     id?: string;
+    profilePicture?: string;
     username?: string;
     email?: string;
     password?: string;

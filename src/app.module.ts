@@ -10,10 +10,16 @@ import { SignatureModule } from './module/v1/signature/signature.module';
 
 @Module({
     imports: [
-        ServeStaticModule.forRoot({
-            rootPath: join(__dirname, 'module/v1/cape/file/images'), 
-            serveRoot: '/images', 
-        }),
+        ServeStaticModule.forRoot(
+            {
+                rootPath: join(__dirname, 'module/v1/cape/file/images'), 
+                serveRoot: '/images', 
+            },
+            {
+                rootPath: join(__dirname, 'module/v1/auth/uploads/profiles'), 
+                serveRoot: '/profiles', 
+            }
+        ),
 		ConfigModule.forRoot({
             isGlobal: true,
             envFilePath: '.env',

@@ -5,6 +5,7 @@ import {
     Matches,
     MinLength,
     IsEmail,
+    IsOptional
 } from 'class-validator';
 
 export class UpdateProfileDto {

@@ -20,15 +20,18 @@ export class LoggingInterceptor implements NestInterceptor {
         const handler = context.getHandler().name;
 
         this.logger.log(
-            `\n🔹 Incoming Request ${'-'.repeat(50)}
-            📆 Timestamp: ${timestamp}
-            🎯 Endpoint: ${handler}
-            📍 ${method} ${url}
-            📦 Body: ${JSON.stringify(body, null, 2)}
-            🔑 Params: ${JSON.stringify(params, null, 2)}
-            ❓ Query: ${JSON.stringify(query, null, 2)}
-            🌐 User-Agent: ${userAgent}
-            ${'-'.repeat(70)}`
+            `
+            \t|${'-'.repeat(90)}
+            \t|🔹 Incoming Request 
+            \t|📆 Timestamp: ${timestamp} 
+            \t|🎯 Endpoint: ${handler}    
+            \t|📍 ${method} ${url}        
+            \t|📦 Body: ${JSON.stringify(body, null, 4)} 
+            \t|🔑 Params: ${JSON.stringify(params, null, 4)} 
+            \t|❓ Query: ${JSON.stringify(query, null, 4)} 
+            \t|🌐 User-Agent: ${userAgent} 
+            \t|${'-'.repeat(90)}
+            `
         );
 
         return next.handle();

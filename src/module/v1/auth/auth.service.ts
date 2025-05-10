@@ -83,6 +83,7 @@ export class AuthService {
 
         return {
             id: user.id,
+            profilePicture: user.profilePicture,
             fullName: user.fullName,
             email: user.email,
             username: user.username,
@@ -102,12 +103,13 @@ export class AuthService {
         };
     }
 
-    async updateProfile(updateProfileDto: UpdateProfileDto): Promise<UpdateProfileEntity> {
+    async updateProfile(updateProfileDto: UpdateProfileDto, profilePhoto: Express.Multer.File): Promise<UpdateProfileEntity> {
+        const imageFilename = profilePhoto?.filename;
         await this.checkIfUserExists(updateProfileDto.userId);
 
-        await this.checkIfUserOrEmailExists(updateProfileDto.username, updateProfileDto.email);
+        await this.checkIfUserOrEmailExists(updateProfileDto.username, updateProfileDto.email, updateProfileDto.userId);
 
-        await this.authRepository.updateUserProfile(updateProfileDto);
+        await this.authRepository.updateUserProfile(updateProfileDto, imageFilename);
 
         return {
             status: 'success',
@@ -149,10 +151,10 @@ export class AuthService {
         return user;
     }
 
-    private async checkIfUserOrEmailExists(username: string, email: string): Promise<User | undefined | null> {
-        const exists = await this.authRepository.findUserByUsernameOrEmail(username, email);
+    private async checkIfUserOrEmailExists(username: string, email: string, currentUserId?: string): Promise<User | null> {
+        const user = await this.authRepository.findUserByUsernameOrEmail(username, email);
 
-        if (exists) {
+        if (user && user.id !== currentUserId) {
             throw new HttpException(
                 {
                     status: 'error',
@@ -161,7 +163,8 @@ export class AuthService {
                 HttpStatus.CONFLICT,
             );
         }
-        return exists;
+
+        return user;
     }
 
     private throwInvalidCredentials(): never {

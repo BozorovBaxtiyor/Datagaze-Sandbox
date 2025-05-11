@@ -26,7 +26,7 @@ export class SignatureController {
     
     @Get('all')
     @ApiGetAll('Signatures', SignatureEntity)
-    async getSignatures(@Query() query: GetSignaturesQueryDto, @Req() req: CustomRequest): Promise<any> {
+    async getSignatures(@Query() query: GetSignaturesQueryDto): Promise<any> {
         return this.signatureService.getSignatures(query);
     }
 
@@ -36,6 +36,7 @@ export class SignatureController {
         return this.signatureService.getSignatureById(id);
     }
 
+    @Post('upload/new/signature')
     @ApiBody({ 
         type: UploadSignatureDto, 
         description: 'User credentials',
@@ -43,13 +44,13 @@ export class SignatureController {
             loginExample: {
                 value: {
                     name: 'filename.yar',
-                    type: 'YAR',
+                    type: 'yar',
                     rule: 'rule',
                 },
             }
         } 
     })
-    @Post('tasks/upload/signature')
+    @Role(UserRole.ADMIN)
     async uploadSignature(@Body() signature: UploadSignatureDto, @Req() req: CustomRequest): Promise<CommonEntity> {
         return this.signatureService.uploadSignature(signature, req.user.userId);
     }

@@ -18,31 +18,15 @@ import { GetTasksEntity } from './entity/get.tasks.entity';
 export class CapeController {
     constructor(private readonly capeService: CapeService) {}
 
-    @Get('machines/list')
-    async getListOfMachines() {
-        return this.capeService.getListOfMachines();
+    @Get('tasks/dashboard')
+    async getDashboard(): Promise<any> {
+        return this.capeService.getDashboardData();
     }
-    
+
     @Get('tasks/list/:path')
     @ApiGetAll('Signature Tasks', GetTasksEntity)
     async getTasks(@Param('path') path: string, @Query() query: TaskListQueryDto, @Req() req: CustomRequest): Promise<GetTasksEntity[]> {
         return this.capeService.getTasks(path, query, req.user.userId);
-    }
-
-    @Get('tasks/get/report/:taskId')
-    async getReport(@Param('taskId') taskId: string): Promise<any> {
-        return this.capeService.getReport(taskId);
-    }
-
-    @Get('tasks/view/:taskId')
-    // @ApiGetOne('Web Application', GetWebApplicationEntity)
-    async getTask(@Param('taskId') taskId: string): Promise<any> {
-        return this.capeService.getTask(taskId);
-    }
-
-    @Get('tasks/get/screenshot/:taskId')
-    async getScreenshot(@Param('taskId') taskId: string): Promise<any> {
-        return this.capeService.getScreenshot(taskId);
     }
 
     @ApiConsumes('multipart/form-data')
@@ -66,15 +50,31 @@ export class CapeController {
         return this.capeService.createFile(createFileDto, req.user.userId);
     }
 
-    @Get('tasks/dashboard')
-    async getDashboard(): Promise<any> {
-        return this.capeService.getDashboardData();
+    @Get('machines/list')
+    async getListOfMachines() {
+        return this.capeService.getListOfMachines();
+    }
+    
+    @Get('tasks/get/report/:taskId')
+    async getReport(@Param('taskId') taskId: string): Promise<any> {
+        return this.capeService.getReport(taskId);
     }
 
-    @Get('files/view/sha256/:sha256')
-    async getFileBySha256(@Param('sha256') sha256: string): Promise<any> {
-        return this.capeService.getFileBySha256(sha256);
+    @Get('tasks/view/:taskId')
+    // @ApiGetOne('Web Application', GetWebApplicationEntity)
+    async getTask(@Param('taskId') taskId: string): Promise<any> {
+        return this.capeService.getTask(taskId);
     }
+
+    @Get('tasks/get/screenshot/:taskId')
+    async getScreenshot(@Param('taskId') taskId: string): Promise<any> {
+        return this.capeService.getScreenshot(taskId);
+    }
+
+    // @Get('files/view/sha256/:sha256')
+    // async getFileBySha256(@Param('sha256') sha256: string): Promise<any> {
+    //     return this.capeService.getFileBySha256(sha256);
+    // }
     
     // @Post('tasks/create/url')
     // async createUrl() {

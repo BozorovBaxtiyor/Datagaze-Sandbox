@@ -38,11 +38,26 @@ export class AuthService {
         return { status: 'success', token };
     }
 
+    async register(registerDto: RegisterDto): Promise<RegisterEntity> {
+        await this.checkIfUserOrEmailExists(registerDto.username, registerDto.email);
+
+        const hashedPassword = await bcrypt.hash(registerDto.password, 10);
+
+        await this.authRepository.createUser(registerDto, hashedPassword);
+
+        return {
+            status: 'success',
+            message: 'User registered successfully',
+        };
+    }
+
     async getUsers(query: PaginationQueryUsersDto): Promise<Partial<User>[]> {
         return this.authRepository.getUsers(query);
     }
 
-    async activateUser(id: string): Promise<any> {
+    async activateUser(id: string, currentUserId: string): Promise<any> {
+        this.throwIfSelfAction(id, currentUserId, 'activate');
+
         const user = await this.checkIfUserExists(id);
 
         if (user.status === 'active') {
@@ -60,7 +75,9 @@ export class AuthService {
         return { status: 'success', message: 'User activated successfully' };
     }
 
-    async deactivateUser(id: string): Promise<any> {
+    async deactivateUser(id: string, currentUserId: string): Promise<any> {
+        this.throwIfSelfAction(id, currentUserId, 'deactivate');
+
         const user = await this.checkIfUserExists(id);
 
         if (user.status === 'inactive') {
@@ -91,19 +108,6 @@ export class AuthService {
         };
     }
 
-    async register(registerDto: RegisterDto): Promise<RegisterEntity> {
-        await this.checkIfUserOrEmailExists(registerDto.username, registerDto.email);
-
-        const hashedPassword = await bcrypt.hash(registerDto.password, 10);
-
-        await this.authRepository.createUser(registerDto, hashedPassword);
-
-        return {
-            status: 'success',
-            message: 'User registered successfully',
-        };
-    }
-
     async updateProfile(updateProfileDto: UpdateProfileDto, profilePhoto: Express.Multer.File): Promise<UpdateProfileEntity> {
         const imageFilename = profilePhoto?.filename;
         await this.checkIfUserExists(updateProfileDto.userId);
@@ -119,15 +123,7 @@ export class AuthService {
     }
 
     async deleteUser(id: string, currentUserId: string): Promise<any> {
-        if (id === currentUserId) {
-            throw new HttpException(
-                {
-                    status: 'error',
-                    message: 'You cannot delete your own account',
-                },
-                HttpStatus.FORBIDDEN
-            );
-        }
+        this.throwIfSelfAction(id, currentUserId, 'delete');
 
         await this.checkIfUserExists(id);
 
@@ -182,7 +178,6 @@ export class AuthService {
         userId: string,
         currentPassword: string,
         newPassword: string,
-        updatedById: string,
     ): Promise<{ status: string; message: string }> {
         const user = await this.checkIfUserExists(userId);
 
@@ -202,4 +197,15 @@ export class AuthService {
         return { status: 'success', message: 'Password reset successfully' };
     }
 
+    private throwIfSelfAction(id: string, currentUserId: string, action: string): void {
+        if (id === currentUserId) {
+            throw new HttpException(
+                {
+                    status: 'error',
+                    message: `You cannot ${action} your own account`,
+                },
+                HttpStatus.FORBIDDEN
+            );
+        }
+    }
 }

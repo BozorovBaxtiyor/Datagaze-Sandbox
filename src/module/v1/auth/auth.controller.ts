@@ -1,13 +1,14 @@
 // auth.controller.ts
-import { Controller, Post, Get, Body, Query, HttpException, HttpStatus, Put, UseGuards, UseInterceptors, UploadedFile, Delete, Req } from '@nestjs/common';
+import { Controller, Post, Get, Body, Query, Put, UseGuards, UseInterceptors, UploadedFile, Delete, Req } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { v4 as uuidv4 } from 'uuid';
 import { extname } from 'path';
-import { ApiTags, ApiOperation, ApiBody, ApiResponse, ApiConsumes } from '@nestjs/swagger';
+import { ApiTags, ApiQuery, ApiBody, ApiResponse, ApiConsumes } from '@nestjs/swagger';
 import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
 import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
 import { Role } from 'src/common/decorators/role.decorator';
+import { Public } from 'src/common/decorators/public.decorator';
 import { CustomRequest, User } from 'src/common/types/types';
 import { UserRole } from 'src/common/enums/roles.enum';
 import { ApiAuth, ApiOkResponse } from 'src/common/swagger/common-swagger';
@@ -21,13 +22,15 @@ import { RegisterEntity } from './entity/register.output';
 import { UpdateProfileEntity } from './entity/update.output';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 
+@UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
+@ApiAuth()
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @Public()
     @Post('login')
-    @ApiOperation({ summary: 'Login' })
     @ApiBody({
         type: LoginDto,
         examples: { 'application/json': { value: { username: 'superadmin', password: 'superadmin' } } },
@@ -48,10 +51,19 @@ export class AuthController {
         return this.authService.login(loginDto);
     }
 
+    @Post('register')
+    @Role(UserRole.SUPERADMIN)
+    @ApiBody({
+        type: RegisterDto,
+        examples: { 'application/json': { value: { username: 'new_admin', fullName: 'Joe Doe', email: 'newadmin@example.com', password: 'StrongPassword@456' } } },
+    })
+    @ApiOkResponse('Successful registration', RegisterEntity)
+    async register(@Body() registerDto: RegisterDto): Promise<RegisterEntity> {
+        return this.authService.register(registerDto);
+    }
+
     @Get('users')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
-    @Role(UserRole.ADMIN)
-    @ApiAuth()
+    @Role(UserRole.SUPERADMIN) // only superadmin can access this route
     @ApiResponse({ 
         status: 200,
         description: 'List of users',
@@ -62,7 +74,9 @@ export class AuthController {
                 properties: {
                     id: { type: 'string' },
                     fullName: { type: 'string' },
+                    username: { type: 'string' },
                     email: { type: 'string' },
+                    role: { type: 'string' },
                     createdAt: { type: 'string', format: 'date-time' },
                 },
             },
@@ -73,9 +87,7 @@ export class AuthController {
     }
 
     @Get('user')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.ADMIN)
-    @ApiAuth()
     @ApiResponse({
         status: 200,
         description: 'User found',
@@ -86,52 +98,18 @@ export class AuthController {
                 fullName: { type: 'string' },
                 email: { type: 'string' },
                 username: { type: 'string' },
+                profilePicture: { type: 'string', nullable: true },
+                roleId: { type: 'number' },
             },
         },
     })
-    @ApiResponse({
-        status: 404,
-        description: 'User not found',
-        schema: {
-            type: 'object',
-            properties: {   
-                status: { type: 'string', example: 'error' },
-                message: { type: 'string', example: 'User not found' },
-            },
-        },
-    })
-    async getUser(@Query('id') id: string, @Req() req: CustomRequest): Promise<User> {
-        const userId = id || req.user.userId;
-        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-        
-        if (!uuidRegex.test(userId)) {
-            throw new HttpException({
-                status: 'error',
-                message: 'Invalid UUID format'
-            }, HttpStatus.BAD_REQUEST);
-        }
-        
-        return this.authService.getUser(userId);
-    }
-
-    @Post('register')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
-    @Role(UserRole.SUPERADMIN)
-    @ApiAuth()
-    @ApiOperation({ summary: 'Register' })
-    @ApiBody({
-        type: RegisterDto,
-        examples: { 'application/json': { value: { username: 'new_admin', fullName: 'Joe Doe', email: 'newadmin@example.com', password: 'StrongPassword@456' } } },
-    })
-    @ApiOkResponse('Successful registration', RegisterEntity)
-    async register(@Body() registerDto: RegisterDto): Promise<RegisterEntity> {
-        return this.authService.register(registerDto);
+    @ApiQuery({ name: 'id', required: false, description: 'User ID (optional). If omitted, returns authenticated user.' })
+    async getUser(@Query('id') id?: string, @Req() req?: CustomRequest): Promise<User> {
+        return this.authService.getUser(id || req.user.userId);
     }
 
     @Put('update-profile')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
-    @Role(UserRole.ADMIN)
-    @ApiAuth()
+    @Role(UserRole.SUPERADMIN) // only superadmin can access this route
     @ApiConsumes('multipart/form-data')
     @UseInterceptors(FileInterceptor('profilePhoto', {
         storage: diskStorage({
@@ -172,33 +150,25 @@ export class AuthController {
     }
 
     @Delete('delete-user/:id')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
-    @ApiAuth()
     async deleteUser(@Query('id') id: string, @Req() req: CustomRequest): Promise<any> {
         return this.authService.deleteUser(id, req.user.userId);
     }
 
     @Put('activate')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
-    @ApiAuth()
-    async activateUser(@Query('id') id: string): Promise<any> {
-        return this.authService.activateUser(id);
+    async activateUser(@Query('id') id: string, @Req() req: CustomRequest): Promise<any> {
+        return this.authService.activateUser(id, req.user.userId);
     }
 
     @Put('deactivate')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
-    @ApiAuth()
-    async deactivateUser(@Query('id') id: string): Promise<any> {
-        return this.authService.deactivateUser(id);
+    async deactivateUser(@Query('id') id: string, @Req() req: CustomRequest): Promise<any> {
+        return this.authService.deactivateUser(id, req.user.userId);
     }
 
     @Put('reset-password')
-    @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
     @Role(UserRole.SUPERADMIN)
-    @ApiAuth()
     @ApiBody({ type: ResetPasswordDto })
     @ApiResponse({ 
         status: 200,
@@ -219,7 +189,6 @@ export class AuthController {
             resetPasswordDto.userId,
             resetPasswordDto.currentPassword,
             resetPasswordDto.newPassword,
-            req.user.userId,
         );
     }
 }

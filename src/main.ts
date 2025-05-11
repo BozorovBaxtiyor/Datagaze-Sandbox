@@ -14,6 +14,15 @@ async function bootstrap() {
     app.useGlobalInterceptors(new LoggingInterceptor());
     app.useGlobalFilters(new HttpExceptionFilter());
 
+    app.useGlobalPipes(
+        new ValidationPipe({
+            transform: true,
+            whitelist: true,
+            forbidNonWhitelisted: true,
+            transformOptions: { enableImplicitConversion: true },
+        }),
+    );
+
     app.enableVersioning({
         type: VersioningType.URI,
         prefix: 'api/',
@@ -41,14 +50,7 @@ async function bootstrap() {
     const webDocument = SwaggerModule.createDocument(app, webConfig);
     SwaggerModule.setup('api', app, webDocument);
 
-    app.useGlobalPipes(
-        new ValidationPipe({
-            transform: true,
-            whitelist: true,
-            forbidNonWhitelisted: true,
-            transformOptions: { enableImplicitConversion: true },
-        }),
-    );
+ 
 
     app.enableCors({
         origin: '*',

@@ -7,18 +7,25 @@ import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
 export class GetSignaturesRepository {
     constructor(@InjectKnex() private readonly knex: Knex) {}
 
-    async getSignaturesByUserId(query: GetSignaturesQueryDto): Promise<any> {
+    async getSignatures(query: GetSignaturesQueryDto): Promise<any> {
         const page = Number(query.page) || 1;
         const limit = Number(query.limit) || 10;
         const skip = (page - 1) * limit;
 
-        const data = await this.knex('signatureUploads')
-            .orderBy('uploadedAt', 'desc') 
-            .select('id', 'name', 'status', 'category', 'uploadedBy', 'lastModifiedAt', 'uploadedAt')
-            .limit(limit)
-            .offset(skip);
+        let qb = this.knex('signatureUploads');
 
-        return { data };
+        if (query.status && query.status !== 'all') {
+            qb = qb.where('status', query.status);
+        }
+    
+        if (query.category && query.category !== 'all') {
+            qb = qb.where('category', query.category);
+        }
+    
+        // if (query.incidentType && query.incidentType !== 'all') {
+        //     qb = qb.where('incidentType', query.incidentType);
+        // }
+
+        return { data: await qb.orderBy('uploadedAt', 'desc').limit(limit).offset(skip) };
     }
-
 }

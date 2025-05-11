@@ -1,5 +1,5 @@
 // signature.service.ts
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import FormData from 'form-data';
 import { extractFilename } from 'src/common/utils/file.util';
 import { CommonEntity } from 'src/common/libs/common.entity';
@@ -65,19 +65,8 @@ export class SignatureService {
     }
 
     async uploadSignature(signature: UploadSignatureDto, userId: string): Promise<CommonEntity> {
-        return this.uploadSignatureHelper(signature, userId);
-    }
-
-    private async uploadSignatureHelper(signature: UploadSignatureDto, userId: string): Promise<CommonEntity> {
-        try {
-            await this.storeSignatureRecord(signature, userId);
-            return { status: 'success', message: 'Signature uploaded successfully' };
-        } catch (error: any) {
-            if (error instanceof BadRequestException) {
-                throw error;
-            }
-            throw new Error('Signature upload failed');
-        }
+        await this.storeSignatureRecord(signature, userId);
+        return { status: 'success', message: 'Signature uploaded successfully' };
     }
 
     async getSignatures(query: GetSignaturesQueryDto): Promise<any> {
@@ -102,7 +91,7 @@ export class SignatureService {
     }
 
     private async fetchSignaturesFromDatabase(query: GetSignaturesQueryDto): Promise<any[]> {
-        const { data } = await this.getSignaturesRepository.getSignaturesByUserId(query);
+        const { data } = await this.getSignaturesRepository.getSignatures(query);
         return data;
     }
 

@@ -69,6 +69,19 @@ export class SignatureController {
 
     @Put('update/:signatureId')
     @Role(UserRole.ADMIN)
+    @ApiBody({ 
+        type: UploadSignatureDto, 
+        description: 'User credentials',
+        examples: {
+            loginExample: {
+                value: {
+                    name: 'filename.yar',
+                    type: 'yar',
+                    rule: 'rule',
+                },
+            }
+        } 
+    })
     async updateSignature(@Param('signatureId') id: string, @Body() signature: UploadSignatureDto): Promise<any> {
         return this.signatureService.updateSignature(id, signature);
     }

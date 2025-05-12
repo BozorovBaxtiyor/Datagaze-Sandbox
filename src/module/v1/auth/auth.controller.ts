@@ -109,7 +109,7 @@ export class AuthController {
     }
 
     @Put('update-profile')
-    @Role(UserRole.SUPERADMIN) // only superadmin can access this route
+    @Role(UserRole.ADMIN) 
     @ApiConsumes('multipart/form-data')
     @UseInterceptors(FileInterceptor('profilePhoto', {
         storage: diskStorage({

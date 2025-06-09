@@ -21,7 +21,7 @@ const db = knex({
         port: 25060,
         database: 'datagaze_sandbox',
         user: 'doadmin',
-        password: 'AVNS_Fq4FdQEYfifqZ9Xh-n3',
+        // password: 'AVNS_Fq4FdQEYfifqZ9Xh-n3',
         ssl: {
             rejectUnauthorized: false,
         }

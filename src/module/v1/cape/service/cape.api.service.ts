@@ -1,29 +1,59 @@
 // cape.api.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
-import { log } from 'console';
 import FormData from 'form-data';
 
 @Injectable()
 export class CapeApiService {
     private readonly headers = { Accept: 'application/json' };
     private readonly baseUrl = process.env.CAPE_URL;
+    private readonly logger = new Logger(CapeApiService.name);
 
     async getTask(taskId: string): Promise<any> {
         return axios.get(`${this.baseUrl}/tasks/view/${taskId}/`, { headers: this.headers });
     }
 
     async uploadFile(form: FormData): Promise<any> {
-        return axios.post(`${this.baseUrl}/tasks/create/file/`, 
-            form, {
+        const url = `${this.baseUrl}/tasks/create/file/`;
+
+        this.logger.log(`[CAPE-API] Uploading file to: ${url}`);
+        this.logger.log(
+            `[CAPE-API] Request headers: ${JSON.stringify({
+                ...form.getHeaders(),
+                ...this.headers,
+            })}`,
+        );
+
+        try {
+            const response = await axios.post(url, form, {
                 headers: {
                     ...form.getHeaders(),
                     ...this.headers,
                 },
                 maxContentLength: Infinity,
                 maxBodyLength: Infinity,
-            }
-        );
+            });
+
+            this.logger.log(
+                `[CAPE-API] Upload successful. Response: ${JSON.stringify({
+                    status: response.status,
+                    statusText: response.statusText,
+                    data: response.data,
+                })}`,
+            );
+
+            return response;
+        } catch (error: any) {
+            this.logger.error(`[CAPE-API] Upload failed: ${error.message}`);
+            this.logger.error(
+                `[CAPE-API] Error details: ${JSON.stringify({
+                    status: error.response?.status,
+                    statusText: error.response?.statusText,
+                    data: error.response?.data,
+                })}`,
+            );
+            throw error;
+        }
     }
 
     async sendSignatureToCape(form: FormData): Promise<any> {
@@ -34,13 +64,13 @@ export class CapeApiService {
 
     async getReport(taskId: string, format: string): Promise<any> {
         return axios.get(`${this.baseUrl}/tasks/get/report/${taskId}/${format}`, {
-            headers: this.headers
+            headers: this.headers,
         });
     }
 
     async getScreenshot(realTaskId: string): Promise<any> {
         return axios.get(`${this.baseUrl}/tasks/get/screenshot/${realTaskId}/`, {
-            responseType: 'arraybuffer'
+            responseType: 'arraybuffer',
         });
     }
 

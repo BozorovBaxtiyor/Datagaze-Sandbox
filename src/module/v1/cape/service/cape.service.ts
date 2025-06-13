@@ -41,8 +41,8 @@ export class CapeService {
 
     async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<GetTasksEntity[]> {
         await this.syncTasksFromCape(userId);
-        const result = await this.getFormattedTasks(query, path);
-        return result
+        
+        return this.getFormattedTasks(query, path);
     }
     
     private async syncTasksFromCape(userId: string): Promise<void> {
@@ -67,7 +67,6 @@ export class CapeService {
     
     private async getFormattedTasks(query: TaskListQueryDto, path: string): Promise<GetTasksEntity[]> {
         const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
-        console.log(data , 'data from capeGetTasksRepository');
         
         return data.map(r => this.formatResponse(r));
     }
@@ -187,6 +186,7 @@ export class CapeService {
 
     private mapTaskData(taskData: any, taskId: string, userId: string): any {
         const data = taskData.data || taskData; 
+        
         return {
             taskId: taskId || data.id,
             target: extractFilename(data.target) || '',
@@ -232,11 +232,11 @@ export class CapeService {
             pending: 'pending',
             running: 'running',
             reported: 'reported',
-            failed_analysis: 'failedAnalysis',
+            failed_reporting: 'failedAnalysis',
             completed: 'processing',
             failed: 'failed',
         };
-        return statusMap[capeStatus] || 'pending';
+        return statusMap[capeStatus] ;
     }
 
     async getScreenshot(taskId: string): Promise<string[]> {

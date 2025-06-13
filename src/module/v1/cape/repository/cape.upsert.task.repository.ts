@@ -11,8 +11,8 @@ export class CapeUpsertTaskRepository {
         const existing = await this.knex('capeTasks').where('taskId', taskData.taskId).first();
 
         if (existing) {
-            // const [result] = await this.knex('capeTasks').where('taskId', taskData.taskId).update(taskData).returning('*');
-            return existing;
+            const [result] = await this.knex('capeTasks').where('taskId', taskData.taskId).update(taskData).returning('*');
+            return result;
         }
     
         const [result] = await this.knex('capeTasks').insert(taskData).returning('*');

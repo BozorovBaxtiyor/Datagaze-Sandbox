@@ -1,0 +1,27 @@
+{
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "eslint.validate": ["javascript", "typescript"],
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // "editor.folding": true,
+    // "editor.foldingStrategy": "indentation",
+    // "editor.defaultFoldingRangeProvider": null,
+    // "editor.occurrencesHighlight": "singleFile",
+    // "editor.foldOnOpen": true,
+    "editor.foldingImportsByDefault": true
+    // "editor.quickSuggestions": {
+    //     "other": true,
+    //     "comments": false,
+    //     "strings": true
+    // }
+}

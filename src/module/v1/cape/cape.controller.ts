@@ -1,15 +1,15 @@
 // cape.controller.ts
-import { Controller, Get, Post, Param, Query, Body, Req, UseGuards, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { CapeService } from './service/cape.service';
-import { TaskListQueryDto } from './dto/tasks.list.query.dto';
-import { CreateFileDto } from './dto/create.file.dto';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
 import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
+import { ApiAuth, ApiGetAll } from 'src/common/swagger/common-swagger';
 import { CustomRequest } from 'src/common/types/types';
-import { ApiTags, ApiConsumes, ApiBody } from '@nestjs/swagger';
-import { ApiAuth, ApiGetAll, ApiGetOne } from 'src/common/swagger/common-swagger';
+import { CreateFileDto } from './dto/create.file.dto';
+import { TaskListQueryDto } from './dto/tasks.list.query.dto';
 import { GetTasksEntity } from './entity/get.tasks.entity';
+import { CapeService } from './service/cape.service';
 
 @UseGuards(JwtHttpAuthGuard, HttpRoleGuard)
 @ApiTags('Cape Sandbox')

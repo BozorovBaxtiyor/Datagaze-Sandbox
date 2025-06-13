@@ -1,7 +1,7 @@
 // cape.service.ts
 import FormData from 'form-data';
 import * as path from 'path';
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import AdmZip from 'adm-zip';
 import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeGetTasksRepository } from '../repository/cape.get.tasks.respositry';
@@ -18,11 +18,13 @@ import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { CreateFileDto } from '../dto/create.file.dto';
 import { GetTasksEntity } from '../entity/get.tasks.entity';
 import { extractFilename } from 'src/common/utils/file.util';
+import { CapeRepository } from '../repository/cape.repository';
 
 @Injectable()
 export class CapeService {
     constructor(
         private readonly capeApiService: CapeApiService,
+        private readonly capeRepository: CapeRepository,
         private readonly capeFileService: CapeFileService,
         private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
@@ -33,11 +35,14 @@ export class CapeService {
         private readonly capeGetTotalTasksByLastSevenDaysRepository: CapeGetTotalTasksByLastSevenDaysRepository,
         private readonly capeGetTotalPendingTasksSizeRepository: CapeGetTotalPendingTasksSizeRepository,
         private readonly capeGetIncidentDistributionRepository: CapeGetIncidentDistributionRepository,
-    ) {}
+    ) { }
+    
+    private readonly logger = new Logger(CapeService.name);
 
     async getTasks(path: string, query: TaskListQueryDto, userId: string): Promise<GetTasksEntity[]> {
         await this.syncTasksFromCape(userId);
-        return this.getFormattedTasks(query, path);
+        const result = await this.getFormattedTasks(query, path);
+        return result
     }
     
     private async syncTasksFromCape(userId: string): Promise<void> {
@@ -48,15 +53,22 @@ export class CapeService {
     
     private async syncSingleTask(taskId: string, userId: string): Promise<void> {
         const task = await this.getTask(taskId);
-        if (!task) return;
-        
+
+        if (task.error) {
+            this.logger.warn(`Task not found in CAPE API: ${taskId}`);
+            await this.capeRepository.deleteTaskByTaskId(taskId);
+            return;
+        }
+
         const taskData = this.mapTaskData(task, taskId, userId);
         await this.capeUpsertTaskRepository.upsertTask(taskData);
     }
+
     
     private async getFormattedTasks(query: TaskListQueryDto, path: string): Promise<GetTasksEntity[]> {
         const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
-
+        console.log(data , 'data from capeGetTasksRepository');
+        
         return data.map(r => this.formatResponse(r));
     }
 

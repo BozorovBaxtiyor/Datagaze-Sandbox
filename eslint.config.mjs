@@ -5,31 +5,38 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  {
-    ignores: ['eslint.config.mjs'],
-  },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  eslintPluginPrettierRecommended,
-  {
-    languageOptions: {
-      globals: {
-        ...globals.node,
-        ...globals.jest,
-      },
-      ecmaVersion: 5,
-      sourceType: 'module',
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
+    {
+        ignores: ['eslint.config.mjs'],
     },
-  },
-  {
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'on',
-      '@typescript-eslint/no-floating-promises': 'warn',
-      '@typescript-eslint/no-unsafe-argument': 'warn'
+    eslint.configs.recommended,
+    ...tseslint.configs.recommendedTypeChecked,
+    eslintPluginPrettierRecommended,
+    {
+        languageOptions: {
+            globals: {
+                ...globals.node,
+                ...globals.jest,
+            },
+            ecmaVersion: 5,
+            sourceType: 'module',
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+            },
+        },
     },
-  },
+    {
+        rules: {
+            '@typescript-eslint/no-explicit-any': 'on',
+            '@typescript-eslint/no-floating-promises': 'warn',
+            '@typescript-eslint/no-unsafe-argument': 'warn',
+
+        // Umumiy qoidalar
+            
+            'no-console': ['warn', { allow: ['warn', 'error'] }],
+            eqeqeq: ['error', 'always'],
+            'no-unused-expressions': 'error',
+            'no-duplicate-imports': 'error',
+        },
+    },
 );

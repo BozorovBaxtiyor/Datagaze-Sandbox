@@ -1,5 +1,6 @@
 // http-exception.filter.ts
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { log } from 'console';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -7,7 +8,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const status = exception.getStatus();
-
+        log(`HTTP Exception: ${exception} - Status: ${status}`);
         response.status(status).json({
             status,
             message: exception.message,

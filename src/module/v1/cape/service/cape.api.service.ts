@@ -1,6 +1,7 @@
 // cape.api.service.ts
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+import { log } from 'console';
 import FormData from 'form-data';
 
 @Injectable()

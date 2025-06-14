@@ -46,7 +46,14 @@ export class CapeController {
     @Post('tasks/create/file')
     @UseInterceptors(AnyFilesInterceptor({ limits: { fileSize: 200 * 1024 * 1024 }}))
     async createFile(@UploadedFiles() files: Array<Express.Multer.File>, @Body() createFileDto: CreateFileDto, @Req() req: CustomRequest): Promise<any> {
-        createFileDto.file = files[0]; 
+        // Log fayl haqida ma'lumot
+        console.log('Uploaded files:', files);
+
+        // Log DTO va foydalanuvchi haqida ma'lumot
+        console.log('User ID:', req.user.userId);
+        createFileDto.file = files[0];
+        
+        console.log('CreateFileDto:', createFileDto);
         return this.capeService.createFile(createFileDto, req.user.userId);
     }
 

@@ -1,11 +1,11 @@
 // create.file.dto.ts
-import { IsOptional, IsString, IsNumber, IsBoolean } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsOptional, IsString, IsNumber, IsBoolean, IsNotEmpty } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 
 export class CreateFileDto {
     @IsOptional()
     @IsString()
-    package?: string = 'default';
+    package?: string;
 
     @IsOptional()
     @Type(() => Number)
@@ -14,15 +14,16 @@ export class CreateFileDto {
 
     @IsOptional()
     @IsString()
+    @Transform(({ value }) => (value === '' ? 'win10' : value))
     machine?: string = 'win10';
 
     @IsOptional()
     @IsString()
-    platform?: string = 'windows';
+    platform?: string;
 
     @IsOptional()
     @IsString()
-    options?: string = 'isolated=password';
+    options?: string;
 
     filePath?: string;
     file?: Express.Multer.File;

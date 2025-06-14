@@ -81,6 +81,8 @@ export class CapeService {
     
             return preparedFile.response.data;
         } catch (error: any) {
+            console.log(error);
+            
             throw new Error(`File upload failed: ${error.message}`);
         }
     }
@@ -152,11 +154,16 @@ export class CapeService {
     }
     
     private appendTaskSettingsToForm(form: FormData, dto: CreateFileDto): void {
-        form.append('package', dto.package);
-        form.append('timeout', String(dto.timeout));
-        form.append('machine', dto.machine);
-        form.append('platform', dto.platform);
-        form.append('options', dto.options);
+        if(dto.package) form.append('package', dto.package);
+        if(dto.timeout) form.append('timeout', String(dto.timeout));
+        if(dto.machine) form.append('machine', dto.machine);
+        if(dto.platform) form.append('platform', dto.platform);
+        if(dto.options) form.append('options', dto.options);
+        // form.append('package', dto.package);
+        // form.append('timeout', String(dto.timeout));
+        // form.append('machine', dto.machine);
+        // form.append('platform', dto.platform);
+        // form.append('options', dto.options);
     }
       
     // Database storage methods

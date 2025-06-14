@@ -57,3 +57,5 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 src/file/*.msi
 src/file/*.msi
 src/file/images/**
+src/file/
+src/module/v1/cape/file/images/

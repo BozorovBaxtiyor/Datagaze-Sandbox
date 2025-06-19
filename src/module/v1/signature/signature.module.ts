@@ -10,11 +10,13 @@ import { GetSignaturesRepository } from './repository/get.signatures.repository'
 import { ActivateSignatureRepository } from './repository/activate.signature.repository';
 import { DeactivateSignatureRepository } from './repository/deactivate.signature.repository';
 import { UpdateSignatureRepository } from './repository/update.signature.repository';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
     imports: [
         CapeModule, 
-        AuthModule
+        AuthModule,
+        DatabaseModule
     ],
     controllers: [SignatureController],
     providers: [

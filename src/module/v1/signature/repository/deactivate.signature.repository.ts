@@ -1,10 +1,10 @@
 // deactivate.signature.repository.ts
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { InjectKnex, Knex } from 'nestjs-knex';
+import { Injectable, Inject } from '@nestjs/common';
+import { Knex } from 'nestjs-knex';
 
 @Injectable()
 export class DeactivateSignatureRepository {
-    constructor(@InjectKnex() private readonly knex: Knex) {}
+    constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {}
 
     async deactivateSignature(id: string): Promise<void> {
         await this.knex('signatureUploads').where({ id }).update({ status: 'inactive' });

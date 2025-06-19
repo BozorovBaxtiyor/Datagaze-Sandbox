@@ -1,15 +1,15 @@
 // auth.repository.ts
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { InjectKnex, Knex } from 'nestjs-knex';
+import { HttpException, HttpStatus, Injectable, Inject } from '@nestjs/common';
 import bcrypt from 'bcrypt';
+import { Knex } from 'nestjs-knex';
 import { User } from 'src/common/types/types';
-import { RegisterDto } from './dto/register.dto';
 import { PaginationQueryUsersDto } from './dto/get-all.users.input';
+import { RegisterDto } from './dto/register.dto';
 import { UpdateProfileDto } from './dto/update.dto';
 
 @Injectable()
 export class AuthRepository {
-    constructor(@InjectKnex() private readonly knex: Knex) {}
+    constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {}
 
     async findUserByUsername(username: string): Promise<User | undefined> {
         return this.knex<User>('users').where({ username }).first();
@@ -34,15 +34,15 @@ export class AuthRepository {
     async deactivateUser(id: string): Promise<void> {
         await this.knex('users').where('id', id).update({ status: 'inactive' });
     }
-    
+
     async getUsernameById(userId: string): Promise<string | null> {
         return this.knex('users').select('username').where('id', userId).first();
     }
-    
+
     async deleteUser(id: string): Promise<void> {
         await this.knex('users').where('id', id).del();
     }
-    
+
     async createUser(registerDto: RegisterDto, hashedPassword: string): Promise<void> {
         await this.knex<User>('users').insert({
             username: registerDto.username,
@@ -54,10 +54,7 @@ export class AuthRepository {
         });
     }
 
-    async updateUserPassword(
-        userId: string,
-        hashedPassword: string,
-    ): Promise<void> {
+    async updateUserPassword(userId: string, hashedPassword: string): Promise<void> {
         await this.knex<User>('users').where('id', userId).update({
             password: hashedPassword,
             updated_at: new Date(),
@@ -78,7 +75,10 @@ export class AuthRepository {
         });
     }
 
-    async updateUserProfile(updateProfileDto: UpdateProfileDto, imageFilename?: string): Promise<void> {
+    async updateUserProfile(
+        updateProfileDto: UpdateProfileDto,
+        imageFilename?: string,
+    ): Promise<void> {
         const updateObject: Partial<User> = {
             username: updateProfileDto.username,
             fullName: updateProfileDto.fullName,
@@ -87,19 +87,14 @@ export class AuthRepository {
         };
 
         if (imageFilename) {
-            updateObject.profilePicture = `profiles/${imageFilename}`; 
+            updateObject.profilePicture = `profiles/${imageFilename}`;
         }
 
-        await this.knex<User>('users')
-            .where('id', updateProfileDto.userId)
-            .update(updateObject);
+        await this.knex<User>('users').where('id', updateProfileDto.userId).update(updateObject);
     }
 
-    async updatePasswordWithTransaction(
-        userId: string,
-        newPassword: string,
-    ): Promise<void> {
-        await this.knex.transaction(async (trx) => {
+    async updatePasswordWithTransaction(userId: string, newPassword: string): Promise<void> {
+        await this.knex.transaction(async trx => {
             const user = await trx<User>('users').where('id', userId).first();
 
             if (!user) {
@@ -118,6 +113,9 @@ export class AuthRepository {
         const page = query.page ?? 1;
         const limit = query.limit ?? 10;
         const skip = (page - 1) * limit;
-        return this.knex<any>('users').select('id', 'fullName', 'email', 'username', 'role', 'lastLogin', 'status').limit(limit).offset(skip);
+        return this.knex<any>('users')
+            .select('id', 'fullName', 'email', 'username', 'role', 'lastLogin', 'status')
+            .limit(limit)
+            .offset(skip);
     }
 }

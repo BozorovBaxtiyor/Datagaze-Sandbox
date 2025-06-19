@@ -1,12 +1,12 @@
 // create.yara.repository.ts
-import { Injectable, Logger } from '@nestjs/common';
-import { InjectKnex, Knex } from 'nestjs-knex';
+import { Injectable, Logger, Inject } from '@nestjs/common';
+import { Knex } from 'nestjs-knex';
 
 @Injectable()
 export class CreateYaraRepository {
     private readonly logger = new Logger(CreateYaraRepository.name);
 
-    constructor(@InjectKnex() private readonly knex: Knex) {
+    constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {
         // if (!fs.existsSync(this.outputFile)) {
         //     fs.writeFileSync(this.outputFile, '', 'utf8');
         // }

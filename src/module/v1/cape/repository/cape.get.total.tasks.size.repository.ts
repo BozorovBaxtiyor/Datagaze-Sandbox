@@ -1,10 +1,10 @@
 // cape.get.total.tasks.size.repositry.ts
-import { Injectable } from '@nestjs/common';
-import { InjectKnex, Knex } from 'nestjs-knex';
+import { Inject, Injectable } from '@nestjs/common';
+import { Knex } from 'nestjs-knex';
 
 @Injectable()
 export class CapeGetTotalTasksSizeRepository {
-    constructor(@InjectKnex() private readonly knex: Knex) {}
+    constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {}
 
     async getTotalTasksSize(): Promise<any> {
         try {

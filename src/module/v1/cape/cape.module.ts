@@ -1,6 +1,7 @@
 // cape.module.ts
 import { Module } from '@nestjs/common';
 import { JwtAuthModule } from '../auth/jwt-auth.module';
+import { DatabaseModule } from '../database/database.module';
 import { CapeController } from './cape.controller';
 import { CapeGetRealTaskIdRepository } from './repository/cape.get.real.taskId.repository';
 import { CapeGetTaskIdRepository } from './repository/cape.get.taskId.repositry';
@@ -17,7 +18,7 @@ import { CapeFileService } from './service/cape.file.service';
 import { CapeService } from './service/cape.service';
 
 @Module({
-    imports: [JwtAuthModule],
+    imports: [JwtAuthModule, DatabaseModule],
     controllers: [CapeController],
     providers: [
         CapeService,

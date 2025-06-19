@@ -4,9 +4,10 @@ import { AuthService } from './auth.service';
 import { AuthRepository } from './auth.repository';
 import { AuthController } from './auth.controller';
 import { JwtAuthModule } from './jwt-auth.module';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
-    imports: [JwtAuthModule],
+    imports: [JwtAuthModule , DatabaseModule],
     providers: [AuthService, AuthRepository],
     controllers: [AuthController],
     exports: [

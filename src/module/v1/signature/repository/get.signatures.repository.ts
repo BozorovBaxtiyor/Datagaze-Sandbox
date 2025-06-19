@@ -1,11 +1,11 @@
 // get.signatures.repository.ts
-import { Injectable } from '@nestjs/common';
-import { InjectKnex, Knex } from 'nestjs-knex';
+import { Injectable, Inject } from '@nestjs/common';
+import { Knex } from 'nestjs-knex';
 import { GetSignaturesQueryDto } from '../dto/get.signatures.query.dto';
 
 @Injectable()
 export class GetSignaturesRepository {
-    constructor(@InjectKnex() private readonly knex: Knex) {}
+    constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {}
 
     async getSignatures(query: GetSignaturesQueryDto): Promise<any> {
         const page = Number(query.page) || 1;
@@ -17,11 +17,11 @@ export class GetSignaturesRepository {
         if (query.status && query.status !== 'all') {
             qb = qb.where('status', query.status);
         }
-    
+
         if (query.category && query.category !== 'all') {
             qb = qb.where('category', query.category);
         }
-    
+
         // if (query.incidentType && query.incidentType !== 'all') {
         //     qb = qb.where('incidentType', query.incidentType);
         // }

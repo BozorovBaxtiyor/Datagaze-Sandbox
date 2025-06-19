@@ -1,14 +1,11 @@
-import { Injectable } from "@nestjs/common";
-import { Knex } from "knex";
-import { InjectKnex } from "nestjs-knex";
+import { Injectable, Inject } from '@nestjs/common';
+import { Knex } from 'knex';
 
 @Injectable()
 export class CapeRepository {
-    constructor(@InjectKnex() private readonly knex: Knex){}
+    constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {}
 
-    async deleteTaskByTaskId(taskId: string): Promise<void> { 
-        await this.knex('capeTasks')
-            .where('taskId', taskId)
-            .del()
+    async deleteTaskByTaskId(taskId: string): Promise<void> {
+        await this.knex('capeTasks').where('taskId', taskId).del();
     }
 }

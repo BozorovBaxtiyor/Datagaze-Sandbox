@@ -1,6 +1,6 @@
 // cape.get.total.tasks.by.last.seven.days.repository.ts
-import { Injectable } from '@nestjs/common';
-import { InjectKnex, Knex } from 'nestjs-knex';
+import { Inject, Injectable } from '@nestjs/common';
+import { Knex } from 'nestjs-knex';
 
 export interface TaskCountByDay {
     date: string;
@@ -10,7 +10,7 @@ export interface TaskCountByDay {
 
 @Injectable()
 export class CapeGetTotalTasksByLastSevenDaysRepository {
-    constructor(@InjectKnex() private readonly knex: Knex) {}
+    constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {}
 
     async getTotalTasksByLastSevenDays(): Promise<TaskCountByDay[]> {
         return this.knex('capeTasks')

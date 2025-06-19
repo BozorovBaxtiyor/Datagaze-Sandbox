@@ -20,6 +20,7 @@ import { CapeRepository } from '../repository/cape.repository';
 import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
+import { CapeAnalysisMongoRepository } from '../repository/analysis.mongo.repository';
 
 @Injectable()
 export class CapeService {
@@ -31,6 +32,7 @@ export class CapeService {
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeDatabaseRepository: CapeDatabaseRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
+        private readonly capeAnalysisRepository: CapeAnalysisMongoRepository,
         private readonly capeGetRealTaskIdRepository: CapeGetRealTaskIdRepository,
         private readonly capeGetTotalTasksSizeRepository: CapeGetTotalTasksSizeRepository,
         private readonly capeGetTotalIncidentsSizeRepository: CapeGetTotalIncidentsSizeRepository,
@@ -157,6 +159,10 @@ export class CapeService {
         return this.capeApiService.getReport(realTaskId, 'json').then(res => res.data);
     }
 
+    async getReport1(taskId: number): Promise<any> {
+        const result = await this.capeAnalysisRepository.getAnalysisById(taskId)
+        return result
+    }
     // File handling methods
     private async saveFileToDisk(dto: CreateFileDto): Promise<string> {
         const uploadDir = this.getUploadDirectory();
@@ -185,7 +191,6 @@ export class CapeService {
         if (dto.machine) form.append('machine', dto.machine);
         if (dto.platform) form.append('platform', dto.platform);
         if (dto.options) form.append('options', dto.options);
-       
     }
 
     // Database storage methods
@@ -261,7 +266,7 @@ export class CapeService {
             startedAt: data.startedAt,
             completedAt: data.completedAt,
             status: data.status,
-            incidentType: 'unknown', 
+            incidentType: 'unknown',
         };
     }
 
@@ -283,20 +288,18 @@ export class CapeService {
     }
 
     async getScreenshot(taskId: string): Promise<string[]> {
-        const realTaskId = await this.capeGetRealTaskIdRepository.getRealTaskId(taskId);
-        if (!realTaskId) return [];
 
         try {
-            const resp = await this.capeApiService.getScreenshot(realTaskId);
+            const resp = await this.capeApiService.getScreenshot(taskId);
 
-            const screenshotsDir = path.join(__dirname, '..', 'file', 'images', realTaskId);
+            const screenshotsDir = path.join(__dirname, '..', 'file', 'images', taskId);
             await this.capeFileService.ensureDirectoryExists(screenshotsDir);
 
             const zip = new AdmZip(resp.data);
             zip.extractAllTo(screenshotsDir, true);
 
             const shotsDir = path.join(screenshotsDir, 'shots');
-            return this.capeFileService.listScreenshotImages(shotsDir, realTaskId);
+            return this.capeFileService.listScreenshotImages(shotsDir, taskId);
         } catch {
             return [];
         }

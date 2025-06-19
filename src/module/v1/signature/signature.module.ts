@@ -1,23 +1,19 @@
 // signature.module.ts
 import { Module } from '@nestjs/common';
+import { DatabaseModule } from '../../../database/postgres/database.module';
 import { AuthModule } from '../auth/auth.module';
 import { CapeModule } from '../cape/cape.module';
-import { SignatureController } from './signature.controller';
-import { SignatureService } from './service/signature.service';
+import { ActivateSignatureRepository } from './repository/activate.signature.repository';
 import { CreateYaraRepository } from './repository/create.yara.repository';
+import { DeactivateSignatureRepository } from './repository/deactivate.signature.repository';
 import { GetSignatureRepository } from './repository/get.signature.repository';
 import { GetSignaturesRepository } from './repository/get.signatures.repository';
-import { ActivateSignatureRepository } from './repository/activate.signature.repository';
-import { DeactivateSignatureRepository } from './repository/deactivate.signature.repository';
 import { UpdateSignatureRepository } from './repository/update.signature.repository';
-import { DatabaseModule } from '../database/database.module';
+import { SignatureService } from './service/signature.service';
+import { SignatureController } from './signature.controller';
 
 @Module({
-    imports: [
-        CapeModule, 
-        AuthModule,
-        DatabaseModule
-    ],
+    imports: [CapeModule, AuthModule, DatabaseModule],
     controllers: [SignatureController],
     providers: [
         SignatureService,
@@ -28,6 +24,6 @@ import { DatabaseModule } from '../database/database.module';
         DeactivateSignatureRepository,
         UpdateSignatureRepository,
     ],
-    exports: []
+    exports: [],
 })
 export class SignatureModule {}

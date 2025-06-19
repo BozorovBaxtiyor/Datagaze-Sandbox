@@ -19,7 +19,6 @@
         "db:reset": "yarn migrate:rollback:all && yarn migrate:latest && yarn seed:run",
         "migrate:lates": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts --env primary migrate:latest",
         "seed:run": "ts-node --transpile-only ./node_modules/.bin/knex --knexfile src/database/knexfile.ts --env primary seed:run"
-        
     },
     "dependencies": {
         "@nestjs/cli": "^11.0.6",
@@ -42,6 +41,7 @@
         "dotenv": "^16.4.7",
         "form-data": "^4.0.2",
         "knex": "^3.1.0",
+        "mongodb": "^6.17.0",
         "nestjs-knex": "^2.0.0",
         "node-scp": "^0.0.23",
         "pg": "^8.13.3",

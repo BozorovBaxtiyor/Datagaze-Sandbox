@@ -1,8 +1,9 @@
 // cape.module.ts
 import { Module } from '@nestjs/common';
+import { DatabaseModule } from '../../../database/postgres/database.module';
 import { JwtAuthModule } from '../auth/jwt-auth.module';
-import { DatabaseModule } from '../database/database.module';
 import { CapeController } from './cape.controller';
+import { CapeDatabaseRepository } from './repository/cape.database.repository';
 import { CapeGetRealTaskIdRepository } from './repository/cape.get.real.taskId.repository';
 import { CapeGetTaskIdRepository } from './repository/cape.get.taskId.repositry';
 import { CapeGetTasksRepository } from './repository/cape.get.tasks.respositry';
@@ -16,10 +17,11 @@ import { CapeUpsertTaskRepository } from './repository/cape.upsert.task.reposito
 import { CapeApiService } from './service/cape.api.service';
 import { CapeFileService } from './service/cape.file.service';
 import { CapeService } from './service/cape.service';
-import { CapeDatabaseRepository } from './repository/cape.database.repository';
+import { CapeAnalysisMongoRepository } from './repository/analysis.mongo.repository';
+import { MongoDatabaseModule } from 'src/database/mongo/mongo.module';
 
 @Module({
-    imports: [JwtAuthModule, DatabaseModule],
+    imports: [JwtAuthModule, DatabaseModule , MongoDatabaseModule],
     controllers: [CapeController],
     providers: [
         CapeService,
@@ -31,6 +33,7 @@ import { CapeDatabaseRepository } from './repository/cape.database.repository';
         CapeGetTaskIdRepository,
         CapeDatabaseRepository,
         CapeGetRealTaskIdRepository,
+        CapeAnalysisMongoRepository,
         CapeGetTotalTasksSizeRepository,
         CapeGetTotalIncidentsSizeRepository,
         CapeGetTotalTasksByLastSevenDaysRepository,

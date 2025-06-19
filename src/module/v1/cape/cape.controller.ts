@@ -70,9 +70,13 @@ export class CapeController {
         return this.capeService.getListOfMachines();
     }
 
+    // @Get('tasks/get/report/:taskId')
+    // async getReport(@Param('taskId') taskId: string): Promise<any> {
+    //     return this.capeService.getReport(taskId);
+    // }
     @Get('tasks/get/report/:taskId')
-    async getReport(@Param('taskId') taskId: string): Promise<any> {
-        return this.capeService.getReport(taskId);
+    async getReport1(@Param('taskId') taskId: number): Promise<any> {
+        return this.capeService.getReport1(taskId);
     }
 
     @Get('tasks/view/:taskId')
@@ -85,7 +89,7 @@ export class CapeController {
     async getScreenshot(@Param('taskId') taskId: string): Promise<any> {
         return this.capeService.getScreenshot(taskId);
     }
-    
+
     @Get('tasks/list/:path')
     @ApiGetAll('Signature Tasks', GetTasksEntity)
     async getTasks1(
@@ -95,14 +99,4 @@ export class CapeController {
     ): Promise<GetTasksEntity[]> {
         return this.capeService.getTasks1(path, query, req.user.userId);
     }
-
-    // @Get('files/view/sha256/:sha256')
-    // async getFileBySha256(@Param('sha256') sha256: string): Promise<any> {
-    //     return this.capeService.getFileBySha256(sha256);
-    // }
-
-    // @Post('tasks/create/url')
-    // async createUrl() {
-    //     return this.capeService.createUrl();
-    // }
 }

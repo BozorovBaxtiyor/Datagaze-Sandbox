@@ -2,7 +2,10 @@ import * as dotenv from 'dotenv';
 import { Knex } from 'knex';
 import * as path from 'path';
 
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
+dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
+
+console.log(process.env.DB_HOST, process.env.DB_PORT, process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_NAME);
 
 interface ExtendedConnectionOptions extends Knex.PgConnectionConfig {
     ssl?: {
@@ -27,10 +30,10 @@ export const db1Config: Knex.Config = {
     } as ExtendedConnectionOptions,
     pool: { min: 2, max: 10 },
     migrations: {
-        directory: path.resolve(process.cwd(), 'src/database/migrations/db1'),
+        directory: path.resolve(process.cwd(), 'src/database/postgres/migrations/db1'),
         tableName: 'knex_migrations',
     },
     seeds: {
-        directory: path.resolve(process.cwd(), 'src/database/seeds/db1'),
+        directory: path.resolve(process.cwd(), 'src/database/postgres/seeds/db1'),
     },
 };

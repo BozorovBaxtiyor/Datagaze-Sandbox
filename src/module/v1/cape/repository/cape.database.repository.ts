@@ -14,7 +14,7 @@ export class CapeDatabaseRepository {
 
         let qb = this.knex('tasks');
         if (path === 'active') {
-            qb = qb.whereIn('tasks.status', ['pending', 'running', 'processing']);
+            qb = qb.whereIn('tasks.status', ['pending', 'running', 'distributed']);
         } else if (path === 'history') {
             qb = qb.whereIn('tasks.status', ['reported', 'failed_reporting']);
         }

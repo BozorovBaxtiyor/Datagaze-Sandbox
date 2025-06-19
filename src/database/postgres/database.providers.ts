@@ -1,6 +1,6 @@
 import { Provider } from '@nestjs/common';
 import knex from 'knex';
-import knexConfig from '../../../database/knexfile';
+import knexConfig from './knexfile';
 
 export const PrimaryKnexProvider: Provider = {
     provide: 'KNEX_PRIMARY',

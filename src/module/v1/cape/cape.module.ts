@@ -16,6 +16,7 @@ import { CapeUpsertTaskRepository } from './repository/cape.upsert.task.reposito
 import { CapeApiService } from './service/cape.api.service';
 import { CapeFileService } from './service/cape.file.service';
 import { CapeService } from './service/cape.service';
+import { CapeDatabaseRepository } from './repository/cape.database.repository';
 
 @Module({
     imports: [JwtAuthModule, DatabaseModule],
@@ -28,6 +29,7 @@ import { CapeService } from './service/cape.service';
         CapeUpsertTaskRepository,
         CapeGetTasksRepository,
         CapeGetTaskIdRepository,
+        CapeDatabaseRepository,
         CapeGetRealTaskIdRepository,
         CapeGetTotalTasksSizeRepository,
         CapeGetTotalIncidentsSizeRepository,

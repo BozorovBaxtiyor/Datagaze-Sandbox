@@ -23,11 +23,15 @@ export class CapeController {
         return this.capeService.getDashboardData();
     }
 
-    @Get('tasks/list/:path')
-    @ApiGetAll('Signature Tasks', GetTasksEntity)
-    async getTasks(@Param('path') path: string, @Query() query: TaskListQueryDto, @Req() req: CustomRequest): Promise<GetTasksEntity[]> {
-        return this.capeService.getTasks(path, query, req.user.userId);
-    }
+    // @Get('tasks/list/:path')
+    // @ApiGetAll('Signature Tasks', GetTasksEntity)
+    // async getTasks(
+    //     @Param('path') path: string,
+    //     @Query() query: TaskListQueryDto,
+    //     @Req() req: CustomRequest,
+    // ): Promise<GetTasksEntity[]> {
+    //     return this.capeService.getTasks(path, query, req.user.userId);
+    // }
 
     @ApiConsumes('multipart/form-data')
     @ApiBody({
@@ -38,21 +42,25 @@ export class CapeController {
                 file: {
                     type: 'string',
                     format: 'binary',
-                    description: 'File to analyze (max 200MB)'
+                    description: 'File to analyze (max 200MB)',
                 },
-            }
-        }
+            },
+        },
     })
     @Post('tasks/create/file')
-    @UseInterceptors(AnyFilesInterceptor({ limits: { fileSize: 200 * 1024 * 1024 }}))
-    async createFile(@UploadedFiles() files: Array<Express.Multer.File>, @Body() createFileDto: CreateFileDto, @Req() req: CustomRequest): Promise<any> {
+    @UseInterceptors(AnyFilesInterceptor({ limits: { fileSize: 200 * 1024 * 1024 } }))
+    async createFile(
+        @UploadedFiles() files: Array<Express.Multer.File>,
+        @Body() createFileDto: CreateFileDto,
+        @Req() req: CustomRequest,
+    ): Promise<any> {
         // Log fayl haqida ma'lumot
         console.log('Uploaded files:', files);
 
         // Log DTO va foydalanuvchi haqida ma'lumot
         console.log('User ID:', req.user.userId);
         createFileDto.file = files[0];
-        
+
         console.log('CreateFileDto:', createFileDto);
         return this.capeService.createFile(createFileDto, req.user.userId);
     }
@@ -61,7 +69,7 @@ export class CapeController {
     async getListOfMachines() {
         return this.capeService.getListOfMachines();
     }
-    
+
     @Get('tasks/get/report/:taskId')
     async getReport(@Param('taskId') taskId: string): Promise<any> {
         return this.capeService.getReport(taskId);
@@ -77,12 +85,22 @@ export class CapeController {
     async getScreenshot(@Param('taskId') taskId: string): Promise<any> {
         return this.capeService.getScreenshot(taskId);
     }
+    
+    @Get('tasks/list/:path')
+    @ApiGetAll('Signature Tasks', GetTasksEntity)
+    async getTasks1(
+        @Param('path') path: string,
+        @Query() query: TaskListQueryDto,
+        @Req() req: CustomRequest,
+    ): Promise<GetTasksEntity[]> {
+        return this.capeService.getTasks1(path, query, req.user.userId);
+    }
 
     // @Get('files/view/sha256/:sha256')
     // async getFileBySha256(@Param('sha256') sha256: string): Promise<any> {
     //     return this.capeService.getFileBySha256(sha256);
     // }
-    
+
     // @Post('tasks/create/url')
     // async createUrl() {
     //     return this.capeService.createUrl();

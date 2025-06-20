@@ -5,7 +5,6 @@ import * as path from 'path';
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
 
-console.log(process.env.DB_HOST, process.env.DB_PORT, process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_NAME);
 
 interface ExtendedConnectionOptions extends Knex.PgConnectionConfig {
     ssl?: {
@@ -16,6 +15,7 @@ interface ExtendedConnectionOptions extends Knex.PgConnectionConfig {
 
 export const db1Config: Knex.Config = {
     client: 'pg',
+    debug: process.env.NODE_ENV === 'development',
     connection: {
         host: process.env.DB_HOST,
         port: parseInt(process.env.DB_PORT || '25060', 10),

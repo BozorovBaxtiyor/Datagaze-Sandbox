@@ -13,7 +13,6 @@ import { CapeGetTotalTasksByLastSevenDaysRepository } from './repository/cape.ge
 import { CapeGetTotalTasksSizeRepository } from './repository/cape.get.total.tasks.size.repository';
 import { CapeGetIncidentDistributionRepository } from './repository/cape.incident.distribution.repository';
 import { CapeRepository } from './repository/cape.repository';
-import { CapeUpsertTaskRepository } from './repository/cape.upsert.task.repository';
 import { CapeApiService } from './service/cape.api.service';
 import { CapeFileService } from './service/cape.file.service';
 import { CapeService } from './service/cape.service';
@@ -28,7 +27,6 @@ import { MongoDatabaseModule } from 'src/database/mongo/mongo.module';
         CapeApiService,
         CapeFileService,
         CapeRepository,
-        CapeUpsertTaskRepository,
         CapeGetTasksRepository,
         CapeGetTaskIdRepository,
         CapeDatabaseRepository,

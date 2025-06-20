@@ -3,7 +3,6 @@ import * as path from 'path';
 import * as dotenv from 'dotenv';
 
 dotenv.config({ path: path.resolve(__dirname, '../../../.env') });
-console.log(process.env.CAPE_DB_HOST, process.env.CAPE_DB_PORT, process.env.CAPE_DB_USER, process.env.CAPE_DB_PASSWORD, process.env.CAPE_DB_NAME);
 
 
 interface ExtendedConnectionOptions extends Knex.PgConnectionConfig {
@@ -15,6 +14,7 @@ interface ExtendedConnectionOptions extends Knex.PgConnectionConfig {
 
 export const db2Config: Knex.Config = {
     client: 'pg',
+    debug: process.env.NODE_ENV === 'development',
     connection: {
         host: process.env.CAPE_DB_HOST,
         port: parseInt(process.env.CAPE_DB_PORT || '25060', 10),

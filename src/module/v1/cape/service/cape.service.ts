@@ -7,6 +7,7 @@ import { extractFilename } from 'src/common/utils/file.util';
 import { CreateFileDto } from '../dto/create.file.dto';
 import { TaskListQueryDto } from '../dto/tasks.list.query.dto';
 import { GetTasksEntity } from '../entity/get.tasks.entity';
+import { CapeAnalysisMongoRepository } from '../repository/analysis.mongo.repository';
 import { CapeDatabaseRepository } from '../repository/cape.database.repository';
 import { CapeGetRealTaskIdRepository } from '../repository/cape.get.real.taskId.repository';
 import { CapeGetTaskIdRepository } from '../repository/cape.get.taskId.repositry';
@@ -17,10 +18,8 @@ import { CapeGetTotalTasksByLastSevenDaysRepository } from '../repository/cape.g
 import { CapeGetTotalTasksSizeRepository } from '../repository/cape.get.total.tasks.size.repository';
 import { CapeGetIncidentDistributionRepository } from '../repository/cape.incident.distribution.repository';
 import { CapeRepository } from '../repository/cape.repository';
-import { CapeUpsertTaskRepository } from '../repository/cape.upsert.task.repository';
 import { CapeApiService } from './cape.api.service';
 import { CapeFileService } from './cape.file.service';
-import { CapeAnalysisMongoRepository } from '../repository/analysis.mongo.repository';
 
 @Injectable()
 export class CapeService {
@@ -28,7 +27,6 @@ export class CapeService {
         private readonly capeApiService: CapeApiService,
         private readonly capeRepository: CapeRepository,
         private readonly capeFileService: CapeFileService,
-        private readonly capeUpsertTaskRepository: CapeUpsertTaskRepository,
         private readonly capeGetTasksRepository: CapeGetTasksRepository,
         private readonly capeDatabaseRepository: CapeDatabaseRepository,
         private readonly capeGetTaskIdRepository: CapeGetTaskIdRepository,
@@ -76,7 +74,6 @@ export class CapeService {
         }
 
         const taskData = this.mapTaskData(task, taskId, userId);
-        await this.capeUpsertTaskRepository.upsertTask(taskData);
     }
 
     private async getFormattedTasks(
@@ -102,7 +99,6 @@ export class CapeService {
 
             const taskId = await this.uploadFileToCape(preparedFile);
 
-            await this.storeTaskData(preparedFile, userId, taskId);
 
             return preparedFile.response.data;
         } catch (error: any) {
@@ -154,14 +150,17 @@ export class CapeService {
         }
     }
 
-    async getReport(taskId: string): Promise<any> {
-        const realTaskId = await this.capeGetRealTaskIdRepository.getRealTaskId(taskId);
-        return this.capeApiService.getReport(realTaskId, 'json').then(res => res.data);
-    }
-
-    async getReport1(taskId: number): Promise<any> {
-        const result = await this.capeAnalysisRepository.getAnalysisById(taskId)
-        return result
+    async getReport(taskId: number): Promise<any> {
+        // const result = await this.capeAnalysisRepository.getAnalysisById(taskId);
+        const [analysis , task] = await Promise.all([
+            this.capeAnalysisRepository.getAnalysisById(taskId),
+            this.capeDatabaseRepository.getTaskByIdSample(taskId),
+        ]);
+        analysis.target.file = { ...analysis.target.file, ...task };
+        console.log(analysis);
+        
+        
+        return analysis;
     }
     // File handling methods
     private async saveFileToDisk(dto: CreateFileDto): Promise<string> {
@@ -193,30 +192,6 @@ export class CapeService {
         if (dto.options) form.append('options', dto.options);
     }
 
-    // Database storage methods
-    private async storeTaskData(dto: CreateFileDto, userId: string, taskId: string): Promise<void> {
-        const taskData = this.createTaskDataObject(dto, userId, taskId);
-        await this.capeUpsertTaskRepository.upsertTask(taskData);
-    }
-
-    private createTaskDataObject(dto: CreateFileDto, userId: string, taskId: string): any {
-        return {
-            target: dto.file.originalname,
-            sha256: '',
-            category: 'file',
-            filePath: dto.filePath,
-            fileType: dto.file.mimetype,
-            fileSize: dto.file.size,
-            machine: dto.machine,
-            platform: dto.platform,
-            package: dto.package,
-            timeout: dto.timeout,
-            status: 'pending',
-            createdAt: new Date().toISOString(),
-            createdBy: userId,
-            taskId: taskId,
-        };
-    }
 
     private mapTaskData(taskData: any, taskId: string, userId: string): any {
         const data = taskData.data || taskData;
@@ -288,7 +263,6 @@ export class CapeService {
     }
 
     async getScreenshot(taskId: string): Promise<string[]> {
-
         try {
             const resp = await this.capeApiService.getScreenshot(taskId);
 
@@ -300,7 +274,9 @@ export class CapeService {
 
             const shotsDir = path.join(screenshotsDir, 'shots');
             return this.capeFileService.listScreenshotImages(shotsDir, taskId);
-        } catch {
+        } catch (error: any) {
+            console.log(error);
+
             return [];
         }
     }

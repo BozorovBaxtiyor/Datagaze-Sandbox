@@ -1,14 +1,8 @@
 // ws-auth.guard.ts
-import {
-    CanActivate,
-    ExecutionContext,
-    Injectable,
-    Logger,
-} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Socket } from 'socket.io';
 import { WsException } from '@nestjs/websockets';
-import { JwtPayload, AuthenticatedSocket } from '../../types/types';
+import { AuthenticatedSocket } from '../../types/types';
 
 @Injectable()
 export class WsJwtAuthGuard implements CanActivate {
@@ -33,6 +27,10 @@ export class WsJwtAuthGuard implements CanActivate {
     }
 
     private extractTokenFromClient(client: AuthenticatedSocket): string | null {
-        return ((client?.handshake?.query?.token as string) || client?.handshake?.auth?.token?.split(' ')[1] || null);
+        return (
+            (client?.handshake?.query?.token as string) ||
+            client?.handshake?.auth?.token?.split(' ')[1] ||
+            null
+        );
     }
 }

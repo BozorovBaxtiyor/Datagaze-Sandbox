@@ -34,7 +34,7 @@ export class CapeDatabaseRepository {
                 'tasks.status as status',
             );
 
-        return { data: await qb.orderBy('tasks.id').limit(limit).offset(skip) };
+        return { data: await qb.orderBy('tasks.id' , 'desc').limit(limit).offset(skip) };
     }
 
     async getTaskByIdSample(taskId: number): Promise<any>{

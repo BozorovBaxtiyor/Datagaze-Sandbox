@@ -23,15 +23,15 @@ export class CapeController {
         return this.capeService.getDashboardData();
     }
 
-    @Get('tasks/list/:path')
-    @ApiGetAll('Signature Tasks', GetTasksEntity)
-    async getTasks(
-        @Param('path') path: string,
-        @Query() query: TaskListQueryDto,
-        @Req() req: CustomRequest,
-    ): Promise<GetTasksEntity[]> {
-        return this.capeService.getTasks(path, query, req.user.userId);
-    }
+    // @Get('tasks/list/:path')
+    // @ApiGetAll('Signature Tasks', GetTasksEntity)
+    // async getTasks(
+    //     @Param('path') path: string,
+    //     @Query() query: TaskListQueryDto,
+    //     @Req() req: CustomRequest,
+    // ): Promise<GetTasksEntity[]> {
+    //     return this.capeService.getTasks(path, query, req.user.userId);
+    // }
 
     @ApiConsumes('multipart/form-data')
     @ApiBody({

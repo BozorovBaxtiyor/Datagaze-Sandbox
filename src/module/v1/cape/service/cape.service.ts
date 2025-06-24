@@ -102,8 +102,6 @@ export class CapeService {
 
             return preparedFile.response.data;
         } catch (error: any) {
-            console.log(error);
-
             throw new Error(`File upload failed: ${error.message}`);
         }
     }
@@ -157,9 +155,6 @@ export class CapeService {
             this.capeDatabaseRepository.getTaskByIdSample(taskId),
         ]);
         analysis.target.file = { ...analysis.target.file, ...task };
-        console.log(analysis);
-        
-        
         return analysis;
     }
     // File handling methods
@@ -275,8 +270,6 @@ export class CapeService {
             const shotsDir = path.join(screenshotsDir, 'shots');
             return this.capeFileService.listScreenshotImages(shotsDir, taskId);
         } catch (error: any) {
-            console.log(error);
-
             return [];
         }
     }

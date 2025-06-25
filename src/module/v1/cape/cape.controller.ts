@@ -36,16 +36,6 @@ export class CapeController {
         return this.capeService.getDashboardData();
     }
 
-    // @Get('tasks/list/:path')
-    // @ApiGetAll('Signature Tasks', GetTasksEntity)
-    // async getTasks(
-    //     @Param('path') path: string,
-    //     @Query() query: TaskListQueryDto,
-    //     @Req() req: CustomRequest,
-    // ): Promise<GetTasksEntity[]> {
-    //     return this.capeService.getTasks(path, query, req.user.userId);
-    // }
-
     @ApiConsumes('multipart/form-data')
     @ApiBody({
         description: 'File upload with additional data',
@@ -68,7 +58,7 @@ export class CapeController {
         @Req() req: CustomRequest,
     ): Promise<any> {
         createFileDto.file = files[0];
-        return this.capeService.createFile(createFileDto, req.user.userId);
+        return this.capeService.createFile(createFileDto);
     }
 
     @Get('machines/list')
@@ -81,11 +71,10 @@ export class CapeController {
         return this.capeService.getReport(taskId);
     }
 
-    @Get('tasks/view/:taskId')
-    // @ApiGetOne('Web Application', GetWebApplicationEntity)
-    async getTask(@Param('taskId') taskId: string): Promise<any> {
-        return this.capeService.getTask(taskId);
-    }
+    // @Get('tasks/view/:taskId')
+    // async getTask(@Param('taskId') taskId: string): Promise<any> {
+    //     return this.capeService.getTasks1(taskId);
+    // }
 
     @Get('tasks/get/screenshot/:taskId')
     async getScreenshot(@Param('taskId') taskId: string): Promise<any> {
@@ -99,7 +88,7 @@ export class CapeController {
         @Query() query: TaskListQueryDto,
         @Req() req: CustomRequest,
     ): Promise<GetTasksEntity[]> {
-        return this.capeService.getTasks1(path, query, req.user.userId);
+        return this.capeService.getTasks1(path, query);
     }
     @Get('tasks/download/report/:taskId/')
     async downloadReport(@Param('taskId') taskId: string, @Res() res: Response): Promise<any> {

@@ -5,7 +5,5 @@ import { Knex } from 'knex';
 export class CapeRepository {
     constructor(@Inject('KNEX_PRIMARY') private readonly knex: Knex) {}
 
-    async deleteTaskByTaskId(taskId: string): Promise<void> {
-        await this.knex('capeTasks').where('taskId', taskId).del();
-    }
+   
 }

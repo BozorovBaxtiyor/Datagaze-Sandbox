@@ -24,4 +24,5 @@ export enum TaskStatus {
     Analyzing = 'analyzing',
     Reported = 'reported',
     Failed = 'failed',
+    Completed ='completed',
 }

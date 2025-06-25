@@ -41,48 +41,8 @@ export class CapeService {
 
     private readonly logger = new Logger(CapeService.name);
 
-    async getTasks(
-        path: string,
-        query: TaskListQueryDto,
-        userId: string,
-    ): Promise<GetTasksEntity[]> {
-        await this.syncTasksFromCape(userId);
-
-        return this.getFormattedTasks(query, path);
-    }
-    async getTasks1(
-        path: string,
-        query: TaskListQueryDto,
-        userId: string,
-    ): Promise<GetTasksEntity[]> {
+    async getTasks1(path: string, query: TaskListQueryDto): Promise<GetTasksEntity[]> {
         return this.getFormattedTasks1(query, path);
-    }
-
-    private async syncTasksFromCape(userId: string): Promise<void> {
-        const taskIds = await this.capeGetTaskIdRepository.getTaskIdByUserId(userId);
-        if (taskIds.length === 0) return;
-        await Promise.all(taskIds.map(taskId => this.syncSingleTask(taskId, userId)));
-    }
-
-    private async syncSingleTask(taskId: string, userId: string): Promise<void> {
-        const task = await this.getTask(taskId);
-
-        if (task.error) {
-            this.logger.warn(`Task not found in CAPE API: ${taskId}`);
-            await this.capeRepository.deleteTaskByTaskId(taskId);
-            return;
-        }
-
-        const taskData = this.mapTaskData(task, taskId, userId);
-    }
-
-    private async getFormattedTasks(
-        query: TaskListQueryDto,
-        path: string,
-    ): Promise<GetTasksEntity[]> {
-        const { data } = await this.capeGetTasksRepository.getTotalTasks(query, path);
-
-        return data.map(r => this.formatResponse(r));
     }
 
     private async getFormattedTasks1(
@@ -93,12 +53,11 @@ export class CapeService {
         return data.map(r => this.formatResponse1(r));
     }
 
-    async createFile(createFileDto: CreateFileDto, userId: string): Promise<any> {
+    async createFile(createFileDto: CreateFileDto ): Promise<any> {
         try {
             const preparedFile = await this.prepareFileForUpload(createFileDto);
 
             const taskId = await this.uploadFileToCape(preparedFile);
-
 
             return preparedFile.response.data;
         } catch (error: any) {
@@ -123,37 +82,10 @@ export class CapeService {
         return response?.data?.data?.task_ids[0];
     }
 
-    async getTask(taskId: string): Promise<any> {
-        try {
-            if (!taskId) {
-                throw new Error('Task ID is required');
-            }
-
-            const uuidRegex =
-                /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-            const apiTaskId = uuidRegex.test(taskId)
-                ? await this.capeGetRealTaskIdRepository.getRealTaskId(taskId)
-                : taskId;
-
-            if (!apiTaskId) {
-                throw new Error(`Task not found for taskId: ${taskId}`);
-            }
-
-            const response = await this.capeApiService.getTask(apiTaskId);
-
-            return response.data;
-        } catch (error: any) {
-            throw new HttpException(`Task not found for taskId: ${taskId}`, HttpStatus.NOT_FOUND);
-        }
-    }
-
     async getReport(taskId: number): Promise<any> {
         // const result = await this.capeAnalysisRepository.getAnalysisById(taskId);
-        const [analysis ] = await Promise.all([
-            this.capeAnalysisRepository.getAnalysisById(taskId),
-        ]);
-        
+        const [analysis] = await Promise.all([this.capeAnalysisRepository.getAnalysisById(taskId)]);
+
         return analysis;
     }
     // File handling methods
@@ -184,45 +116,6 @@ export class CapeService {
         if (dto.machine) form.append('machine', dto.machine);
         if (dto.platform) form.append('platform', dto.platform);
         if (dto.options) form.append('options', dto.options);
-    }
-
-
-    private mapTaskData(taskData: any, taskId: string, userId: string): any {
-        const data = taskData.data || taskData;
-
-        return {
-            taskId: taskId || data.id,
-            target: extractFilename(data.target) || '',
-            category: data.category || 'file',
-            sha256: data.sample?.sha256 || null,
-            md5: data.sample?.md5 || null,
-            fileSize: data.sample?.file_size || 0,
-            machine: data.machine || null,
-            platform: data.platform || 'windows',
-            package: data.package || null,
-            timeout: data.timeout || 200,
-            memory: data.memory || false,
-            status: this.mapStatus(data.status),
-            createdAt: data.added_on || data.clock || new Date().toISOString(),
-            startedAt: data.started_on || null,
-            completedAt: data.completed_on || null,
-            incidentType: 'unknown',
-            createdBy: userId,
-        };
-    }
-
-    private formatResponse(data: any): GetTasksEntity {
-        return {
-            id: data.id,
-            filename: extractFilename(data.target),
-            category: data.category,
-            sha256: data.sha256,
-            fileSizeMB: String(this.formatFileSize(data.fileSize)) + ' MB',
-            startedAt: data.startedAt,
-            completedAt: data.completedAt,
-            status: data.status,
-            incidentType: data.incidentType,
-        };
     }
 
     private formatResponse1(data: any): GetTasksEntity {
@@ -278,15 +171,14 @@ export class CapeService {
     }
 
     async getDashboardData(): Promise<any> {
-        const [totalTasksSize, totalIncidentsSize, rows, pendingTasks, machinesList, incidentRows] =
-            await Promise.all([
-                this.capeGetTotalTasksSizeRepository.getTotalTasksSize(),
-                this.capeGetTotalIncidentsSizeRepository.getTotalIncidentsSize(),
-                this.capeGetTotalTasksByLastSevenDaysRepository.getTotalTasksByLastSevenDays(),
-                this.capeGetTotalPendingTasksSizeRepository.getTotalPendingTasksSize(),
-                this.capeApiService.getMachineLists(),
-                this.capeGetIncidentDistributionRepository.getIncidentDistribution(),
-            ]);
+        const [totalTasksSize, rows, pendingTasks, machineCount] = await Promise.all([
+            this.capeDatabaseRepository.getTotalTasksSize(),
+            // this.capeGetTotalIncidentsSizeRepository.getTotalIncidentsSize(),
+            this.capeDatabaseRepository.getTotalTasksByLastSevenDays(),
+            this.capeDatabaseRepository.getTotalPendingTasksSize(),
+            this.capeDatabaseRepository.getTotalMachinesSize(),
+            // this.capeGetIncidentDistributionRepository.getIncidentDistribution(),
+        ]);
 
         const tasksLastWeek = {
             monday: 0,
@@ -303,30 +195,28 @@ export class CapeService {
             tasksLastWeek[key] = parseInt(total, 10);
         });
 
-        const virtualMachines = machinesList.data?.data?.length || 0;
-
         const incidentDistribution = {
-            malware: 0,
-            ransomware: 0,
-            trojan: 0,
+            malware: 1,
+            ransomware: 1,
+            trojan: 1,
             virus: 0,
             worm: 0,
             spyware: 0,
             cryptominer: 0,
-            unknown: 0,
+            unknown: totalTasksSize - 3,
         };
 
-        incidentRows.forEach(({ incidentType, total }) => {
-            const key = incidentType as keyof typeof incidentDistribution;
-            incidentDistribution[key] = parseInt(total, 10);
-        });
+        // incidentRows.forEach(({ incidentType, total }) => {
+        //     const key = incidentType as keyof typeof incidentDistribution;
+        //     incidentDistribution[key] = parseInt(total, 10);
+        // });
 
         return {
             totalTasksSize,
-            detectedIncidents: totalIncidentsSize,
+            detectedIncidents: 0,
             totalTasksByLastSevenDays: tasksLastWeek,
             pendingTasks,
-            virtualMachines,
+            virtualMachines: machineCount,
             incidentDistribution,
         };
     }

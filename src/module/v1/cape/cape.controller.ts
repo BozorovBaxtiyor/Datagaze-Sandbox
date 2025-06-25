@@ -1,7 +1,20 @@
 // cape.controller.ts
-import { Body, Controller, Get, Param, Post, Query, Req, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Post,
+    Query,
+    Req,
+    Res,
+    UploadedFiles,
+    UseGuards,
+    UseInterceptors,
+} from '@nestjs/common';
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { JwtHttpAuthGuard } from 'src/common/guards/auth/http-auth.guard';
 import { HttpRoleGuard } from 'src/common/guards/role/http-role.guard';
 import { ApiAuth, ApiGetAll } from 'src/common/swagger/common-swagger';
@@ -87,5 +100,18 @@ export class CapeController {
         @Req() req: CustomRequest,
     ): Promise<GetTasksEntity[]> {
         return this.capeService.getTasks1(path, query, req.user.userId);
+    }
+    @Get('tasks/download/report/:taskId/')
+    async downloadReport(@Param('taskId') taskId: string, @Res() res: Response): Promise<any> {
+        const report = await this.capeService.downloadReport(taskId);
+        const buffer = Buffer.from(JSON.stringify(report), 'utf-8');
+
+        res.set({
+            'Content-Type': 'application/octet-stream',
+            'Content-Disposition': `attachment; filename="report-${taskId}.json"`,
+            'Content-Length': buffer.length.toString(),
+        });
+
+        res.end(buffer);
     }
 }

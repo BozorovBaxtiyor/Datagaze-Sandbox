@@ -150,11 +150,10 @@ export class CapeService {
 
     async getReport(taskId: number): Promise<any> {
         // const result = await this.capeAnalysisRepository.getAnalysisById(taskId);
-        const [analysis , task] = await Promise.all([
+        const [analysis ] = await Promise.all([
             this.capeAnalysisRepository.getAnalysisById(taskId),
-            this.capeDatabaseRepository.getTaskByIdSample(taskId),
         ]);
-        analysis.target.file = { ...analysis.target.file, ...task };
+        
         return analysis;
     }
     // File handling methods
@@ -334,5 +333,12 @@ export class CapeService {
 
     async getFileBySha256(sha256: string): Promise<any> {
         return this.capeApiService.getReportBySha256(sha256).then(res => res.data);
+    }
+    async downloadReport(taskId: string): Promise<any> {
+        const report = await this.capeApiService.getReport(taskId);
+        if (!report) {
+            throw new HttpException('Report not found', HttpStatus.NOT_FOUND);
+        }
+        return report.data;
     }
 }

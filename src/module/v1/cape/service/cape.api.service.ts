@@ -62,8 +62,8 @@ export class CapeApiService {
         });
     }
 
-    async getReport(taskId: string, format: string): Promise<any> {
-        return axios.get(`${this.baseUrl}/tasks/get/report/${taskId}/${format}`, {
+    async getReport(taskId: string): Promise<any> {
+        return axios.get(`${this.baseUrl}/tasks/get/report/${taskId}/json`, {
             headers: this.headers,
         });
     }

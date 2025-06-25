@@ -1,9 +1,8 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { Collection, Db } from "mongodb";
-import { AnalysisDocument} from '../../../../database/mongo/models/analysis.schema'
-import { info } from "console";
+import { Inject, Injectable } from '@nestjs/common';
+import { Collection, Db } from 'mongodb';
+import { AnalysisDocument } from '../../../../database/mongo/models/analysis.schema';
 
-Injectable()
+Injectable();
 export class CapeAnalysisMongoRepository {
     private readonly analysisCollection: Collection<AnalysisDocument>;
 
@@ -31,14 +30,20 @@ export class CapeAnalysisMongoRepository {
                 $project: {
                     info: 1,
                     'debug.log': 1,
-                    'target.file': 1,
+                    'target.file.type': 1,
+                    'target.file.name': 1,
                     signatures: 1,
                     'target.file2.sha3_384': 1,
                     'target.file2.tlsh': 1,
+                    'target.file2.sha256': 1,
+                    'target.file2.sha1': 1,
+                    'target.file2.md5': 1,
+                    'target.file2.size': 1,
+                    'target.file2.crc32': 1,
+                    'target.file2.ssdeep': 1,
                 },
             },
         ];
-
 
         const result = await this.analysisCollection.aggregate(piplene).toArray();
         return result.length > 0 ? (result[0] as AnalysisDocument) : null;
